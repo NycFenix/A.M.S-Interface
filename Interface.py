@@ -104,6 +104,6 @@ class Ui_AMS(object):
         self.label_4.setText("")
         self.Tabnumber3.setTabText(self.Tabnumber3.indexOf(self.Predicao), QCoreApplication.translate("AMS", u"Predição", None))
         self.Tabnumber3.setTabText(self.Tabnumber3.indexOf(self.tab_3), QCoreApplication.translate("AMS", u"Ferramentas", None))
-        self.Tabnumber3.setTabText(self.Tabnumber3.indexOf(self.Ferramentas), QCoreApplication.translate("AMS", u"Calibração", None))
+        self.Tabnumber3.setTabText(self.Tabnumber3.indexOf(self.Ferramentas), QCoreApplication.translate("AMS", u"Configurações", None))
     # retranslateUi
 
