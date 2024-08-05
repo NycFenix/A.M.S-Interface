@@ -16,19 +16,21 @@ class Ui_AMS(object):
         AMS.resize(800, 600)
         self.centralwidget = QWidget(AMS)
         self.centralwidget.setObjectName(u"centralwidget")
+
         self.Tabnumber3 = QTabWidget(self.centralwidget)
         self.Tabnumber3.setObjectName(u"Tabnumber3")
         self.Tabnumber3.setGeometry(QRect(0, 0, 791, 591))
+
         self.Predicao = QWidget()
         self.Predicao.setObjectName(u"Predicao")
         self.gridLayoutWidget = QWidget(self.Predicao)
-        self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
+
+        
         self.gridLayoutWidget.setGeometry(QRect(120, 40, 511, 61))
         self.gridLayout = QGridLayout(self.gridLayoutWidget)
-        self.gridLayout.setObjectName(u"gridLayout")
+        
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalSpacer = QSpacerItem(1000, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
         self.gridLayout.addItem(self.horizontalSpacer, 1, 1, 1, 1)
 
         self.lineEdit = QLineEdit(self.gridLayoutWidget)
@@ -68,25 +70,47 @@ class Ui_AMS(object):
         self.pushButton = QPushButton(self.Predicao)
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setGeometry(QRect(320, 120, 91, 31))
+
         self.label_4 = QLabel(self.Predicao)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setGeometry(QRect(180, 190, 371, 251))
         self.label_4.setPixmap(QPixmap(u"../../../Downloads/Diagrama-de-fases-template.png"))
+        
+        
         self.Tabnumber3.addTab(self.Predicao, "")
-        self.tab_3 = QWidget()
-        self.tab_3.setObjectName(u"tab_3")
-        self.Tabnumber3.addTab(self.tab_3, "")
-        self.Ferramentas = QWidget()
-        self.Ferramentas.setObjectName(u"Ferramentas")
-        self.widget = QWidget(self.Ferramentas)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(-1, -1, 791, 571))
-        self.Tabnumber3.addTab(self.Ferramentas, "")
-        AMS.setCentralWidget(self.centralwidget)
-        self.statusbar = QStatusBar(AMS)
-        self.statusbar.setObjectName(u"statusbar")
-        AMS.setStatusBar(self.statusbar)
 
+
+        self.FerramentasTab = QWidget()
+        self.FerramentasSubTab = QTabWidget()
+        self.FerramentasTab.layout = QGridLayout(self.FerramentasTab)
+        self.FerramentasTab.layout.addWidget(self.FerramentasSubTab)
+        self.FerramentasTab.setLayout(self.FerramentasTab.layout)
+        
+        self.Tabnumber3.addTab(self.FerramentasTab, "")
+
+        self.Ferramenta1 = QWidget()
+        self.Ferramenta2 = QWidget()
+
+        self.FerramentasSubTab.addTab(self.Ferramenta1, "Ferramenta 1")
+        self.FerramentasSubTab.addTab(self.Ferramenta2, "Ferramenta 2")
+
+        # Campo Ferramenta 1
+        self.Ferramenta1.layout = QGridLayout(self.centralwidget)
+        self.Ferramenta2.setLayout(self.Ferramenta1.layout)
+
+        # Campo Ferramenta 2
+        self.Ferramenta2.layout = QGridLayout(self.FerramentasTab)
+        self.Ferramenta2.setLayout(self.Ferramenta2.layout)
+
+
+        self.Configuracoes = QWidget()
+
+       # self.widget = QWidget(self.Configuracoes)
+
+        self.Configuracoes.setGeometry(QRect(-1, -1, 791, 571))
+        self.Tabnumber3.addTab(self.Configuracoes, "")
+        AMS.setCentralWidget(self.centralwidget)
+        
         self.retranslateUi(AMS)
 
         self.Tabnumber3.setCurrentIndex(1)
@@ -101,9 +125,8 @@ class Ui_AMS(object):
         self.label_2.setText(QCoreApplication.translate("AMS", u"Comprimento", None))
         self.label_3.setText(QCoreApplication.translate("AMS", u"Temperatura (Em C\u00b0)", None))
         self.pushButton.setText(QCoreApplication.translate("AMS", u"Preview", None))
-        self.label_4.setText("")
         self.Tabnumber3.setTabText(self.Tabnumber3.indexOf(self.Predicao), QCoreApplication.translate("AMS", u"Predição", None))
-        self.Tabnumber3.setTabText(self.Tabnumber3.indexOf(self.tab_3), QCoreApplication.translate("AMS", u"Ferramentas", None))
-        self.Tabnumber3.setTabText(self.Tabnumber3.indexOf(self.Ferramentas), QCoreApplication.translate("AMS", u"Configurações", None))
+        self.Tabnumber3.setTabText(self.Tabnumber3.indexOf(self.FerramentasTab), QCoreApplication.translate("AMS", u"FerramentasTab", None))
+        self.Tabnumber3.setTabText(self.Tabnumber3.indexOf(self.Configuracoes), QCoreApplication.translate("AMS", u"Configurações", None))
     # retranslateUi
 

@@ -1,7 +1,5 @@
 import sys
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QTabWidget, QApplication, QMainWindow
-
-
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTabBar, QTableWidget, QTabWidget, QVBoxLayout
 class MyAPP(QMainWindow):
   def __init__(self):
     super().__init__()
