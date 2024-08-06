@@ -8,7 +8,7 @@ def paletteConfig(aplication = QApplication):
     palette.setColor(QPalette.Window, QColor(100, 200, 0))
     palette.setColor(QPalette.Button, QColor(0, 200, 200))
 
-
+    
     aplication.setPalette(palette)
 if __name__ == "__main__":
 
