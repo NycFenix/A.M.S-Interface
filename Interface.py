@@ -86,7 +86,7 @@ class Ui_AMS(object):
         
         self.MainTab.addTab(self.Predicao, "")
 
-
+        
         
         self.FerramentasTab.layout = QGridLayout(self.FerramentasTab)
         self.FerramentasTab.layout.addWidget(self.FerramentasSubTab)
@@ -110,18 +110,13 @@ class Ui_AMS(object):
 
 
         self.Configuracoes = QWidget()
-
-       # self.widget = QWidget(self.Configuracoes)
-
         self.Configuracoes.setGeometry(QRect(-1, -1, 791, 571))
         self.MainTab.addTab(self.Configuracoes, "")
         AMS.setCentralWidget(self.centralwidget)
         
+
         self.retranslateUi(AMS)
-
         self.MainTab.setCurrentIndex(1)
-
-
         QMetaObject.connectSlotsByName(AMS)
     # setupUi
 
