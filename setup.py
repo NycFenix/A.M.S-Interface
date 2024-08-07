@@ -3,7 +3,7 @@ import os
 from cx_Freeze import setup, Executable
 
 # Add Files
-files = ['Interface.py', 'sold_icon.ico', 'img/']
+files = ['sold_icon.ico', 'img/']
 
 # TARGET
 target = Executable(
