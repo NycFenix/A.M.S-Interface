@@ -40,9 +40,13 @@ class Ui_AMS_Interface(object):
         AMS_Interface.setUnifiedTitleAndToolBarOnMac(False)
         self.centralwidget = QWidget(AMS_Interface)
         self.centralwidget.setObjectName(u"centralwidget")
+
+
         self.primaryTabWidget = QTabWidget(self.centralwidget)
         self.primaryTabWidget.setObjectName(u"primaryTabWidget")
         self.primaryTabWidget.setGeometry(QRect(9, 9, 800, 600))
+
+
         palette1 = QPalette()
         brush2 = QBrush(QColor(255, 0, 0, 255))
         brush2.setStyle(Qt.SolidPattern)
@@ -104,7 +108,7 @@ class Ui_AMS_Interface(object):
         palette4.setBrush(QPalette.Disabled, QPalette.Base, brush4)
         palette4.setBrush(QPalette.Disabled, QPalette.Window, brush4)
 
-        
+
         # all rects have to be before all labels
         self.rect1 = QLabel(self.Geometriadocordao)
         self.rect1.setObjectName(u"rect1")
@@ -115,7 +119,7 @@ class Ui_AMS_Interface(object):
         self.rect2 = QLabel(self.Geometriadocordao)
         self.rect2.setObjectName(u"rect2")
         self.rect2.setStyleSheet(u"#rect2 {\n""background-color:rgb(245, 232, 220)\n""}")
-        self.rect2.setGeometry(QRect(5, 245, 365, 100))
+        self.rect2.setGeometry(QRect(5, 245, 350, 100))
 
         self.rect3 = QLabel(self.Geometriadocordao)
         self.rect3.setObjectName(u"rect3")
@@ -135,12 +139,14 @@ class Ui_AMS_Interface(object):
         self.rect6 = QLabel(self.Geometriadocordao)
         self.rect6.setObjectName("rect6")
         self.rect6.setStyleSheet(u"#rect6 {\n""background-color:rgb(245, 232, 220)\n""}")
-        self.rect6.setGeometry(QRect(580, 5, 205, 340))
+        self.rect6.setGeometry(QRect(580, 5, 205, 350))
 
         self.Geometriadocordao.setPalette(palette4)
         self.Geometriadocordao.setStyleSheet(u"#Geometriadocordao{\n"
 "	background: rgb(214, 118, 118);\n"
 "}")
+        
+        
         self.gridLayout_4 = QGridLayout(self.Geometriadocordao)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.gridLayout_4.setHorizontalSpacing(5)
@@ -185,7 +191,7 @@ class Ui_AMS_Interface(object):
         self.current_title.setPalette(palette6)
         font1 = QFont()
         font1.setPointSize(8)
-        font1.setBold(True)
+        font1.setBold(False)
         self.current_title.setFont(font1)
 
         self.electric_current_layout.addWidget(self.current_title, 0, 0, 1, 3)
@@ -682,7 +688,6 @@ class Ui_AMS_Interface(object):
         palette31.setBrush(QPalette.Active, QPalette.WindowText, brush9)
         palette31.setBrush(QPalette.Inactive, QPalette.WindowText, brush9)
         self.prediction_layers_title.setPalette(palette31)
-        self.prediction_layers_title.setFont(font)
 
         self.predicion_layers_layout.addWidget(self.prediction_layers_title, 0, 0, 1, 4)
 
@@ -881,7 +886,10 @@ class Ui_AMS_Interface(object):
         palette40.setBrush(QPalette.Disabled, QPalette.Base, brush6)
         palette40.setBrush(QPalette.Disabled, QPalette.Window, brush6)
         self.ws_label.setPalette(palette40)
-        self.ws_label.setFont(font1)
+        font8 = QFont()
+        font8.setPointSize(8)
+        font8.setBold(True)
+        self.ws_label.setFont(font8)
         self.ws_label.setStyleSheet(u"background-color:rgb(245, 132, 153)")
         self.ws_label.setAlignment(Qt.AlignCenter)
 
@@ -954,6 +962,7 @@ class Ui_AMS_Interface(object):
         palette44.setBrush(QPalette.Active, QPalette.WindowText, brush3)
         palette44.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
         self.v_measure.setPalette(palette44)
+        self.v_measure.raise_()
 
         self.electric_parameters_layout.addWidget(self.v_measure, 10, 2, 1, 1)
 
@@ -990,7 +999,7 @@ class Ui_AMS_Interface(object):
         palette46.setBrush(QPalette.Disabled, QPalette.Base, brush8)
         palette46.setBrush(QPalette.Disabled, QPalette.Window, brush8)
         self.diameter_label.setPalette(palette46)
-        self.diameter_label.setFont(font1)
+        self.diameter_label.setFont(font8)
         self.diameter_label.setStyleSheet(u"background-color:rgb(245, 230, 196)")
         self.diameter_label.setAlignment(Qt.AlignCenter)
 
@@ -1002,7 +1011,6 @@ class Ui_AMS_Interface(object):
         palette47.setBrush(QPalette.Active, QPalette.WindowText, brush9)
         palette47.setBrush(QPalette.Inactive, QPalette.WindowText, brush9)
         self.wire_characteristics_title.setPalette(palette47)
-        self.wire_characteristics_title.setFont(font)
         self.wire_characteristics_title.setStyleSheet(u"")
         self.wire_characteristics_title.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
 
@@ -1029,6 +1037,172 @@ class Ui_AMS_Interface(object):
 
         self.gridLayout_4.addItem(self.horizontalSpacer, 2, 4, 1, 1)
 
+        self.geometric_prediction_layout = QGridLayout()
+        self.geometric_prediction_layout.setObjectName(u"geometric_prediction_layout")
+        self.geometric_prediction_layout.setHorizontalSpacing(10)
+        self.geometric_prediction_layout.setVerticalSpacing(20)
+        self.geometric_prediction_layout.setContentsMargins(10, -1, 10, 10)
+        self.zta_label = QLabel(self.Geometriadocordao)
+        self.zta_label.setObjectName(u"zta_label")
+        palette49 = QPalette()
+        palette49.setBrush(QPalette.Active, QPalette.WindowText, brush3)
+        palette49.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
+        self.zta_label.setPalette(palette49)
+        self.zta_label.setAlignment(Qt.AlignCenter)
+
+        self.geometric_prediction_layout.addWidget(self.zta_label, 6, 0, 1, 1)
+
+        self.penetration_label = QLabel(self.Geometriadocordao)
+        self.penetration_label.setObjectName(u"penetration_label")
+        palette50 = QPalette()
+        palette50.setBrush(QPalette.Active, QPalette.WindowText, brush3)
+        palette50.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
+        self.penetration_label.setPalette(palette50)
+        self.penetration_label.setAlignment(Qt.AlignCenter)
+
+        self.geometric_prediction_layout.addWidget(self.penetration_label, 5, 0, 1, 1)
+
+        self.zta_measure = QLabel(self.Geometriadocordao)
+        self.zta_measure.setObjectName(u"zta_measure")
+        palette51 = QPalette()
+        palette51.setBrush(QPalette.Active, QPalette.WindowText, brush3)
+        palette51.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
+        self.zta_measure.setPalette(palette51)
+
+        self.geometric_prediction_layout.addWidget(self.zta_measure, 6, 3, 1, 1)
+
+        self.height_label = QLabel(self.Geometriadocordao)
+        self.height_label.setObjectName(u"height_label")
+        palette52 = QPalette()
+        palette52.setBrush(QPalette.Active, QPalette.WindowText, brush3)
+        palette52.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
+        self.height_label.setPalette(palette52)
+        self.height_label.setAlignment(Qt.AlignCenter)
+
+        self.geometric_prediction_layout.addWidget(self.height_label, 4, 0, 1, 1)
+
+        self.penetration = QLineEdit(self.Geometriadocordao)
+        self.penetration.setObjectName(u"penetration")
+
+        self.geometric_prediction_layout.addWidget(self.penetration, 5, 1, 1, 2)
+
+        self.zta = QLineEdit(self.Geometriadocordao)
+        self.zta.setObjectName(u"zta")
+
+        self.geometric_prediction_layout.addWidget(self.zta, 6, 1, 1, 2)
+
+        self.t_solid_label = QLabel(self.Geometriadocordao)
+        self.t_solid_label.setObjectName(u"t_solid_label")
+        palette53 = QPalette()
+        palette53.setBrush(QPalette.Active, QPalette.WindowText, brush3)
+        palette53.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
+        self.t_solid_label.setPalette(palette53)
+        self.t_solid_label.setAlignment(Qt.AlignCenter)
+
+        self.geometric_prediction_layout.addWidget(self.t_solid_label, 7, 0, 1, 1)
+
+        self.t_solid_measure = QLabel(self.Geometriadocordao)
+        self.t_solid_measure.setObjectName(u"t_solid_measure")
+        palette54 = QPalette()
+        palette54.setBrush(QPalette.Active, QPalette.WindowText, brush3)
+        palette54.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
+        self.t_solid_measure.setPalette(palette54)
+
+        self.geometric_prediction_layout.addWidget(self.t_solid_measure, 7, 3, 1, 1)
+
+        self.calculate_button = QPushButton(self.Geometriadocordao)
+        self.calculate_button.setObjectName(u"calculate_button")
+        sizePolicy2.setHeightForWidth(self.calculate_button.sizePolicy().hasHeightForWidth())
+        self.calculate_button.setSizePolicy(sizePolicy2)
+        self.calculate_button.setMinimumSize(QSize(0, 20))
+        palette55 = QPalette()
+        palette55.setBrush(QPalette.Active, QPalette.WindowText, brush9)
+        palette55.setBrush(QPalette.Active, QPalette.ButtonText, brush9)
+        palette55.setBrush(QPalette.Inactive, QPalette.WindowText, brush9)
+        palette55.setBrush(QPalette.Inactive, QPalette.ButtonText, brush9)
+        self.calculate_button.setPalette(palette55)
+
+        self.geometric_prediction_layout.addWidget(self.calculate_button, 1, 1, 1, 2)
+
+        self.penetration_measure = QLabel(self.Geometriadocordao)
+        self.penetration_measure.setObjectName(u"penetration_measure")
+        palette56 = QPalette()
+        palette56.setBrush(QPalette.Active, QPalette.WindowText, brush3)
+        palette56.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
+        self.penetration_measure.setPalette(palette56)
+
+        self.geometric_prediction_layout.addWidget(self.penetration_measure, 5, 3, 1, 1)
+
+        self.width = QLineEdit(self.Geometriadocordao)
+        self.width.setObjectName(u"width")
+        sizePolicy6 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.MinimumExpanding)
+        sizePolicy6.setHorizontalStretch(0)
+        sizePolicy6.setVerticalStretch(0)
+        sizePolicy6.setHeightForWidth(self.width.sizePolicy().hasHeightForWidth())
+        self.width.setSizePolicy(sizePolicy6)
+        self.width.setMinimumSize(QSize(0, 22))
+
+        self.geometric_prediction_layout.addWidget(self.width, 3, 1, 1, 2)
+
+        self.width_label = QLabel(self.Geometriadocordao)
+        self.width_label.setObjectName(u"width_label")
+        palette57 = QPalette()
+        palette57.setBrush(QPalette.Active, QPalette.WindowText, brush3)
+        palette57.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
+        self.width_label.setPalette(palette57)
+        self.width_label.setAlignment(Qt.AlignCenter)
+
+        self.geometric_prediction_layout.addWidget(self.width_label, 3, 0, 1, 1)
+
+        self.width_measure = QLabel(self.Geometriadocordao)
+        self.width_measure.setObjectName(u"width_measure")
+        palette58 = QPalette()
+        palette58.setBrush(QPalette.Active, QPalette.WindowText, brush3)
+        palette58.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
+        self.width_measure.setPalette(palette58)
+
+        self.geometric_prediction_layout.addWidget(self.width_measure, 3, 3, 1, 1)
+
+        self.height_measure = QLabel(self.Geometriadocordao)
+        self.height_measure.setObjectName(u"height_measure")
+        palette59 = QPalette()
+        palette59.setBrush(QPalette.Active, QPalette.WindowText, brush3)
+        palette59.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
+        self.height_measure.setPalette(palette59)
+
+        self.geometric_prediction_layout.addWidget(self.height_measure, 4, 3, 1, 1)
+
+        self.geometric_prediction_title = QLabel(self.Geometriadocordao)
+        self.geometric_prediction_title.setObjectName(u"geometric_prediction_title")
+        palette60 = QPalette()
+        palette60.setBrush(QPalette.Active, QPalette.WindowText, brush9)
+        palette60.setBrush(QPalette.Inactive, QPalette.WindowText, brush9)
+        self.geometric_prediction_title.setPalette(palette60)
+        font9 = QFont()
+        font9.setKerning(True)
+        self.geometric_prediction_title.setFont(font9)
+        self.geometric_prediction_title.setLayoutDirection(Qt.LeftToRight)
+        self.geometric_prediction_title.setAlignment(Qt.AlignCenter)
+
+        self.geometric_prediction_layout.addWidget(self.geometric_prediction_title, 0, 0, 1, 4)
+
+        self.t_solid = QLineEdit(self.Geometriadocordao)
+        self.t_solid.setObjectName(u"t_solid")
+
+        self.geometric_prediction_layout.addWidget(self.t_solid, 7, 1, 1, 2)
+
+        self.height = QLineEdit(self.Geometriadocordao)
+        self.height.setObjectName(u"height")
+
+        self.geometric_prediction_layout.addWidget(self.height, 4, 1, 1, 2)
+
+        self.gp_spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.geometric_prediction_layout.addItem(self.gp_spacer, 2, 1, 1, 1)
+
+
+        self.gridLayout_4.addLayout(self.geometric_prediction_layout, 1, 6, 3, 1)
+
         self.dial_layout = QVBoxLayout()
         self.dial_layout.setObjectName(u"dial_layout")
         self.dial_layout.setContentsMargins(-1, -1, -1, 10)
@@ -1052,195 +1226,23 @@ class Ui_AMS_Interface(object):
 
         self.ElectricParameters_title = QLabel(self.Geometriadocordao)
         self.ElectricParameters_title.setObjectName(u"ElectricParameters_title")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
-        sizePolicy6.setHorizontalStretch(0)
-        sizePolicy6.setVerticalStretch(0)
-        sizePolicy6.setHeightForWidth(self.ElectricParameters_title.sizePolicy().hasHeightForWidth())
-        self.ElectricParameters_title.setSizePolicy(sizePolicy6)
-        palette49 = QPalette()
-        palette49.setBrush(QPalette.Active, QPalette.WindowText, brush7)
-        palette49.setBrush(QPalette.Inactive, QPalette.WindowText, brush7)
-        self.ElectricParameters_title.setPalette(palette49)
+        sizePolicy7 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        sizePolicy7.setHorizontalStretch(0)
+        sizePolicy7.setVerticalStretch(0)
+        sizePolicy7.setHeightForWidth(self.ElectricParameters_title.sizePolicy().hasHeightForWidth())
+        self.ElectricParameters_title.setSizePolicy(sizePolicy7)
+        palette61 = QPalette()
+        palette61.setBrush(QPalette.Active, QPalette.WindowText, brush7)
+        palette61.setBrush(QPalette.Inactive, QPalette.WindowText, brush7)
+        self.ElectricParameters_title.setPalette(palette61)
         self.ElectricParameters_title.setFont(font)
 
         self.gridLayout_4.addWidget(self.ElectricParameters_title, 0, 0, 1, 2)
 
-        self.geometric_prediction_layout = QGridLayout()
-        self.geometric_prediction_layout.setObjectName(u"geometric_prediction_layout")
-        self.geometric_prediction_layout.setHorizontalSpacing(10)
-        self.geometric_prediction_layout.setVerticalSpacing(20)
-        self.geometric_prediction_layout.setContentsMargins(10, -1, 10, 10)
-        self.geometric_prediction_title = QLabel(self.Geometriadocordao)
-        self.geometric_prediction_title.setObjectName(u"geometric_prediction_title")
-        palette50 = QPalette()
-        palette50.setBrush(QPalette.Active, QPalette.WindowText, brush9)
-        palette50.setBrush(QPalette.Inactive, QPalette.WindowText, brush9)
-        self.geometric_prediction_title.setPalette(palette50)
-        font8 = QFont()
-        font8.setBold(True)
-        font8.setKerning(True)
-        self.geometric_prediction_title.setFont(font8)
-        self.geometric_prediction_title.setLayoutDirection(Qt.LeftToRight)
-        self.geometric_prediction_title.setAlignment(Qt.AlignCenter)
-
-        self.geometric_prediction_layout.addWidget(self.geometric_prediction_title, 0, 0, 1, 4)
-
-        self.penetration_label = QLabel(self.Geometriadocordao)
-        self.penetration_label.setObjectName(u"penetration_label")
-        palette51 = QPalette()
-        palette51.setBrush(QPalette.Active, QPalette.WindowText, brush3)
-        palette51.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
-        self.penetration_label.setPalette(palette51)
-        font9 = QFont()
-        font9.setPointSize(7)
-        self.penetration_label.setFont(font9)
-        self.penetration_label.setAlignment(Qt.AlignCenter)
-
-        self.geometric_prediction_layout.addWidget(self.penetration_label, 6, 0, 1, 1)
-
-        self.width_label = QLabel(self.Geometriadocordao)
-        self.width_label.setObjectName(u"width_label")
-        palette52 = QPalette()
-        palette52.setBrush(QPalette.Active, QPalette.WindowText, brush3)
-        palette52.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
-        self.width_label.setPalette(palette52)
-        self.width_label.setAlignment(Qt.AlignCenter)
-
-        self.geometric_prediction_layout.addWidget(self.width_label, 4, 0, 1, 1)
-
-        self.t_solid_label = QLabel(self.Geometriadocordao)
-        self.t_solid_label.setObjectName(u"t_solid_label")
-        palette53 = QPalette()
-        palette53.setBrush(QPalette.Active, QPalette.WindowText, brush3)
-        palette53.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
-        self.t_solid_label.setPalette(palette53)
-        self.t_solid_label.setFont(font9)
-        self.t_solid_label.setAlignment(Qt.AlignCenter)
-
-        self.geometric_prediction_layout.addWidget(self.t_solid_label, 8, 0, 1, 1)
-
-        self.penetration = QLineEdit(self.Geometriadocordao)
-        self.penetration.setObjectName(u"penetration")
-
-        self.geometric_prediction_layout.addWidget(self.penetration, 6, 1, 1, 2)
-
-        self.zta = QLineEdit(self.Geometriadocordao)
-        self.zta.setObjectName(u"zta")
-
-        self.geometric_prediction_layout.addWidget(self.zta, 7, 1, 1, 2)
-
-        self.zta_label = QLabel(self.Geometriadocordao)
-        self.zta_label.setObjectName(u"zta_label")
-        palette54 = QPalette()
-        palette54.setBrush(QPalette.Active, QPalette.WindowText, brush3)
-        palette54.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
-        self.zta_label.setPalette(palette54)
-        self.zta_label.setAlignment(Qt.AlignCenter)
-
-        self.geometric_prediction_layout.addWidget(self.zta_label, 7, 0, 1, 1)
-
-        self.width_measure = QLabel(self.Geometriadocordao)
-        self.width_measure.setObjectName(u"width_measure")
-        palette55 = QPalette()
-        palette55.setBrush(QPalette.Active, QPalette.WindowText, brush3)
-        palette55.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
-        self.width_measure.setPalette(palette55)
-
-        self.geometric_prediction_layout.addWidget(self.width_measure, 4, 3, 1, 1)
-
-        self.height_measure = QLabel(self.Geometriadocordao)
-        self.height_measure.setObjectName(u"height_measure")
-        palette56 = QPalette()
-        palette56.setBrush(QPalette.Active, QPalette.WindowText, brush3)
-        palette56.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
-        self.height_measure.setPalette(palette56)
-
-        self.geometric_prediction_layout.addWidget(self.height_measure, 5, 3, 1, 1)
-
-        self.t_solid = QLineEdit(self.Geometriadocordao)
-        self.t_solid.setObjectName(u"t_solid")
-
-        self.geometric_prediction_layout.addWidget(self.t_solid, 8, 1, 1, 2)
-
-        self.height = QLineEdit(self.Geometriadocordao)
-        self.height.setObjectName(u"height")
-
-        self.geometric_prediction_layout.addWidget(self.height, 5, 1, 1, 2)
-
-        self.gp_spacer = QSpacerItem(20, 50, QSizePolicy.Minimum, QSizePolicy.Minimum)
-
-        self.geometric_prediction_layout.addItem(self.gp_spacer, 3, 1, 1, 1)
-
-        self.t_solid_measure = QLabel(self.Geometriadocordao)
-        self.t_solid_measure.setObjectName(u"t_solid_measure")
-        palette57 = QPalette()
-        palette57.setBrush(QPalette.Active, QPalette.WindowText, brush3)
-        palette57.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
-        self.t_solid_measure.setPalette(palette57)
-
-        self.geometric_prediction_layout.addWidget(self.t_solid_measure, 8, 3, 1, 1)
-
-        self.penetration_measure = QLabel(self.Geometriadocordao)
-        self.penetration_measure.setObjectName(u"penetration_measure")
-        palette58 = QPalette()
-        palette58.setBrush(QPalette.Active, QPalette.WindowText, brush3)
-        palette58.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
-        self.penetration_measure.setPalette(palette58)
-
-        self.geometric_prediction_layout.addWidget(self.penetration_measure, 6, 3, 1, 1)
-
-        self.calculate_button = QPushButton(self.Geometriadocordao)
-        self.calculate_button.setObjectName(u"calculate_button")
-        sizePolicy2.setHeightForWidth(self.calculate_button.sizePolicy().hasHeightForWidth())
-        self.calculate_button.setSizePolicy(sizePolicy2)
-        self.calculate_button.setMinimumSize(QSize(0, 20))
-        palette59 = QPalette()
-        palette59.setBrush(QPalette.Active, QPalette.WindowText, brush9)
-        palette59.setBrush(QPalette.Active, QPalette.ButtonText, brush9)
-        palette59.setBrush(QPalette.Inactive, QPalette.WindowText, brush9)
-        palette59.setBrush(QPalette.Inactive, QPalette.ButtonText, brush9)
-        self.calculate_button.setPalette(palette59)
-
-        self.geometric_prediction_layout.addWidget(self.calculate_button, 2, 1, 1, 2)
-
-        self.height_label = QLabel(self.Geometriadocordao)
-        self.height_label.setObjectName(u"height_label")
-        palette60 = QPalette()
-        palette60.setBrush(QPalette.Active, QPalette.WindowText, brush3)
-        palette60.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
-        self.height_label.setPalette(palette60)
-        self.height_label.setAlignment(Qt.AlignCenter)
-
-        self.geometric_prediction_layout.addWidget(self.height_label, 5, 0, 1, 1)
-
-        self.width = QLineEdit(self.Geometriadocordao)
-        self.width.setObjectName(u"width")
-        sizePolicy7 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.MinimumExpanding)
-        sizePolicy7.setHorizontalStretch(0)
-        sizePolicy7.setVerticalStretch(0)
-        sizePolicy7.setHeightForWidth(self.width.sizePolicy().hasHeightForWidth())
-        self.width.setSizePolicy(sizePolicy7)
-        self.width.setMinimumSize(QSize(0, 22))
-
-        self.geometric_prediction_layout.addWidget(self.width, 4, 1, 1, 2)
-
-        self.zta_measure = QLabel(self.Geometriadocordao)
-        self.zta_measure.setObjectName(u"zta_measure")
-        palette61 = QPalette()
-        palette61.setBrush(QPalette.Active, QPalette.WindowText, brush3)
-        palette61.setBrush(QPalette.Inactive, QPalette.WindowText, brush3)
-        self.zta_measure.setPalette(palette61)
-
-        self.geometric_prediction_layout.addWidget(self.zta_measure, 7, 3, 1, 1)
-
-        self.gpSpacer2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Minimum)
-
-        self.geometric_prediction_layout.addItem(self.gpSpacer2, 1, 1, 1, 1)
-
-
-        self.gridLayout_4.addLayout(self.geometric_prediction_layout, 0, 6, 4, 1)
 
         self.PredictionSubTabWidget.addTab(self.Geometriadocordao, "")
+        
+        self.ElectricParameters_title.raise_()
         self.altura = QWidget()
         self.altura.setObjectName(u"altura")
         palette62 = QPalette()
@@ -1341,7 +1343,7 @@ class Ui_AMS_Interface(object):
         self.retranslateUi(AMS_Interface)
 
         self.primaryTabWidget.setCurrentIndex(0)
-        self.PredictionSubTabWidget.setCurrentIndex(0)
+        self.PredictionSubTabWidget.setCurrentIndex(2)
         self.MeasureToolSubTabWidget.setCurrentIndex(0)
 
 
@@ -1394,19 +1396,21 @@ class Ui_AMS_Interface(object):
         self.diameter_label.setText(QCoreApplication.translate("AMS_Interface", u"Diameter", None))
         self.wire_characteristics_title.setText(QCoreApplication.translate("AMS_Interface", u"Wire Characteristics", None))
         self.diameter_measure.setText(QCoreApplication.translate("AMS_Interface", u"(mm)", None))
-        self.ElectricParameters_title.setText(QCoreApplication.translate("AMS_Interface", u"Electric Parameters", None))
-        self.geometric_prediction_title.setText(QCoreApplication.translate("AMS_Interface", u"Geometric Prediction", None))
-        self.penetration_label.setText(QCoreApplication.translate("AMS_Interface", u"Penetration", None))
-        self.width_label.setText(QCoreApplication.translate("AMS_Interface", u"Width", None))
-        self.t_solid_label.setText(QCoreApplication.translate("AMS_Interface", u"tempo_solid", None))
         self.zta_label.setText(QCoreApplication.translate("AMS_Interface", u"ZTA", None))
+        self.penetration_label.setText(QCoreApplication.translate("AMS_Interface", u"Penetration", None))
+        self.zta_measure.setText(QCoreApplication.translate("AMS_Interface", u"(mm)", None))
+        self.height_label.setText(QCoreApplication.translate("AMS_Interface", u"Height", None))
+        self.t_solid_label.setText(QCoreApplication.translate("AMS_Interface", u"tempo_solid", None))
+        self.t_solid_measure.setText(QCoreApplication.translate("AMS_Interface", u"(s)", None))
+        self.calculate_button.setText(QCoreApplication.translate("AMS_Interface", u"Calculate", None))
+        self.penetration_measure.setText(QCoreApplication.translate("AMS_Interface", u"(mm)", None))
+        self.width_label.setText(QCoreApplication.translate("AMS_Interface", u"Width", None))
         self.width_measure.setText(QCoreApplication.translate("AMS_Interface", u"(mm)", None))
         self.height_measure.setText(QCoreApplication.translate("AMS_Interface", u"(mm)", None))
-        self.t_solid_measure.setText(QCoreApplication.translate("AMS_Interface", u"(s)", None))
-        self.penetration_measure.setText(QCoreApplication.translate("AMS_Interface", u"(mm)", None))
-        self.calculate_button.setText(QCoreApplication.translate("AMS_Interface", u"Calculate", None))
-        self.height_label.setText(QCoreApplication.translate("AMS_Interface", u"Height", None))
-        self.zta_measure.setText(QCoreApplication.translate("AMS_Interface", u"(mm)", None))
+        self.geometric_prediction_title.setText(QCoreApplication.translate("AMS_Interface", u"Geometric Prediction", None))
+        self.ElectricParameters_title.setText(QCoreApplication.translate("AMS_Interface", u"Electric Parameters", None))
+        self.rect1.setText("")
+        self.rect2.setText("")
         self.PredictionSubTabWidget.setTabText(self.PredictionSubTabWidget.indexOf(self.Geometriadocordao), QCoreApplication.translate("AMS_Interface", u"Geometria do cord\u00e3o", None))
         self.PredictionSubTabWidget.setTabText(self.PredictionSubTabWidget.indexOf(self.altura), QCoreApplication.translate("AMS_Interface", u"Altura das Camadas", None))
         self.test_label.setText(QCoreApplication.translate("AMS_Interface", u"TextLabel", None))

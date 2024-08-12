@@ -3,13 +3,13 @@ import os
 from cx_Freeze import setup, Executable
 
 # Add Files
-files = ['sold_icon.ico', 'img/']
+files = ['img/']
 
 # TARGET
 target = Executable(
     script= 'main.py',
     base="Win32GUI",
-    icon='sold_icon.ico'
+    icon='img/sold_icon.ico'
 )
 
 # SETUP
