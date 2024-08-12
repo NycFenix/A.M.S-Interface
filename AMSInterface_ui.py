@@ -20,6 +20,8 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDial, QGridLayout,
     QPushButton, QSizePolicy, QSpacerItem, QTabWidget,
     QVBoxLayout, QWidget)
 
+from include import BeadGeometry
+
 class Ui_AMS_Interface(object):
     def setupUi(self, AMS_Interface):
         if not AMS_Interface.objectName():
@@ -1124,6 +1126,11 @@ class Ui_AMS_Interface(object):
 
         self.geometric_prediction_layout.addWidget(self.calculate_button, 1, 1, 1, 2)
 
+        self.calculate_button.clicked.connect(lambda: self.GeometricPredictionCallback(float(self.ws_input1.text()), float(self.ts_input1.text()), float(self.v_input.text()), 
+                                                                                       float(self.I.text()), float(self.melting_point.text()), 
+                                                                                       float(self.specific_heat.text()), float(self.viscosity.text()), float(self.density.text()), 
+                                                                                       float(self.thermal_conductivity.text()), float(self.diameter.text())))
+
         self.penetration_measure = QLabel(self.Geometriadocordao)
         self.penetration_measure.setObjectName(u"penetration_measure")
         palette56 = QPalette()
@@ -1428,3 +1435,15 @@ class Ui_AMS_Interface(object):
         self.primaryTabWidget.setTabText(self.primaryTabWidget.indexOf(self.tab_6), QCoreApplication.translate("AMS_Interface", u"Instability and detect monitoring", None))
     # retranslateUi
 
+
+    def GeometricPredictionCallback(self, Ws, Ts, V, I, Mp, Sh, Vi, De, Ct, D):
+        penetration = BeadGeometry.getPenetration(V, I, Ws, Ts, Mp, Sh)
+        t_solid = BeadGeometry.getT_Sol(Sh, D, Ts, I, V, De, penetration, Mp, Ct, Ws)
+        height, width = BeadGeometry.getBeadGeometry(D, Ws, Ts, I, V, t_solid, De, Sh, Vi, Ct)
+
+        self.penetration.setText(str(penetration))
+        self.t_solid.setText(str(t_solid))
+        self.height.setText(str(height))
+        self.width.setText(str(width))
+
+ 
