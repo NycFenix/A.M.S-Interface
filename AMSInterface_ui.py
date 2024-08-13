@@ -791,10 +791,23 @@ class Ui_AMS_Interface(object):
 
         self.electric_parameters_layout.addWidget(self.ts_label, 5, 1, 1, 1)
 
+        self.ws_input1 = QLineEdit(self.Geometriadocordao)
+        self.ws_input1.setObjectName(u"ws_input1")
+        self.ws_input1.setEnabled(True)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.ws_input1.sizePolicy().hasHeightForWidth())
+        self.ws_input1.setSizePolicy(sizePolicy5)
+
         self.ws_input2 = QLineEdit(self.Geometriadocordao)
         self.ws_input2.setObjectName(u"ws_input2")
-
         self.electric_parameters_layout.addWidget(self.ws_input2, 3, 1, 1, 1)
+
+        self.ws_input1.editingFinished.connect(self.ws_input2.setText(str(self.SpeedMeasureConverter(eval(self.ws_input1.text()), 1)))) # TODO: Fix string parsing .text() error
+
+        self.ws_input2.editingFinished.connect(self.ws_input1.setText(str(self.SpeedMeasureConverter(eval(self.ws_input2.text()), -1))))
+
 
         self.v_label = QLabel(self.Geometriadocordao)
         self.v_label.setObjectName(u"v_label")
@@ -938,15 +951,7 @@ class Ui_AMS_Interface(object):
 
         self.electric_parameters_layout.addItem(self.verticalSpacer_6, 4, 1, 1, 1)
 
-        self.ws_input1 = QLineEdit(self.Geometriadocordao)
-        self.ws_input1.setObjectName(u"ws_input1")
-        self.ws_input1.setEnabled(True)
-        sizePolicy5 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.ws_input1.sizePolicy().hasHeightForWidth())
-        self.ws_input1.setSizePolicy(sizePolicy5)
-
+        
         self.electric_parameters_layout.addWidget(self.ws_input1, 2, 1, 1, 1)
 
         self.ts_measure2 = QLabel(self.Geometriadocordao)
@@ -1446,4 +1451,11 @@ class Ui_AMS_Interface(object):
         self.height.setText(str(height))
         self.width.setText(str(width))
 
+
+    def SpeedMeasureConverter(self, speed = float, flag = int):
+        #This method converts mm/s into m/min and vice-versa
+        # If flag = 1, mm/s -> m/min
+        # if its -1, m/min -> mm/s
+        new_speed  = speed * ((60 / 1000) ** flag)
+        return new_speed
  

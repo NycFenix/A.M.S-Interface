@@ -21,7 +21,7 @@ def getPenetration(V, I, Ws, Ts, Mp, Sh):
     Cp3 = 0.021
 
     DBCP = 15  #(??)
-    
+
     a = (Ws/(Cp1 + ((Ts-4)**2)**0.5))   # TODO: ao quadrado e depois tira raíz? N é melhor so não usar radiciação?
     b = Ts**2*(((E_d*Cp2)/(DBCP* Mp*Ce2))**0.5)
     Pe = ((a*b)*Cp3)
@@ -70,15 +70,15 @@ def getBeadGeometry(D, Ws, Ts, I, V, t_so, De, Sh, Vi, Ct = None):
     E_d = Pot/Ts
 
     # Semicircular bead height
-    Hi = ((2*(Ws/Ts) * (r**2))**0.5)       # Hi = Hi #TODO: elevar ao quadrado so o raio ou a expressão toda?
+    Hi = ((2*(Ws/Ts) * (r**2))**0.5)       # Hi = Ai #TODO: elevar ao quadrado so o raio ou a expressão toda?
     # Semicircular bead width
     Wi = 2*Hi                            # Wi = Li
 
     # To be changed in the future
-    Ce2 = Sh * 4.186        # j / g* °C
-    Ct2 = Ct * 1/1000       # W / mm °K
-    Vi2 = Vi * 1000 / 1000  # g / mm*s   # TODO: redundância
-    De2 = De * (1/1000)     # g / mm^3
+    # Ce2 = Sh * 4.186        # j / g* °C
+    # Ct2 = Ct * 1/1000       # W / mm °K
+    # Vi2 = Vi * 1000 / 1000  # g / mm*s   # TODO: redundância
+    # De2 = De * (1/1000)     # g / mm^3
 
     Pot1 = 0.45*Pot 
 
