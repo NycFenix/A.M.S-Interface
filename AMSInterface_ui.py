@@ -804,8 +804,8 @@ class Ui_AMS_Interface(object):
         self.ws_input2.setObjectName(u"ws_input2")
         self.electric_parameters_layout.addWidget(self.ws_input2, 3, 1, 1, 1)
 
-        self.ws_input1.editingFinished.connect(self.ws_input2.setText(self.SpeedMeasureConverter(self.ws_input1.text(), 1))) # TODO: Fix string parsing .text() error
-
+        self.ws_input1.returnPressed.connect(self.ws_input2.setText(self.SpeedMeasureConverter(self.ws_input1.text(), 1))) #TODO: fix qlinedit signal problem
+        self.ws_input1.returnPressed.connect(print("Return Pressed!"))
         self.ws_input2.editingFinished.connect(self.ws_input1.setText(self.SpeedMeasureConverter(self.ws_input2.text(), -1)))
 
 
