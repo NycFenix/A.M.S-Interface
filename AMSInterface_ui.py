@@ -804,9 +804,9 @@ class Ui_AMS_Interface(object):
         self.ws_input2.setObjectName(u"ws_input2")
         self.electric_parameters_layout.addWidget(self.ws_input2, 3, 1, 1, 1)
 
-        self.ws_input1.editingFinished.connect(self.ws_input2.setText(str(self.SpeedMeasureConverter(eval(self.ws_input1.text()), 1)))) # TODO: Fix string parsing .text() error
+        self.ws_input1.editingFinished.connect(self.ws_input2.setText(self.SpeedMeasureConverter(self.ws_input1.text(), 1))) # TODO: Fix string parsing .text() error
 
-        self.ws_input2.editingFinished.connect(self.ws_input1.setText(str(self.SpeedMeasureConverter(eval(self.ws_input2.text()), -1))))
+        self.ws_input2.editingFinished.connect(self.ws_input1.setText(self.SpeedMeasureConverter(self.ws_input2.text(), -1)))
 
 
         self.v_label = QLabel(self.Geometriadocordao)
@@ -1452,10 +1452,14 @@ class Ui_AMS_Interface(object):
         self.width.setText(str(width))
 
 
-    def SpeedMeasureConverter(self, speed = float, flag = int):
+    def SpeedMeasureConverter(self, speed = str, flag = int):
         #This method converts mm/s into m/min and vice-versa
         # If flag = 1, mm/s -> m/min
         # if its -1, m/min -> mm/s
-        new_speed  = speed * ((60 / 1000) ** flag)
-        return new_speed
- 
+
+        try:
+            speed = float(speed)
+            new_speed  = speed * ((60 / 1000) ** flag)
+            return str(new_speed)
+        except ValueError: # If nothing is written or input is invalid, does not convert
+            return ""
