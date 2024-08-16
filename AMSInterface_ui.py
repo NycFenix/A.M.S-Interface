@@ -28,13 +28,9 @@ class Ui_AMS_Interface(object):
             AMS_Interface.setObjectName(u"AMS_Interface")
         AMS_Interface.resize(814, 624)
         palette = QPalette()
-        brush = QBrush(QColor(255, 85, 255, 255))
-        brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Active, QPalette.Base, brush)
         brush1 = QBrush(QColor(255, 255, 255, 255))
         brush1.setStyle(Qt.SolidPattern)
         palette.setBrush(QPalette.Active, QPalette.Window, brush1)
-        palette.setBrush(QPalette.Inactive, QPalette.Base, brush)
         palette.setBrush(QPalette.Inactive, QPalette.Window, brush1)
         palette.setBrush(QPalette.Disabled, QPalette.Base, brush1)
         palette.setBrush(QPalette.Disabled, QPalette.Window, brush1)
@@ -112,16 +108,16 @@ class Ui_AMS_Interface(object):
 
 
         # all rects have to be before all labels
-        self.rect1 = QLabel(self.Geometriadocordao)
-        self.rect1.setObjectName(u"rect1")
-        self.rect1.setStyleSheet(u"#rect1 {\n""background-color:rgb(245, 232, 220)\n""}")
+        self.rectEP = QLabel(self.Geometriadocordao)
+        self.rectEP.setObjectName(u"rectEP")
+        self.rectEP.setStyleSheet(u"#rectEP {\n""background-color:rgb(245, 232, 220)\n""}")
 
-        self.rect1.setGeometry(QRect(5, 5, 260, 235))
+        self.rectEP.setGeometry(QRect(5, 5, 260, 235))
 
-        self.rect2 = QLabel(self.Geometriadocordao)
-        self.rect2.setObjectName(u"rect2")
-        self.rect2.setStyleSheet(u"#rect2 {\n""background-color:rgb(245, 232, 220)\n""}")
-        self.rect2.setGeometry(QRect(5, 245, 350, 100))
+        self.rectEC = QLabel(self.Geometriadocordao)
+        self.rectEC.setObjectName(u"rectEC")
+        self.rectEC.setStyleSheet(u"#rectEC {\n""background-color:rgb(245, 232, 220)\n""}")
+        self.rectEC.setGeometry(QRect(5, 245, 350, 100))
 
         self.rect3 = QLabel(self.Geometriadocordao)
         self.rect3.setObjectName(u"rect3")
@@ -793,7 +789,7 @@ class Ui_AMS_Interface(object):
 
         self.ws_input1 = QLineEdit(self.Geometriadocordao)
         self.ws_input1.setObjectName(u"ws_input1")
-        self.ws_input1.setEnabled(True)
+        
         sizePolicy5 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy5.setHorizontalStretch(0)
         sizePolicy5.setVerticalStretch(0)
@@ -804,9 +800,11 @@ class Ui_AMS_Interface(object):
         self.ws_input2.setObjectName(u"ws_input2")
         self.electric_parameters_layout.addWidget(self.ws_input2, 3, 1, 1, 1)
 
-        self.ws_input1.returnPressed.connect(self.ws_input2.setText(self.SpeedMeasureConverter(self.ws_input1.text(), 1))) #TODO: fix qlinedit signal problem
-        self.ws_input1.returnPressed.connect(print("Return Pressed!"))
-        self.ws_input2.editingFinished.connect(self.ws_input1.setText(self.SpeedMeasureConverter(self.ws_input2.text(), -1)))
+        
+        self.ws_input1.returnPressed.connect(lambda: self.ws_input2.setText(self.SpeedMeasureConverter(self.ws_input1.text(), 1)))
+
+        
+        self.ws_input2.editingFinished.connect(lambda: self.ws_input1.setText(self.SpeedMeasureConverter(self.ws_input2.text(), -1)))
 
 
         self.v_label = QLabel(self.Geometriadocordao)
@@ -913,8 +911,19 @@ class Ui_AMS_Interface(object):
         self.ts_input1 = QLineEdit(self.Geometriadocordao)
         self.ts_input1.setObjectName(u"ts_input1")
 
+
+
         self.electric_parameters_layout.addWidget(self.ts_input1, 6, 1, 1, 1)
 
+        self.ts_input1.editingFinished.connect(lambda: self.ts_input2.setText(self.SpeedMeasureConverter(self.ts_input1.text(), 1)))
+
+
+        self.ts_input2 = QLineEdit(self.Geometriadocordao)
+        self.ts_input2.setObjectName(u"ts_input2")
+
+        self.electric_parameters_layout.addWidget(self.ts_input2, 7, 1, 1, 1)
+
+        self.ts_input2.editingFinished.connect(lambda: self.ts_input1.setText(self.SpeedMeasureConverter(self.ts_input2.text(), -1)))
         self.v_input = QLineEdit(self.Geometriadocordao)
         self.v_input.setObjectName(u"v_input")
 
@@ -942,10 +951,6 @@ class Ui_AMS_Interface(object):
 
         self.electric_parameters_layout.addItem(self.verticalSpacer_7, 8, 1, 1, 1)
 
-        self.ts_input2 = QLineEdit(self.Geometriadocordao)
-        self.ts_input2.setObjectName(u"ts_input2")
-
-        self.electric_parameters_layout.addWidget(self.ts_input2, 7, 1, 1, 1)
 
         self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Minimum)
 
@@ -1421,8 +1426,8 @@ class Ui_AMS_Interface(object):
         self.height_measure.setText(QCoreApplication.translate("AMS_Interface", u"(mm)", None))
         self.geometric_prediction_title.setText(QCoreApplication.translate("AMS_Interface", u"Geometric Prediction", None))
         self.ElectricParameters_title.setText(QCoreApplication.translate("AMS_Interface", u"Electric Parameters", None))
-        self.rect1.setText("")
-        self.rect2.setText("")
+        self.rectEP.setText("")
+        self.rectEC.setText("")
         self.PredictionSubTabWidget.setTabText(self.PredictionSubTabWidget.indexOf(self.Geometriadocordao), QCoreApplication.translate("AMS_Interface", u"Geometria do cord\u00e3o", None))
         self.PredictionSubTabWidget.setTabText(self.PredictionSubTabWidget.indexOf(self.altura), QCoreApplication.translate("AMS_Interface", u"Altura das Camadas", None))
         self.test_label.setText(QCoreApplication.translate("AMS_Interface", u"TextLabel", None))
@@ -1452,7 +1457,7 @@ class Ui_AMS_Interface(object):
         self.width.setText(str(width))
 
 
-    def SpeedMeasureConverter(self, speed = str, flag = int):
+    def SpeedMeasureConverter(self, speed = str,flag = int):
         #This method converts mm/s into m/min and vice-versa
         # If flag = 1, mm/s -> m/min
         # if its -1, m/min -> mm/s
@@ -1460,6 +1465,8 @@ class Ui_AMS_Interface(object):
         try:
             speed = float(speed)
             new_speed  = speed * ((60 / 1000) ** flag)
-            return str(new_speed)
+            return str(round(new_speed, 3))
         except ValueError: # If nothing is written or input is invalid, does not convert
             return ""
+
+ 
