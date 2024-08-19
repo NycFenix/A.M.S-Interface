@@ -27,7 +27,8 @@ def getPenetration(V, I, Ws, Ts, Mp, Sh):
     Pe = ((a*b)*Cp3)
     return Pe
 
-def getT_Sol(Sh, D, Ts, I, V, De, Pe, Mp, Ct, Ws):
+#Usar 0.7 segundos para o tempo de soldagem por enquanto
+def getT_Sol(Sh, D, Ts, I, V, De, Pe, Mp, Ct, Ws): #TODO: Acertar a formula a respeito do numerador (valor negativo)
     r = D/2
     Pot = I*V
 
@@ -52,13 +53,33 @@ def getT_Sol(Sh, D, Ts, I, V, De, Pe, Mp, Ct, Ws):
     sigma = 5.67e-14    # W/ mm^2 * K^4
     emiss = 0.7
 
-    Numerator= (0.45*I*V/Ts)*Wi/2 - (De2*((np.pi*(Wi/4)*(Hi**2)/2 + np.pi*(4/6)*(Hi**3))+(np.pi*(4/6)*(Pe**3)+np.pi*(Wi/4)*(Pe**2)/2)) * Ce2*(Mp))-(Ct2*1973*(Wi) + Convt2*(2*np.pi*(Hi**2)+(Wi/4)*np.pi*Hi)*1973 +emiss*sigma*((1973)**4)*(2*np.pi*(Hi**2)+(Wi/4)*np.pi*Hi))*T_ins
+    # # Break down the numerator variable into other little readable variables
+    # Numerator_1 = (0.45 * I * V / Ts) * Wi / 2
+    # Numerator_2 = De2 * ((np.pi * (Wi / 4) * (Hi ** 2) / 2 + np.pi * (4 / 6) * (Hi ** 3)) + (np.pi * (4 / 6) * (Pe ** 3) + np.pi * (Wi / 4) * (Pe ** 2) / 2)) * Ce2 * Mp
+    # Numerator_3 = Ct2 * 1973 * Wi + Convt2 * (2 * np.pi * (Hi ** 2) + (Wi / 4) * np.pi * Hi) * 1973 + emiss * sigma * (1973 ** 4) * (2 * np.pi * (Hi ** 2) + (Wi / 4) * np.pi * Hi)
+    # Numerator_alpha = Numerator_1 - Numerator_2 - Numerator_3
 
+    NumeratorA = (0.45*I*V/Ts) * Wi/2
+    NumeratorB = De2 * ((np.pi * (Wi/4) * (Hi**2)/2 + (np.pi * (4/6) * (Hi**3)))+(np.pi * (4/6) * (Pe**3) + np.pi * (Wi/4) * (Pe**2)/2)) * Ce2 * (Mp)
+    NumeratorC = Ct2 * 1973 * Wi + Convt2 * (2*np.pi * (Hi**2) + (Wi/4) * np.pi * Hi) * 1973 + emiss * sigma * ((1973)**4) * (2*np.pi * (Hi**2) + (Wi/4) * np.pi * Hi) *T_ins
+    
+    Numerator= (
+        NumeratorA - 
+        NumeratorB - 
+        NumeratorC)
+    
     Denominator = (Ct2 * (Mp - Tam2) * Wi
                    + Convt2 * (2*np.pi * (Hi**2) + (Wi/4) * np.pi * Hi)
                     * (Mp - Tam2)
                      + emiss * sigma * ((Mp**4) * (2*np.pi*(Hi**2) + (Wi/4) * np.pi * Hi)))
 
+    print("Numerador A: ", NumeratorA)
+    print("Numerador B: ", NumeratorB)
+    print("Numerador C: ", NumeratorC)
+    print("T_ins: ", T_ins)
+    print("Numerator: ", Numerator)
+    print("Denominator: ", Denominator)
+    # print("numerator_alpha: ", Numerator_alpha)
     t_sol = (Numerator/Denominator)
 
     return t_sol
@@ -85,7 +106,7 @@ def getBeadGeometry(D, Ws, Ts, I, V, t_so, De, Sh, Vi, Ct = None):
 
     Cpr = 0.00048
 
-    DelA = Cpr*(Pot1/Ts) * ((2)**0.5) * Hi* (t_so**0.5)
+    DelA = Cpr*(Pot1/Ts) * ((2)**0.5) * Hi* t_so **0.5
     
     print("DelA: ", DelA)
     #print("Hi: ", Hi)  // +- correct
