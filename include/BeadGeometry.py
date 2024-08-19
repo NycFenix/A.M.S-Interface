@@ -64,6 +64,7 @@ def getT_Sol(Sh, D, Ts, I, V, De, Pe, Mp, Ct, Ws):
     return t_sol
 
 def getBeadGeometry(D, Ws, Ts, I, V, t_so, De, Sh, Vi, Ct = None):
+    
     r = D/2
 
     Pot = I*V
@@ -85,6 +86,10 @@ def getBeadGeometry(D, Ws, Ts, I, V, t_so, De, Sh, Vi, Ct = None):
     Cpr = 0.00048
 
     DelA = Cpr*(Pot1/Ts) * ((2)**0.5) * Hi* (t_so**0.5)
+    
+    print("DelA: ", DelA)
+    #print("Hi: ", Hi)  // +- correct
+    #print("Wi: ", Wi)  // +- correct
     h = Hi - DelA
     w = 2*Hi + ((11.985 * (DelA/Hi)**2 + 14.4 * (DelA/Hi)) * DelA)
 

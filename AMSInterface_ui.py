@@ -1365,6 +1365,34 @@ class Ui_AMS_Interface(object):
 
 
         QMetaObject.connectSlotsByName(AMS_Interface)
+
+
+
+        # Default Parameters: Common Steel
+
+        mp_default = 1450   # Melting Point
+        sh_default = 0.11   # Specific Heat
+        vi_default = 0.003  # Viscosity
+        de_default = 7.89   # Density
+        ct_default = 71.5   # Thermal Conductivity
+        em_default = 0.75   # Emissivity
+
+        self.melting_point.setText(str(mp_default))
+        self.specific_heat.setText(str(sh_default))
+        self.viscosity.setText(str(vi_default))
+        self.density.setText(str(de_default))
+        self.thermal_conductivity.setText(str(ct_default))
+        self.emissivity.setText(str(em_default))
+
+        # Default Parameters: Análise de dados.xlsx (linha 1)
+
+        self.ws_input2.setText("3")
+        self.ts_input1.setText("8.33")
+        self.v_input.setText("17.1")
+        self.I.setText("83")
+        self.diameter.setText("1.2")
+        # ///////////////////////////////////////////////////
+        
     # setupUi
 
     def retranslateUi(self, AMS_Interface):
@@ -1451,10 +1479,11 @@ class Ui_AMS_Interface(object):
         t_solid = BeadGeometry.getT_Sol(Sh, D, Ts, I, V, De, penetration, Mp, Ct, Ws)
         height, width = BeadGeometry.getBeadGeometry(D, Ws, Ts, I, V, t_solid, De, Sh, Vi, Ct)
 
-        self.penetration.setText(str(penetration))
-        self.t_solid.setText(str(t_solid))
-        self.height.setText(str(height))
-        self.width.setText(str(width))
+        self.penetration.setText(str(round(penetration, 3)))
+        self.t_solid.setText(str(round(t_solid,3)))
+        print(str(height))
+        #self.height.setText(str(round(height,3)))
+        #self.width.setText(str(round(width,3)))
 
 
     def SpeedMeasureConverter(self, speed = str,flag = int):
