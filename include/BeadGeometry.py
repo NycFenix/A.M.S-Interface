@@ -20,7 +20,7 @@ def getPenetration(V, I, Ws, Ts, Mp, Sh):
     Cp2 = 0.054423      # All in unit S^4g
     Cp3 = 0.021
 
-    DBCP = 15  #(??)
+    DBCP = 15  #distancia da tocha ao á peça (Distancia Bico de Contato Peça) em mm
 
     a = (Ws/(Cp1 + ((Ts-4)**2)**0.5))   # TODO: ao quadrado e depois tira raíz? N é melhor so não usar radiciação?
     b = Ts**2*(((E_d*Cp2)/(DBCP* Mp*Ce2))**0.5)
@@ -116,3 +116,7 @@ def getBeadGeometry(D, Ws, Ts, I, V, t_so, De, Sh, Vi, Ct = None):
 
     return h, w
 
+def getDeltaE(I, V, Ts, den, Ws, Sh, Mp, D, t = 1):
+    wire_area = np.pi * (D/2)**2
+    DeltaE = ((I*V/Ts) * t) - (Sh * Mp * (den * (wire_area*Ws*t)))
+    return DeltaE

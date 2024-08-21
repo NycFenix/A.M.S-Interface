@@ -146,7 +146,7 @@ class Ui_AMS_Interface(object):
         self.current_label.setFont(font)
         self.current_label.setStyleSheet(u"background-color:rgb(245, 132, 153)")
 
-        self.electric_current_layout.addWidget(self.current_label, 2, 3, 1, 3)
+        self.electric_current_layout.addWidget(self.current_label, 1, 3, 1, 3)
 
         self.current_title = QLabel(self.Geometriadocordao)
         self.current_title.setObjectName(u"current_title")
@@ -166,7 +166,7 @@ class Ui_AMS_Interface(object):
 
         self.I_spacer = QSpacerItem(20, 50, QSizePolicy.Minimum, QSizePolicy.Minimum)
 
-        self.electric_current_layout.addItem(self.I_spacer, 4, 1, 1, 1)
+  
 
         self.viscosity = QLineEdit(self.Geometriadocordao)
         self.viscosity.setObjectName(u"viscosity")
@@ -425,7 +425,7 @@ class Ui_AMS_Interface(object):
         self.I_measure.setPalette(measurLabelPalette)
         self.I_measure.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
-        self.electric_current_layout.addWidget(self.I_measure, 3, 6, 1, 1)
+        self.electric_current_layout.addWidget(self.I_measure, 2, 6, 1, 1)
 
         self.density = QLineEdit(self.Geometriadocordao)
         self.density.setObjectName(u"density")
@@ -435,7 +435,7 @@ class Ui_AMS_Interface(object):
         self.I = QLineEdit(self.Geometriadocordao)
         self.I.setObjectName(u"I")
 
-        self.electric_current_layout.addWidget(self.I, 3, 3, 1, 3)
+        self.electric_current_layout.addWidget(self.I, 2, 3, 1, 3)
 
         self.specific_heat_icon = QLabel(self.Geometriadocordao)
         self.specific_heat_icon.setObjectName(u"specific_heat_icon")
@@ -623,7 +623,7 @@ class Ui_AMS_Interface(object):
         secondTabPalette0.setBrush(QPalette.Inactive, QPalette.WindowText, black)
         self.T_layer_label.setPalette(measurLabelPalette)
 
-        self.predicion_layers_layout.addWidget(self.T_layer_label, 2, 0, 1, 1)
+        self.predicion_layers_layout.addWidget(self.T_layer_label, 1, 0, 1, 1)
 
         self.prediction_layers_title = QLabel(self.Geometriadocordao)
         self.prediction_layers_title.setObjectName(u"prediction_layers_title")
@@ -700,7 +700,7 @@ class Ui_AMS_Interface(object):
         self.ws_icon.setFont(font7)
         self.ws_icon.setStyleSheet(u"background-color:rgb(245, 230, 196)")
 
-        self.electric_parameters_layout.addWidget(self.ws_icon, 2, 0, 1, 1)
+        self.electric_parameters_layout.addWidget(self.ws_icon, 1, 0, 1, 1)
 
         self.ts_label = QLabel(self.Geometriadocordao)
         self.ts_label.setObjectName(u"ts_label")
@@ -726,7 +726,7 @@ class Ui_AMS_Interface(object):
         self.ts_label.setStyleSheet(u"background-color:rgb(245, 132, 153)")
         self.ts_label.setAlignment(Qt.AlignCenter)
 
-        self.electric_parameters_layout.addWidget(self.ts_label, 5, 1, 1, 1)
+        self.electric_parameters_layout.addWidget(self.ts_label, 3, 1, 1, 1)
 
         self.ws_input1 = QLineEdit(self.Geometriadocordao)
         self.ws_input1.setObjectName(u"ws_input1")
@@ -739,7 +739,7 @@ class Ui_AMS_Interface(object):
 
         self.ws_input2 = QLineEdit(self.Geometriadocordao)
         self.ws_input2.setObjectName(u"ws_input2")
-        self.electric_parameters_layout.addWidget(self.ws_input2, 3, 1, 1, 1)
+        self.electric_parameters_layout.addWidget(self.ws_input2, 2, 1, 1, 1)
 
         
         self.ws_input1.returnPressed.connect(lambda: self.ws_input2.setText(self.SpeedMeasureConverter(self.ws_input1.text(), 1)))
@@ -770,7 +770,7 @@ class Ui_AMS_Interface(object):
         self.v_label.setStyleSheet(u"background-color:rgb(245, 132, 153)")
         self.v_label.setAlignment(Qt.AlignCenter)
 
-        self.electric_parameters_layout.addWidget(self.v_label, 9, 1, 1, 1)
+        self.electric_parameters_layout.addWidget(self.v_label, 6, 1, 1, 1)
 
         self.ts_icon = QLabel(self.Geometriadocordao)
         self.ts_icon.setObjectName(u"ts_icon")
@@ -792,7 +792,7 @@ class Ui_AMS_Interface(object):
         self.ts_icon.setFont(font7)
         self.ts_icon.setStyleSheet(u"background-color:rgb(245, 230, 196)")
 
-        self.electric_parameters_layout.addWidget(self.ts_icon, 5, 0, 1, 1)
+        self.electric_parameters_layout.addWidget(self.ts_icon, 4, 0, 1, 1)
 
         self.v_icon = QLabel(self.Geometriadocordao)
         self.v_icon.setObjectName(u"v_icon")
@@ -814,7 +814,7 @@ class Ui_AMS_Interface(object):
         self.v_icon.setFont(font7)
         self.v_icon.setStyleSheet(u"background-color:rgb(245, 230, 196)")
 
-        self.electric_parameters_layout.addWidget(self.v_icon, 9, 0, 1, 1)
+        self.electric_parameters_layout.addWidget(self.v_icon, 6, 0, 1, 1)
 
         self.ws_label = QLabel(self.Geometriadocordao)
         self.ws_label.setObjectName(u"ws_label")
@@ -847,14 +847,14 @@ class Ui_AMS_Interface(object):
         self.ws_label.setStyleSheet(u"background-color:rgb(245, 132, 153)")
         self.ws_label.setAlignment(Qt.AlignCenter)
 
-        self.electric_parameters_layout.addWidget(self.ws_label, 1, 1, 1, 1)
+        self.electric_parameters_layout.addWidget(self.ws_label, 0, 1, 1, 1)
 
         self.ts_input1 = QLineEdit(self.Geometriadocordao)
         self.ts_input1.setObjectName(u"ts_input1")
 
 
 
-        self.electric_parameters_layout.addWidget(self.ts_input1, 6, 1, 1, 1)
+        self.electric_parameters_layout.addWidget(self.ts_input1, 4, 1, 1, 1)
 
         self.ts_input1.editingFinished.connect(lambda: self.ts_input2.setText(self.SpeedMeasureConverter(self.ts_input1.text(), 1)))
 
@@ -862,56 +862,55 @@ class Ui_AMS_Interface(object):
         self.ts_input2 = QLineEdit(self.Geometriadocordao)
         self.ts_input2.setObjectName(u"ts_input2")
 
-        self.electric_parameters_layout.addWidget(self.ts_input2, 7, 1, 1, 1)
+        self.electric_parameters_layout.addWidget(self.ts_input2, 5, 1, 1, 1)
 
         self.ts_input2.editingFinished.connect(lambda: self.ts_input1.setText(self.SpeedMeasureConverter(self.ts_input2.text(), -1)))
         self.v_input = QLineEdit(self.Geometriadocordao)
         self.v_input.setObjectName(u"v_input")
 
-        self.electric_parameters_layout.addWidget(self.v_input, 10, 1, 1, 1)
+        self.electric_parameters_layout.addWidget(self.v_input, 7, 1, 1, 1)
 
         self.ws_measure1 = QLabel(self.Geometriadocordao)
         self.ws_measure1.setObjectName(u"ws_measure1")
         self.ws_measure1.setPalette(measurLabelPalette)
 
-        self.electric_parameters_layout.addWidget(self.ws_measure1, 2, 2, 1, 1)
+        self.electric_parameters_layout.addWidget(self.ws_measure1, 1, 2, 1, 1)
 
         self.ts_measure1 = QLabel(self.Geometriadocordao)
         self.ts_measure1.setObjectName(u"ts_measure1")
         self.ts_measure1.setPalette(measurLabelPalette)
 
-        self.electric_parameters_layout.addWidget(self.ts_measure1, 6, 2, 1, 1)
+        self.electric_parameters_layout.addWidget(self.ts_measure1, 4, 2, 1, 1)
 
         self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Minimum)
 
-        self.electric_parameters_layout.addItem(self.verticalSpacer_7, 8, 1, 1, 1)
+        #self.electric_parameters_layout.addItem(self.verticalSpacer_7, 8, 1, 1, 1)
 
 
         self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Minimum)
 
-        self.electric_parameters_layout.addItem(self.verticalSpacer_6, 4, 1, 1, 1)
+        #self.electric_parameters_layout.addItem(self.verticalSpacer_6, 4, 1, 1, 1)
 
         
-        self.electric_parameters_layout.addWidget(self.ws_input1, 2, 1, 1, 1)
+        self.electric_parameters_layout.addWidget(self.ws_input1, 1, 1, 1, 1)
 
         self.ts_measure2 = QLabel(self.Geometriadocordao)
         self.ts_measure2.setObjectName(u"ts_measure2")
         self.ts_measure2.setPalette(measurLabelPalette)
 
-        self.electric_parameters_layout.addWidget(self.ts_measure2, 7, 2, 1, 1)
+        self.electric_parameters_layout.addWidget(self.ts_measure2, 5, 2, 1, 1)
 
         self.v_measure = QLabel(self.Geometriadocordao)
         self.v_measure.setObjectName(u"v_measure")
         self.v_measure.setPalette(measurLabelPalette)
-        self.v_measure.raise_()
 
-        self.electric_parameters_layout.addWidget(self.v_measure, 10, 2, 1, 1)
+        self.electric_parameters_layout.addWidget(self.v_measure, 7, 2, 1, 1)
 
         self.ws_measure2 = QLabel(self.Geometriadocordao)
         self.ws_measure2.setObjectName(u"ws_measure2")
         self.ws_measure2.setPalette(measurLabelPalette)
 
-        self.electric_parameters_layout.addWidget(self.ws_measure2, 3, 2, 1, 1)
+        self.electric_parameters_layout.addWidget(self.ws_measure2, 2, 2, 1, 1)
 
 
         self.gridLayout_4.addLayout(self.electric_parameters_layout, 1, 1, 2, 1)
@@ -1181,9 +1180,6 @@ class Ui_AMS_Interface(object):
         self.PredictionSubTabWidget.addTab(self.altura, "")
         self.redes_neurais_geometria = QWidget()
         self.redes_neurais_geometria.setObjectName(u"redes_neurais_geometria")
-        self.test_label = QLabel(self.redes_neurais_geometria)
-        self.test_label.setObjectName(u"test_label")
-        self.test_label.setGeometry(QRect(320, 60, 49, 16))
         self.PredictionSubTabWidget.addTab(self.redes_neurais_geometria, "")
         self.balanco_fase = QWidget()
         self.balanco_fase.setObjectName(u"balanco_fase")
@@ -1356,7 +1352,6 @@ class Ui_AMS_Interface(object):
         self.rectEC.setText("")
         self.PredictionSubTabWidget.setTabText(self.PredictionSubTabWidget.indexOf(self.Geometriadocordao), QCoreApplication.translate("AMS_Interface", u"Geometria do cord\u00e3o", None))
         self.PredictionSubTabWidget.setTabText(self.PredictionSubTabWidget.indexOf(self.altura), QCoreApplication.translate("AMS_Interface", u"Altura das Camadas", None))
-        self.test_label.setText(QCoreApplication.translate("AMS_Interface", u"TextLabel", None))
         self.PredictionSubTabWidget.setTabText(self.PredictionSubTabWidget.indexOf(self.redes_neurais_geometria), QCoreApplication.translate("AMS_Interface", u"Redes Neurais Geometria", None))
         self.PredictionSubTabWidget.setTabText(self.PredictionSubTabWidget.indexOf(self.balanco_fase), QCoreApplication.translate("AMS_Interface", u"Balan\u00e7o de Fase", None))
         self.PredictionSubTabWidget.setTabText(self.PredictionSubTabWidget.indexOf(self.distancia_interdendritica), QCoreApplication.translate("AMS_Interface", u"Dist\u00e2ncia Interdendr\u00edtica", None))
