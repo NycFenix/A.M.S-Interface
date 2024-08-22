@@ -1390,3 +1390,11 @@ class Ui_AMS_Interface(object):
             return str(round(new_speed, 3))
         except ValueError: # If nothing is written or input is invalid, does not convert
             return ""
+
+    def DeltaECallback(self, deltaE = str):
+        try:
+            deltaE = float(deltaE)
+            deltaE = BeadGeometry.getDeltaE(deltaE)
+            return str(round(deltaE, 3))
+        except ValueError:
+            return ""
