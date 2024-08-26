@@ -1,7 +1,7 @@
 import os
 import sys
-from AMSInterface_atual import Ui_AMS_Interface
-
+#from AMSInterface_atual import Ui_AMS_Interface
+from lib.ui import Ui_AMS_Interface
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
