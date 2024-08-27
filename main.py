@@ -2,6 +2,7 @@ import os
 import sys
 #from AMSInterface_atual import Ui_AMS_Interface
 from lib.ui import Ui_AMS_Interface
+from AMSInterface import AMSInterface
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -23,5 +24,7 @@ if __name__ == "__main__":
     ui.setupUi(QUI)
     QUI.show()
     sys.exit(app.exec())
+
+
 
 

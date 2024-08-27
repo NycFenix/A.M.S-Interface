@@ -1,54 +1,110 @@
 from lib.ui import Ui_AMS_Interface
 from include import BeadGeometry
+from PySide6.QtWidgets import QMainWindow
 
-
-class AMSInterface(Ui_AMS_Interface):
+class AMSInterface(QMainWindow):
     def __init__(self):
         super(AMSInterface, self).__init__()
-        self.setupUi(self)
+
+        self.ui = Ui_AMS_Interface()
+        self.ui.setupUi(self)
+
+        # Defining global variable as to not have to repeat it every time
+        global ui
+        ui = self.ui
+
+        
+        title = "AMS Interface"
+        description = "Interface for Adictivie Manufacturing Projects developed by LNTSOLD team" # TODO: Figure out where to put this
+        version = "0.1"                                                                          # TODO: Same as above
+        self.setWindowTitle(title)
+
+
+        # BUTTONS
+
+        ui.calculate_button.clicked.connect(lambda: self.GeometricPredictionCallback(float(ui.ws_input1.text()), float(ui.ts_input1.text()), float(ui.v_input.text()), 
+                                                                                     float(ui.I.text()), float(ui.melting_point.text()), float(ui.specific_heat.text()), 
+                                                                                     float(ui.viscosity.text()), float(ui.density.text()), float(ui.thermal_conductivity.text()), 
+                                                                                     float(ui.diameter.text())))
+        
+
+
+        # /////////////////////////////////////////////
+
+        # AUTOMATIONS
+
+        ui.ws_input1.editingFinished.connect(lambda: self.ws_input2.setText(self.SpeedMeasureConverter(self.ws_input1.text(), 1)))
+        ui.ws_input2.editingFinished.connect(lambda: self.ws_input1.setText(self.SpeedMeasureConverter(self.ws_input2.text(), -1)))
+
+        ui.ts_input1.editingFinished.connect(lambda: self.ts_input2.setText(self.SpeedMeasureConverter(self.ts_input1.text(), 1)))
+        ui.ts_input2.editingFinished.connect(lambda: self.ts_input1.setText(self.SpeedMeasureConverter(self.ts_input2.text(), -1)))
+
+        # /////////////////////////////////////////////
+
+
 
     
 
 
 
 
+        # Default Parameters: Common Steel
+
+        mp_default = 1450   # Melting Point
+        sh_default = 0.11   # Specific Heat
+        vi_default = 0.003  # Viscosity
+        de_default = 7.89   # Density
+        ct_default = 71.5   # Thermal Conductivity
+        em_default = 0.75   # Emissivity
+
+        ui.melting_point.setText(str(mp_default))
+        ui.specific_heat.setText(str(sh_default))
+        ui.viscosity.setText(str(vi_default))
+        ui.density.setText(str(de_default))
+        ui.thermal_conductivity.setText(str(ct_default))
+        ui.emissivity.setText(str(em_default))
+
+        # Default Parameters: Análise de dados.xlsx (linha 1)
+
+        ui.ws_input2.setText("3")
+        ui.ts_input1.setText("8.33")
+        ui.v_input.setText("17.1")
+        ui.I.setText("83")
+        ui.diameter.setText("1.2")
+
+        # ///////////////////////////////////////////////////
 
 
 
 
+    def GeometricPredictionCallback(self, Ws, Ts, V, I, Mp, Sh, Vi, De, Ct, D) -> None:
+            penetration = BeadGeometry.getPenetration(V, I, Ws, Ts, Mp, Sh)
+            #t_solid = BeadGeometry.getT_Sol(Sh, D, Ts, I, V, De, penetration, Mp, Ct, Ws)
+            t_solid = 0.8 #Valor temporário
+            height, width = BeadGeometry.getBeadGeometry(D, Ws, Ts, I, V, t_solid, De, Sh, Vi, Ct)
+            
+            self.penetration.setText(str(round(penetration, 3)))
+            self.t_solid.setText(str(round(t_solid,3)))
+            self.height.setText(str(round(height,3)))
+            self.width.setText(str(round(width,3)))
 
 
+    def SpeedMeasureConverter(self, speed = str,flag = int):
+        #This method converts mm/s into m/min and vice-versa
+        # If flag = 1, mm/s -> m/min
+        # if its -1, m/min -> mm/s
 
+        try:
+            speed = float(speed)
+            new_speed  = speed * ((60 / 1000) ** flag)
+            return str(round(new_speed, 3))
+        except ValueError: # If nothing is written or input is invalid, does not convert
+            return ""
 
-
-def GeometricPredictionCallback(self, Ws, Ts, V, I, Mp, Sh, Vi, De, Ct, D):
-        penetration = BeadGeometry.getPenetration(V, I, Ws, Ts, Mp, Sh)
-        #t_solid = BeadGeometry.getT_Sol(Sh, D, Ts, I, V, De, penetration, Mp, Ct, Ws)
-        t_solid = 0.8 #Valor temporário
-        height, width = BeadGeometry.getBeadGeometry(D, Ws, Ts, I, V, t_solid, De, Sh, Vi, Ct)
-        
-        self.penetration.setText(str(round(penetration, 3)))
-        self.t_solid.setText(str(round(t_solid,3)))
-        self.height.setText(str(round(height,3)))
-        self.width.setText(str(round(width,3)))
-
-
-def SpeedMeasureConverter(self, speed = str,flag = int):
-    #This method converts mm/s into m/min and vice-versa
-    # If flag = 1, mm/s -> m/min
-    # if its -1, m/min -> mm/s
-
-    try:
-        speed = float(speed)
-        new_speed  = speed * ((60 / 1000) ** flag)
-        return str(round(new_speed, 3))
-    except ValueError: # If nothing is written or input is invalid, does not convert
-        return ""
-
-def DeltaECallback(self, deltaE = str):
-    try:
-        deltaE = float(deltaE)
-        deltaE = BeadGeometry.getDeltaE(deltaE)
-        return str(round(deltaE, 3))
-    except ValueError:
-        return ""
+    def DeltaECallback(self, deltaE = str):
+        try:
+            deltaE = float(deltaE)
+            deltaE = BeadGeometry.getDeltaE(deltaE)
+            return str(round(deltaE, 3))
+        except ValueError:
+            return ""

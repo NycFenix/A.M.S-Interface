@@ -14,18 +14,14 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDial, QGridLayout,
 from include import BeadGeometry
 
 class Ui_AMS_Interface(object):
-    def setupUi(self, AMS_Interface):
+    def setupUi(self, AMS_Interface = QMainWindow()):
         if not AMS_Interface.objectName():
             AMS_Interface.setObjectName(u"AMS_Interface")
         AMS_Interface.resize(814, 624)
         palette = QPalette()
         white = QBrush(QColor(255, 255, 255, 255))
         white.setStyle(Qt.SolidPattern)
-        # palette.setBrush(QPalette.Active, QPalette.Window, white)
-        # palette.setBrush(QPalette.Inactive, QPalette.Window, white)
-        # palette.setBrush(QPalette.Disabled, QPalette.Base, white)
-        # palette.setBrush(QPalette.Disabled, QPalette.Window, white)
-        # AMS_Interface.setPalette(palette)
+        
         AMS_Interface.setUnifiedTitleAndToolBarOnMac(False)
         self.centralwidget = QWidget(AMS_Interface)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -742,7 +738,7 @@ class Ui_AMS_Interface(object):
         self.electric_parameters_layout.addWidget(self.ws_input2, 2, 1, 1, 1)
 
         
-        self.ws_input1.returnPressed.connect(lambda: self.ws_input2.setText(self.SpeedMeasureConverter(self.ws_input1.text(), 1)))
+        self.ws_input1.editingFinished.connect(lambda: self.ws_input2.setText(self.SpeedMeasureConverter(self.ws_input1.text(), 1)))
 
         
         self.ws_input2.editingFinished.connect(lambda: self.ws_input1.setText(self.SpeedMeasureConverter(self.ws_input2.text(), -1)))
