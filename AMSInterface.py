@@ -3,7 +3,8 @@ from include import BeadGeometry
 from PySide6.QtWidgets import QMainWindow
 
 class AMSInterface(QMainWindow):
-    def __init__(self):
+    '''Class that contains all methods and atributes of the interface hat do not belong to the UI file'''
+    def __init__(self) -> None:
         super(AMSInterface, self).__init__()
 
         self.ui = Ui_AMS_Interface()
@@ -33,11 +34,11 @@ class AMSInterface(QMainWindow):
 
         # AUTOMATIONS
 
-        ui.ws_input1.editingFinished.connect(lambda: self.ws_input2.setText(self.SpeedMeasureConverter(self.ws_input1.text(), 1)))
-        ui.ws_input2.editingFinished.connect(lambda: self.ws_input1.setText(self.SpeedMeasureConverter(self.ws_input2.text(), -1)))
+        ui.ws_input1.editingFinished.connect(lambda: ui.ws_input2.setText(self.SpeedMeasureConverter(ui.ws_input1.text(), 1)))
+        ui.ws_input2.editingFinished.connect(lambda: ui.ws_input1.setText(self.SpeedMeasureConverter(ui.ws_input2.text(), -1)))
 
-        ui.ts_input1.editingFinished.connect(lambda: self.ts_input2.setText(self.SpeedMeasureConverter(self.ts_input1.text(), 1)))
-        ui.ts_input2.editingFinished.connect(lambda: self.ts_input1.setText(self.SpeedMeasureConverter(self.ts_input2.text(), -1)))
+        ui.ts_input1.editingFinished.connect(lambda: ui.ts_input2.setText(self.SpeedMeasureConverter(ui.ts_input1.text(), 1)))
+        ui.ts_input2.editingFinished.connect(lambda: ui.ts_input1.setText(self.SpeedMeasureConverter(ui.ts_input2.text(), -1)))
 
         # /////////////////////////////////////////////
 
@@ -76,6 +77,7 @@ class AMSInterface(QMainWindow):
 
 
 
+        self.show()
 
     def GeometricPredictionCallback(self, Ws, Ts, V, I, Mp, Sh, Vi, De, Ct, D) -> None:
             penetration = BeadGeometry.getPenetration(V, I, Ws, Ts, Mp, Sh)
@@ -83,10 +85,10 @@ class AMSInterface(QMainWindow):
             t_solid = 0.8 #Valor temporário
             height, width = BeadGeometry.getBeadGeometry(D, Ws, Ts, I, V, t_solid, De, Sh, Vi, Ct)
             
-            self.penetration.setText(str(round(penetration, 3)))
-            self.t_solid.setText(str(round(t_solid,3)))
-            self.height.setText(str(round(height,3)))
-            self.width.setText(str(round(width,3)))
+            ui.penetration.setText(str(round(penetration, 3)))
+            ui.t_solid.setText(str(round(t_solid,3)))
+            ui.height.setText(str(round(height,3)))
+            ui.width.setText(str(round(width,3)))
 
 
     def SpeedMeasureConverter(self, speed = str,flag = int):
