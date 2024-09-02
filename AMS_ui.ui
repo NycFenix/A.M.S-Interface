@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1207</width>
-    <height>665</height>
+    <height>617</height>
    </rect>
   </property>
   <property name="palette">
@@ -81,8 +81,8 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4">
-    <item>
+   <layout class="QGridLayout" name="gridLayout_10">
+    <item row="0" column="0">
      <widget class="QTabWidget" name="primaryTabWidget">
       <property name="palette">
        <palette>
@@ -240,7 +240,7 @@
        <attribute name="title">
         <string>Predição</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QGridLayout" name="gridLayout_9">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -253,7 +253,7 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
-        <item>
+        <item row="0" column="0">
          <widget class="QTabWidget" name="PredictionSubTabWidget">
           <property name="palette">
            <palette>
@@ -338,7 +338,7 @@
            </palette>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="Geometriadocordao">
            <property name="palette">
@@ -2608,7 +2608,7 @@ background-color:rgb(245, 232, 220)
              <widget class="QWidget" name="delta_e_rect" native="true">
               <layout class="QGridLayout" name="gridLayout_6">
                <item row="0" column="0">
-                <layout class="QGridLayout" name="delta_e_layout">
+                <layout class="QGridLayout" name="delta_e_layout" columnstretch="0,0,0,0,0">
                  <item row="1" column="4">
                   <spacer name="horizontalSpacer">
                    <property name="orientation">
@@ -2629,18 +2629,18 @@ background-color:rgb(245, 232, 220)
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="1">
-                  <widget class="QLineEdit" name="delta_e_input">
-                   <property name="alignment">
-                    <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignJustify</set>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="1" column="3">
                   <widget class="QLabel" name="delta_e_label">
                    <property name="text">
                     <string>ΔE</string>
                    </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QLineEdit" name="delta_e_input">
                    <property name="alignment">
                     <set>Qt::AlignmentFlag::AlignCenter</set>
                    </property>
@@ -5212,7 +5212,7 @@ background-color:rgb(245, 232, 220)
                   <number>20</number>
                  </property>
                  <item row="7" column="0">
-                  <widget class="QLabel" name="t_solid_label_3">
+                  <widget class="QLabel" name="t_solid_label">
                    <property name="palette">
                     <palette>
                      <active>
@@ -5254,7 +5254,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="7" column="1" colspan="2">
-                  <widget class="QLineEdit" name="t_solid_3">
+                  <widget class="QLineEdit" name="t_solid">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                      <horstretch>0</horstretch>
@@ -5267,7 +5267,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="6" column="0">
-                  <widget class="QLabel" name="zta_label_3">
+                  <widget class="QLabel" name="zta_label">
                    <property name="palette">
                     <palette>
                      <active>
@@ -5304,7 +5304,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="6" column="1" colspan="2">
-                  <widget class="QLineEdit" name="zta_3">
+                  <widget class="QLineEdit" name="zta">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                      <horstretch>0</horstretch>
@@ -5317,7 +5317,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="7" column="3">
-                  <widget class="QLabel" name="t_solid_measure_3">
+                  <widget class="QLabel" name="t_solid_measure">
                    <property name="palette">
                     <palette>
                      <active>
@@ -5351,7 +5351,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="5" column="1" colspan="2">
-                  <widget class="QLineEdit" name="penetration_3">
+                  <widget class="QLineEdit" name="penetration">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                      <horstretch>0</horstretch>
@@ -5364,7 +5364,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="5" column="3">
-                  <widget class="QLabel" name="penetration_measure_3">
+                  <widget class="QLabel" name="penetration_measure">
                    <property name="palette">
                     <palette>
                      <active>
@@ -5398,7 +5398,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="5" column="0">
-                  <widget class="QLabel" name="penetration_label_3">
+                  <widget class="QLabel" name="penetration_label">
                    <property name="palette">
                     <palette>
                      <active>
@@ -5440,7 +5440,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="6" column="3">
-                  <widget class="QLabel" name="zta_measure_3">
+                  <widget class="QLabel" name="zta_measure">
                    <property name="palette">
                     <palette>
                      <active>
@@ -5474,7 +5474,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="2" column="1">
-                  <spacer name="gp_spacer_3">
+                  <spacer name="gp_spacer">
                    <property name="orientation">
                     <enum>Qt::Orientation::Vertical</enum>
                    </property>
@@ -5490,7 +5490,7 @@ background-color:rgb(245, 232, 220)
                   </spacer>
                  </item>
                  <item row="1" column="1" colspan="2">
-                  <widget class="QPushButton" name="calculate_button_3">
+                  <widget class="QPushButton" name="calculate_button">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                      <horstretch>0</horstretch>
@@ -5554,7 +5554,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="4" column="0">
-                  <widget class="QLabel" name="height_label_3">
+                  <widget class="QLabel" name="height_label">
                    <property name="palette">
                     <palette>
                      <active>
@@ -5591,7 +5591,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="3" column="1" colspan="2">
-                  <widget class="QLineEdit" name="width_3">
+                  <widget class="QLineEdit" name="width">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                      <horstretch>0</horstretch>
@@ -5613,7 +5613,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="4" column="3">
-                  <widget class="QLabel" name="height_measure_3">
+                  <widget class="QLabel" name="height_measure">
                    <property name="palette">
                     <palette>
                      <active>
@@ -5647,7 +5647,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="4" column="1" colspan="2">
-                  <widget class="QLineEdit" name="height_3">
+                  <widget class="QLineEdit" name="height">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                      <horstretch>0</horstretch>
@@ -5660,7 +5660,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="3" column="3">
-                  <widget class="QLabel" name="width_measure_3">
+                  <widget class="QLabel" name="width_measure">
                    <property name="palette">
                     <palette>
                      <active>
@@ -5694,7 +5694,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="3" column="0">
-                  <widget class="QLabel" name="width_label_3">
+                  <widget class="QLabel" name="width_label">
                    <property name="palette">
                     <palette>
                      <active>
@@ -5731,7 +5731,7 @@ background-color:rgb(245, 232, 220)
                   </widget>
                  </item>
                  <item row="0" column="0" colspan="4">
-                  <widget class="QLabel" name="geometric_prediction_title_3">
+                  <widget class="QLabel" name="geometric_prediction_title">
                    <property name="font">
                     <font>
                      <bold>true</bold>
@@ -5754,22 +5754,9 @@ background-color:rgb(245, 232, 220)
               </layout>
              </widget>
             </item>
-            <item row="1" column="3">
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="altura">
+          <widget class="QWidget" name="AlturaCamadas">
            <property name="palette">
             <palette>
              <active>
@@ -5862,19 +5849,195 @@ background-color:rgb(245, 232, 220)
             </palette>
            </property>
            <property name="styleSheet">
-            <string notr="true">#altura{
+            <string notr="true">#AlturaCamadas{
 	background-color: rgb(240, 222, 200);
+}
+
+/*yellow layout rectangles*/
+#layer_height_prediction_rect, #layer_height_result, #layer_trajectory_rect {
+background-color:rgb(242, 175, 131);
+}
+
+/*layer trajectory labels*/
+#bead_width_label, #bead_overlap_label, #bead_height_label {
+color:rgb(170, 39, 53);
+background-color:rgb(242, 226, 187);
+font-weight:bold
+}
+
+/*layer trajectory title*/
+#layer_trajectory_title, #lh_prediction_label {
+color:rgb(170, 39, 53);
+font-weight:bold;
 }</string>
            </property>
            <attribute name="title">
             <string>Altura das Camadas</string>
            </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout"/>
+           <layout class="QGridLayout" name="gridLayout_12">
+            <item row="0" column="1">
+             <widget class="QWidget" name="layer_height_img" native="true"/>
+            </item>
+            <item row="1" column="1">
+             <widget class="QWidget" name="layer_height_prediction_rect" native="true">
+              <layout class="QGridLayout" name="gridLayout_17">
+               <item row="0" column="1">
+                <layout class="QGridLayout" name="lh_prediction_layout">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="lh_prediction_label">
+                   <property name="text">
+                    <string>Layer height prediction, illustration images</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="0">
+             <widget class="QWidget" name="layer_trajectory_rect" native="true">
+              <layout class="QGridLayout" name="gridLayout_15" columnstretch="0">
+               <property name="topMargin">
+                <number>10</number>
+               </property>
+               <property name="rightMargin">
+                <number>9</number>
+               </property>
+               <property name="bottomMargin">
+                <number>10</number>
+               </property>
+               <property name="horizontalSpacing">
+                <number>20</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>50</number>
+               </property>
+               <item row="0" column="0">
+                <layout class="QGridLayout" name="layer_trajectory_layout">
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="bead_width"/>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="bead_height_label">
+                   <property name="text">
+                    <string>Bead Height</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="bead_width_label">
+                   <property name="text">
+                    <string>Bead Width</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLineEdit" name="bead_height"/>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLineEdit" name="bead_overlap"/>
+                 </item>
+                 <item row="0" column="0" colspan="2">
+                  <widget class="QLabel" name="layer_trajectory_title">
+                   <property name="text">
+                    <string>Layer trajectory characteristics</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="bead_overlap_label">
+                   <property name="text">
+                    <string>Bead Overlap</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <spacer name="verticalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Vertical</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Policy::Preferred</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="2">
+             <widget class="QWidget" name="layer_height_result" native="true">
+              <layout class="QGridLayout" name="gridLayout_19">
+               <item row="0" column="0">
+                <layout class="QGridLayout" name="layer_height_calculation_layout">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="lh_label">
+                   <property name="text">
+                    <string>Layer Height</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="lh_output"/>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
           </widget>
-          <widget class="QWidget" name="redes_neurais_geometria">
+          <widget class="QWidget" name="RedesNeuraisGeometria">
            <attribute name="title">
             <string>Redes Neurais Geometria</string>
            </attribute>
+           <layout class="QGridLayout" name="gridLayout_14"/>
           </widget>
           <widget class="QWidget" name="balanco_fase">
            <attribute name="title">
@@ -5936,7 +6099,7 @@ background-color:rgb(245, 232, 220)
          </palette>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="melting_pool">
          <property name="palette">
@@ -6114,6 +6277,19 @@ background-color:rgb(245, 232, 220)
        </attribute>
       </widget>
      </widget>
+    </item>
+    <item row="1" column="0">
+     <spacer name="verticalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Orientation::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>

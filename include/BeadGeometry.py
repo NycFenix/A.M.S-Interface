@@ -128,6 +128,7 @@ def getBeadGeometry(D, Ws, Ts, I, V, t_so, De, Sh, Vi, Ct = None):
     Vi: Viscosity
     Ct: Thermal Conductivity
     '''
+    
     r = D/2
 
     Pot = I*V
@@ -159,6 +160,18 @@ def getBeadGeometry(D, Ws, Ts, I, V, t_so, De, Sh, Vi, Ct = None):
     return h, w
 
 def getDeltaE(I, V, Ts, den, Ws, Sh, Mp, D, t = 1):
+    '''Calculates the energy consumed in the welding process
+    /////////////////////////////////////////////////
+    PARAMS:
+    I: Current
+    V: Tension
+    Ts: Travel Speed
+    den: Density
+    Ws: Wire Feet Speed
+    Sh: Specific Heat
+    Mp: Melting Point
+    D: Diameter
+    t: Time'''
     wire_area = np.pi * (D/2)**2
     DeltaE = ((I*V/Ts) * t) - (Sh * Mp * (den * (wire_area*Ws*t)))
     return DeltaE
