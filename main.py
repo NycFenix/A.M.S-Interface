@@ -11,9 +11,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDial, QGridLayout,
     QVBoxLayout, QWidget)
 
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+    QFont, QFontDatabase, QGradient, QIcon)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

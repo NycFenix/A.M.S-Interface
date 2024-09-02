@@ -3,8 +3,15 @@ from include import BeadGeometry
 from PySide6.QtWidgets import QMainWindow
 
 class AMSInterface(QMainWindow):
-    '''Class that contains all methods and atributes of the interface hat do not belong to the UI file'''
+    '''Class that contains all methods and atributes of the interface hat do not belong to the UI file
+    
+    Parameters:
+    ----------------
+    QMainWindow: Base class for all windows in PySide6. Has to be inherited to create a window in PySide6.'''
+
+
     def __init__(self) -> None:
+
         super(AMSInterface, self).__init__()
 
         self.ui = Ui_AMS_Interface()
@@ -82,7 +89,7 @@ class AMSInterface(QMainWindow):
     def GeometricPredictionCallback(self, Ws, Ts, V, I, Mp, Sh, Vi, De, Ct, D) -> None:
             penetration = BeadGeometry.getPenetration(V, I, Ws, Ts, Mp, Sh)
             #t_solid = BeadGeometry.getT_Sol(Sh, D, Ts, I, V, De, penetration, Mp, Ct, Ws)
-            t_solid = 0.8 #Valor temporário
+            t_solid = 1 #Valor temporário
             height, width = BeadGeometry.getBeadGeometry(D, Ws, Ts, I, V, t_solid, De, Sh, Vi, Ct)
             
             ui.penetration.setText(str(round(penetration, 3)))
