@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1207</width>
-    <height>617</height>
+    <width>896</width>
+    <height>625</height>
    </rect>
   </property>
   <property name="palette">
@@ -158,11 +158,11 @@
        </palette>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="PredictionWidget">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -5869,45 +5869,20 @@ font-weight:bold
 #layer_trajectory_title, #lh_prediction_label {
 color:rgb(170, 39, 53);
 font-weight:bold;
+text-decoration: underline;
+text-decoration-color: gray;
 }</string>
            </property>
            <attribute name="title">
             <string>Altura das Camadas</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_12">
-            <item row="0" column="1">
-             <widget class="QWidget" name="layer_height_img" native="true"/>
-            </item>
-            <item row="1" column="1">
-             <widget class="QWidget" name="layer_height_prediction_rect" native="true">
-              <layout class="QGridLayout" name="gridLayout_17">
-               <item row="0" column="1">
-                <layout class="QGridLayout" name="lh_prediction_layout">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="lh_prediction_label">
-                   <property name="text">
-                    <string>Layer height prediction, illustration images</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
+            <property name="horizontalSpacing">
+             <number>25</number>
+            </property>
+            <property name="verticalSpacing">
+             <number>20</number>
+            </property>
             <item row="1" column="0">
              <widget class="QWidget" name="layer_trajectory_rect" native="true">
               <layout class="QGridLayout" name="gridLayout_15" columnstretch="0">
@@ -5924,7 +5899,7 @@ font-weight:bold;
                 <number>20</number>
                </property>
                <property name="verticalSpacing">
-                <number>50</number>
+                <number>60</number>
                </property>
                <item row="0" column="0">
                 <layout class="QGridLayout" name="layer_trajectory_layout">
@@ -5998,19 +5973,6 @@ font-weight:bold;
               </layout>
              </widget>
             </item>
-            <item row="0" column="2">
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
             <item row="1" column="2">
              <widget class="QWidget" name="layer_height_result" native="true">
               <layout class="QGridLayout" name="gridLayout_19">
@@ -6025,6 +5987,74 @@ font-weight:bold;
                  </item>
                  <item row="0" column="1">
                   <widget class="QLineEdit" name="lh_output"/>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QWidget" name="layer_height_img" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <item>
+                <widget class="QPushButton" name="ImgSelector">
+                 <property name="text">
+                  <string>Select Image:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="ImageName_label">
+                 <property name="text">
+                  <string>Image: </string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignmentFlag::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="LayerImg">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>200</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>../../../Pictures/placeholderImg.png</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QWidget" name="layer_height_prediction_rect" native="true">
+              <layout class="QGridLayout" name="gridLayout_17">
+               <item row="0" column="1">
+                <layout class="QGridLayout" name="lh_prediction_layout">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="lh_prediction_label">
+                   <property name="text">
+                    <string>Layer height prediction, illustration images</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -6062,199 +6092,285 @@ font-weight:bold;
        <attribute name="title">
         <string>Measuring Tool</string>
        </attribute>
-       <widget class="QTabWidget" name="MeasureToolSubTabWidget">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>800</width>
-          <height>570</height>
-         </rect>
+       <layout class="QGridLayout" name="gridLayout_8">
+        <property name="leftMargin">
+         <number>0</number>
         </property>
-        <property name="palette">
-         <palette>
-          <active>
-           <colorrole role="WindowText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>85</red>
-              <green>170</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
-          <inactive>
-           <colorrole role="WindowText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>85</red>
-              <green>170</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
-          <disabled/>
-         </palette>
+        <property name="topMargin">
+         <number>0</number>
         </property>
-        <property name="currentIndex">
-         <number>1</number>
+        <property name="rightMargin">
+         <number>0</number>
         </property>
-        <widget class="QWidget" name="melting_pool">
-         <property name="palette">
-          <palette>
-           <active>
-            <colorrole role="Button">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>240</red>
-               <green>150</green>
-               <blue>150</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Base">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>240</red>
-               <green>150</green>
-               <blue>150</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Window">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>240</red>
-               <green>150</green>
-               <blue>150</blue>
-              </color>
-             </brush>
-            </colorrole>
-           </active>
-           <inactive>
-            <colorrole role="Button">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>240</red>
-               <green>150</green>
-               <blue>150</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Base">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>240</red>
-               <green>150</green>
-               <blue>150</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Window">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>240</red>
-               <green>150</green>
-               <blue>150</blue>
-              </color>
-             </brush>
-            </colorrole>
-           </inactive>
-           <disabled>
-            <colorrole role="Button">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>240</red>
-               <green>150</green>
-               <blue>150</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Base">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>240</red>
-               <green>150</green>
-               <blue>150</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Window">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>240</red>
-               <green>150</green>
-               <blue>150</blue>
-              </color>
-             </brush>
-            </colorrole>
-           </disabled>
-          </palette>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">#melting_pool{
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QTabWidget" name="MeasureToolSubTabWidget">
+          <property name="palette">
+           <palette>
+            <active>
+             <colorrole role="WindowText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>85</red>
+                <green>170</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </active>
+            <inactive>
+             <colorrole role="WindowText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>85</red>
+                <green>170</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </inactive>
+            <disabled/>
+           </palette>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="melting_pool">
+           <property name="styleSheet">
+            <string notr="true">#melting_pool{
 	background-color: rgb(240, 150, 150);
 
+}
+
+#loader_title, #frame_extracting_title, #analysis_title {
+color:(170, 39, 53);
 }</string>
-         </property>
-         <attribute name="title">
-          <string>Melting Pool</string>
-         </attribute>
-        </widget>
-        <widget class="QWidget" name="bead_geometry">
-         <property name="palette">
-          <palette>
-           <active>
-            <colorrole role="Window">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>232</red>
-               <green>181</green>
-               <blue>146</blue>
-              </color>
-             </brush>
-            </colorrole>
-           </active>
-           <inactive>
-            <colorrole role="Window">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>232</red>
-               <green>181</green>
-               <blue>146</blue>
-              </color>
-             </brush>
-            </colorrole>
-           </inactive>
-           <disabled>
-            <colorrole role="Base">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>232</red>
-               <green>181</green>
-               <blue>146</blue>
-              </color>
-             </brush>
-            </colorrole>
-            <colorrole role="Window">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>232</red>
-               <green>181</green>
-               <blue>146</blue>
-              </color>
-             </brush>
-            </colorrole>
-           </disabled>
-          </palette>
-         </property>
-         <attribute name="title">
-          <string>Bead Geometry</string>
-         </attribute>
-        </widget>
-       </widget>
+           </property>
+           <attribute name="title">
+            <string>Melting Pool</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_13">
+            <item row="2" column="0">
+             <widget class="QWidget" name="ImgLoad_rect" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <property name="spacing">
+                <number>35</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="loader_title">
+                 <property name="text">
+                  <string>LOAD</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignmentFlag::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="LEDLoaderbttn">
+                 <property name="text">
+                  <string>Load Image LED</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="MeltingPoolLoaderbttn">
+                 <property name="text">
+                  <string>Load Image Melting Pool</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_5">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLabel" name="melting_pool_img">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QWidget" name="ExtractingFrames_rect" native="true">
+              <layout class="QGridLayout" name="gridLayout_16">
+               <property name="spacing">
+                <number>20</number>
+               </property>
+               <item row="2" column="0">
+                <widget class="QLabel" name="Browser_label">
+                 <property name="text">
+                  <string>Browser</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignmentFlag::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="Browser_show"/>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="frame_extracting_title">
+                 <property name="text">
+                  <string>Extracting Frames from the video</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignmentFlag::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QPushButton" name="load_videoBttn">
+                 <property name="text">
+                  <string>PushButton</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <spacer name="verticalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Policy::Preferred</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="1" column="1" colspan="2">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="LEDimg">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3" rowspan="2">
+             <widget class="QWidget" name="melting_pool_analysis_rect" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <item>
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string>Analysis in the melting pool</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton">
+                 <property name="text">
+                  <string>Lenght and width of the weld pool</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_2">
+                 <property name="text">
+                  <string>Thermal profile in the weld pool</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_3">
+                 <property name="text">
+                  <string>Percentage of oxides in the pool</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="0" column="1" colspan="2">
+             <widget class="QPushButton" name="Analyzebttn">
+              <property name="text">
+               <string>Analyze Image</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="bead_geometry">
+           <property name="palette">
+            <palette>
+             <active>
+              <colorrole role="Window">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>232</red>
+                 <green>181</green>
+                 <blue>146</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="Window">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>232</red>
+                 <green>181</green>
+                 <blue>146</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>232</red>
+                 <green>181</green>
+                 <blue>146</blue>
+                </color>
+               </brush>
+              </colorrole>
+              <colorrole role="Window">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>232</red>
+                 <green>181</green>
+                 <blue>146</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </disabled>
+            </palette>
+           </property>
+           <attribute name="title">
+            <string>Bead Geometry</string>
+           </attribute>
+          </widget>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="ThermalCyclesWidget">
        <attribute name="title">
