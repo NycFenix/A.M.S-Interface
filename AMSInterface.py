@@ -1,7 +1,10 @@
 from lib.ui import Ui_AMS_Interface
 from include import BeadGeometry
 from PySide6.QtWidgets import QMainWindow
-
+from PySide6.QtWidgets import QLabel
+from PySide6.QtWidgets import QFileDialog
+from PySide6.QtWidgets import QInputDialog
+import os
 class AMSInterface(QMainWindow):
     '''Class that contains all methods and atributes of the interface hat do not belong to the UI file
     
@@ -35,7 +38,8 @@ class AMSInterface(QMainWindow):
                                                                                      float(ui.viscosity.text()), float(ui.density.text()), float(ui.thermal_conductivity.text()), 
                                                                                      float(ui.diameter.text())))
         
-
+        ui.Analyzebttn.clicked.connect(lambda:self.LoadImg(Qpiui.AnalyzedImg))
+        
 
         # /////////////////////////////////////////////
 
@@ -117,3 +121,19 @@ class AMSInterface(QMainWindow):
             return str(round(deltaE, 3))
         except ValueError:
             return ""
+        
+
+
+    def LoadImg(self, receiverImg = QLabel) -> None:
+        file_filter = "Image Files (*.png *.jpg *.bmp)"
+        imgPath, _ = QFileDialog.getOpenFileName(
+            parent = self,
+            caption = "Select Analyzed Image",
+            dir = os.getcwd(),
+            filter = file_filter,
+            selectedFilter=file_filter
+        )
+
+        receiverImg.setPixmap(imgPath)
+        print("Button Clicked")
+

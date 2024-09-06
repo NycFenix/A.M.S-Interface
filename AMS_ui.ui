@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1341</width>
-    <height>625</height>
+    <width>946</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="palette">
@@ -6221,21 +6221,14 @@ background-color:rgb(197, 252, 252);
               </layout>
              </widget>
             </item>
-            <item row="2" column="2">
-             <widget class="QLabel" name="melting_pool_img">
-              <property name="text">
-               <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap>../../../Pictures/placeholderImgDim.png</pixmap>
-              </property>
-              <property name="scaledContents">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="0">
              <widget class="QWidget" name="ExtractingFrames_rect" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <layout class="QGridLayout" name="gridLayout_16">
                <property name="spacing">
                 <number>20</number>
@@ -6270,7 +6263,7 @@ background-color:rgb(197, 252, 252);
                   <string>Extracting Frames from the video</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignmentFlag::AlignCenter</set>
+                  <set>Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignTop</set>
                  </property>
                 </widget>
                </item>
@@ -6291,26 +6284,13 @@ background-color:rgb(197, 252, 252);
              </widget>
             </item>
             <item row="1" column="1" colspan="2">
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="AnalyzedImg">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap>../../../Pictures/placeholderImgDim.png</pixmap>
-              </property>
-              <property name="scaledContents">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLabel" name="LEDimg">
               <property name="text">
                <string/>
               </property>
@@ -6374,6 +6354,16 @@ background-color:rgb(197, 252, 252);
                  </property>
                 </widget>
                </item>
+               <item>
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>../../../Pictures/placeholderImgEvenSmaller.png</pixmap>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
             </item>
@@ -6393,6 +6383,32 @@ background-color:rgb(197, 252, 252);
               </property>
               <property name="text">
                <string>Analyze Image</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="LEDImg">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>../../../Pictures/placeholderImgEvenSmaller.png</pixmap>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLabel" name="MePoImg">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>../../../Pictures/placeholderImgEvenSmaller.png</pixmap>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
