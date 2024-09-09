@@ -4,6 +4,7 @@ from PySide6.QtWidgets import QMainWindow
 from PySide6.QtWidgets import QLabel
 from PySide6.QtWidgets import QFileDialog
 from PySide6.QtWidgets import QInputDialog
+from PySide6.QtGui import QPixmap
 import os
 class AMSInterface(QMainWindow):
     '''Class that contains all methods and atributes of the interface hat do not belong to the UI file
@@ -36,9 +37,11 @@ class AMSInterface(QMainWindow):
         ui.calculate_button.clicked.connect(lambda: self.GeometricPredictionCallback(float(ui.ws_input1.text()), float(ui.ts_input1.text()), float(ui.v_input.text()), 
                                                                                      float(ui.I.text()), float(ui.melting_point.text()), float(ui.specific_heat.text()), 
                                                                                      float(ui.viscosity.text()), float(ui.density.text()), float(ui.thermal_conductivity.text()), 
-                                                                                     float(ui.diameter.text())))
+                                                                    float(ui.diameter.text())))
         
-        ui.Analyzebttn.clicked.connect(lambda:self.LoadImg(Qpiui.AnalyzedImg))
+
+        ui.Analyzebttn.clicked.connect(lambda: self.LoadImg(ui.AnalyzedImg))             
+      
         
 
         # /////////////////////////////////////////////
@@ -133,7 +136,10 @@ class AMSInterface(QMainWindow):
             filter = file_filter,
             selectedFilter=file_filter
         )
-
-        receiverImg.setPixmap(imgPath)
+        
+        image = QPixmap(imgPath)
+        receiverImg.setPixmap(image)
+        receiverImg.setScaledContents(True)
+        receiverImg.resize(400, 200)
         print("Button Clicked")
 
