@@ -2,6 +2,38 @@
 import numpy as np
 import math
 
+
+
+class BeadGeometry:
+    def __init__(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, Tm):
+        self.D = D  # Diameter
+        self.Ws = Ws    # Wire Feet Speed
+        self.Ts = Ts    # Travel Speed
+        self.I = I    # Current
+        self.V = V  # Tension
+        self.Mp = Mp    # Melting Point
+        self.Sh = Sh    # Specific Heat
+        self.Ct = Ct    # Thermal Conductivity
+        self.De = De    # Density
+        self.Vi = Vi    # Viscosity
+        self.Em = Em    # Emissivity
+        self.CLFus = CLFus  # Latent Heat of Fusion
+        self.Tm = Tm  # Transfer Mode
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 def getPenetration(V, I, Ws, Ts, Mp, Sh): #Acertar fórmula: valores muito baixos de penetração
     '''Calculates the penetration depth of the weld bead
     /////////////////////////////////////////////////
@@ -45,7 +77,7 @@ def getPenetration(V, I, Ws, Ts, Mp, Sh): #Acertar fórmula: valores muito baixo
 #Usar 0.7 segundos para o tempo de soldagem por enquanto
 def getT_Sol(Sh, D, Ts, I, V, De, Pe, Mp, Ct, Ws): #TODO: Acertar a formula a respeito do numerador (valor negativo)
     '''Calculates the solidification time of the weld bead.
-    /////////////////////////////////////////////////]
+    /////////////////////////////////////////////////
     PARAMS:
     Sh: Specific Heat
     D: Diameter
