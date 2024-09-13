@@ -5,7 +5,8 @@ import math
 
 
 class BeadGeometry:
-    def __init__(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, Tm):
+    def __init__(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n):
+        #Given Parameters
         self.D = D  # Diameter
         self.Ws = Ws    # Wire Feet Speed
         self.Ts = Ts    # Travel Speed
@@ -18,61 +19,140 @@ class BeadGeometry:
         self.Vi = Vi    # Viscosity
         self.Em = Em    # Emissivity
         self.CLFus = CLFus  # Latent Heat of Fusion
-        self.Tm = Tm  # Transfer Mode
+        self.n = n  # Transfer Mode Eficiency
 
-    
+        #Calculated Parameters
 
+        self.Pe = self.getPenetration()  # Penetration Depth
+        self.PRratio = self.Pe/(self.D/2)  # Penetration/ radius Ratio
+        self.theta1 = 33.18*(self.PRratio**2) - 123.74*self.PRratio + 90.54 # Angulo em graus
+        self.theta2 = self.theta1 * 3.1416/180                              # Angulo em radianos
+        self.Vf = self.getVolume()  # Total Volume of the weld bead
 
+        self.h, self.w = self.getBeadGeometry() # Height and Width of the weld bead
 
+        
+        self.Pot = self.I*self.V  # Potency (Watts)
+        self.T_halfway = (self.w/2)/self.Ts     # Time to run 1/2 times the width of the weld bead
 
+        self.Et = (self.n * self.I * self.V/self.Ts) * (self.w/2)  # Total Energy Given
 
+     
 
+        self.Tsolid = self.getTsolid()
+    def getTsolid(self):
+        #Botar ts em evidencia
+        t_sol = 0
 
+        return t_sol
 
+    def getBeadGeometry(self):
+        '''Calculates the height and width of the weld bead'''      
+        r = self.D/2
 
+       
+        #E_d = Pot/self.Ts not used
 
+        # Semicircular bead height
+        Hi = ((2*(self.Ws/self.Ts) * (r) **2)**0.5)       # Hi = Ai #TODO: elevar ao quadrado so o raio ou a expressão toda?
+        # Semicircular bead width
+        Wi = 2*Hi                            # Wi = Li
 
+        # To be changed in the future
+        # Ce2 = Sh * 4.186        # j / g* °C
+        # Ct2 = Ct * 1/1000       # W / mm °K
+        # Vi2 = Vi * 1000 / 1000  # g / mm*s  
+        # De2 = De * (1/1000)     # g / mm^3
+        
+       
+        #////////
+        #Pot1 = 0.45*Pot  Only used if DeltaA is needed
+        #Cpr = 0.00048     Only used if DeltaA is needed
+        #//////////
+        #DelA = Cpr*(Pot1/self.Ts) * ((2)**0.5) * Hi* (t_so) **0.5
+        
+        #print("DelA: ", DelA)
+        #print("Hi: ", Hi)  // +- correct
+        #print("Wi: ", Wi)  // +- correct
+        #h = Hi - DelA
+        #w = 2*Hi + (11.985 * (DelA/Hi)**2 + 14.4 * (DelA/Hi)) * DelA
 
+        return Hi, Wi
 
-def getPenetration(V, I, Ws, Ts, Mp, Sh): #Acertar fórmula: valores muito baixos de penetração
-    '''Calculates the penetration depth of the weld bead
-    /////////////////////////////////////////////////
-    PARAMS:
-    V: Tension
-    I: Current
-    Ws: Wire Feet Speed
-    Ts: Travel Speed
-    Mp: Melting Point
-    Sh: Specific Heat
-    '''
+    def getSurfaces(self):
+        '''Calculates multiple different surfaces of the weld bead'''
 
-    
-    # Ws  = Ws * 1000/60
-    # Ts = Ts * 1000 / 60
+        # Área 1 (Superfície líquida em contato com o substrato sólido)
+        a1 = self.w/2
+        b1 = 3*self.w/4
+        c1 = self.Pe
+        
+        As1num = ((a1*b1)**1.6075 + (b1*c1)**1.6075 + (a1*c1)**1.6075)/3
+        As1 = (2*np.pi) * (As1num)**(1/1.6075) 
 
-    Pot = I / V  # Watt
-    E_d1 = Pot/Ts   # J/mm  
-    E_d2 = E_d1/1000         # KJ/mm 
-    E_d = E_d2 * 0.2388      # Kcal/mm
+        # Área 2 (Superfície aproximada que perde calor para o próprio cordão)
+        a2 = self.w/(2**0.5)
+        b2 = self.w/2
 
-    Ce2 = Sh/1000            # Kcal/g*°C
+        As2 = np.pi * a2 * b2
 
-    # Constant Paremeters
+        # Área 3 (Área em contato com o ar aproximada para uma fatia de cilindro)
+        
+        As3 = self.theta2*(self.w**2)/4
+        
+        # Área 4 (Superfície da poça inicial)
 
-    Cp1 = 0.1
-    Cp2 = 0.054423      # All in unit S^4g
-    Cp3 = 0.021
+        As4 = np.pi * (self.w**2)/8
 
-    DBCP = 15  #distancia da tocha ao á peça (Distancia Bico de Contato Peça) em mm
+        return As1, As2, As3, As4
 
-    a = (Ws/(Cp1 + ((Ts-4)**2)**0.5))   # a 
-    b = Ts**2*(((E_d*Cp2)/(DBCP * Mp *Ce2))**0.5)
-    Pe = (a*b)*Cp3
+    def getVolume(self):
+        '''Calculates total volume of the weld bead'''
 
-    print("a: ", a)
-    print("b: ", b)
-    print("Pe: ", Pe)
-    return Pe
+        # Volume 1 (Volume da calota fundida no substrato)
+        c1 = self.w/2*self.theta1
+        
+        v1 = (np.pi/3) * self.Pe**2 *(3*c1 - self.Pe) 
+
+        # Volume 2 (Volume da calota ao se movimentar uma distância w/2 com a tocha)
+
+        v2 = (self.w**2)/2 * self.Pe * np.pi
+        
+        # Volume 3 (Volume fundido depositado na chapa ao percorrer metade da largura com a tocha)
+
+        v3 = np.pi/16 * (self.w**2)
+
+        return v1 + v2 + v3
+    def getPenetration(self): #Acertar fórmula: valores muito baixos de penetração
+        '''Calculates the penetration depth of the weld bead'''
+
+        
+        # Ws  = Ws * 1000/60
+        # Ts = Ts * 1000 / 60
+
+        
+        E_d1 = self.Pot/self.Ts   # J/mm  
+        E_d2 = E_d1/1000         # KJ/mm 
+        E_d = E_d2 * 0.2388      # Kcal/mm
+
+        Ce2 = self.Sh/1000            # Kcal/g*°C
+
+        # Constant Paremeters
+
+        Cp1 = 0.1
+        Cp2 = 0.054423      # All in unit S^4g
+        Cp3 = 0.021
+
+        DBCP = 15  #distancia da tocha ao á peça (Distancia Bico de Contato Peça) em mm
+
+        a = (self.Ws/(Cp1 + ((self.Ts-4)**2)**0.5))   # a 
+        b = self.Ts**2*(((E_d*Cp2)/(DBCP * self.Mp *Ce2))**0.5) #b
+        Pe = (a*b)*Cp3      
+
+        print("a: ", a)
+        print("b: ", b)
+        print("Pe: ", Pe)
+        return Pe
 
 #Usar 0.7 segundos para o tempo de soldagem por enquanto
 def getT_Sol(Sh, D, Ts, I, V, De, Pe, Mp, Ct, Ws): #TODO: Acertar a formula a respeito do numerador (valor negativo)
@@ -145,7 +225,7 @@ def getT_Sol(Sh, D, Ts, I, V, De, Pe, Mp, Ct, Ws): #TODO: Acertar a formula a re
 
     return t_sol
 
-def getBeadGeometry(D, Ws, Ts, I, V, t_so, De, Sh, Vi, Ct = None):
+def getBeadGeometry(self, D, Ws, Ts, I, V, t_so, De, Sh, Vi, Ct = None):
     '''Calculates the height and width of the weld bead
     /////////////////////////////////////////////////
     PARAMS:
