@@ -6,6 +6,10 @@ import math
 
 class BeadGeometry:
     def __init__(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n):
+        # Constans
+        sigma = 5.67e-14  # W/mm^2 * K^4
+        Tamb = 25 # C°
+        Convt = 100/1000000 # W / mm^2 * °K
         #Given Parameters
         self.D = D  # Diameter
         self.Ws = Ws    # Wire Feet Speed
@@ -21,28 +25,53 @@ class BeadGeometry:
         self.CLFus = CLFus  # Latent Heat of Fusion
         self.n = n  # Transfer Mode Eficiency
 
-        #Calculated Parameters
+        # Calculated Parameters
 
         self.Pe = self.getPenetration()  # Penetration Depth
-        self.PRratio = self.Pe/(self.D/2)  # Penetration/ radius Ratio
+        self.PRratio = self.Pe/(self.w/2)  # Penetration/ radius Ratio
         self.theta1 = 33.18*(self.PRratio**2) - 123.74*self.PRratio + 90.54 # Angulo em graus
         self.theta2 = self.theta1 * 3.1416/180                              # Angulo em radianos
-        self.Vf = self.getVolume()  # Total Volume of the weld bead
-
+        
         self.h, self.w = self.getBeadGeometry() # Height and Width of the weld bead
 
         
         self.Pot = self.I*self.V  # Potency (Watts)
-        self.T_halfway = (self.w/2)/self.Ts     # Time to run 1/2 times the width of the weld bead
+        self.t_halfway = (self.w/2)/self.Ts     # Time to run 1/2 times the width of the weld bead
 
         self.Et = (self.n * self.I * self.V/self.Ts) * (self.w/2)  # Total Energy Given
 
-     
+        self.Vf = self.__getVolume()  # Total Volume of the weld bead
+        self.As1, self.As2, self.As3, self.As4 = self.__getSurfaces() # Surface Areeas of the weld bead
 
+
+        # Delta T cálculo (se estiver um número grande (ou negativo), tá errado)
+
+        DeltaTa = ((self.I * self.V)/self.Ts) * self.w/2
+        DeltaTb = (((self.h + self.Pe)/2) + (self.h/2))/2
+        DeltaT_num = DeltaTa - (self.De * (self.w/2 * 3.1416 * DeltaTb) * self.Sh * (self.Mp - Tamb))
+        DeltaT_den = self.Sh * self.De * DeltaTb
+        self.DelT = DeltaT_num/DeltaT_den
+        self.DelT2 = self.DelT/3
+        self.DelT3 = self.DelT/16
+
+        # Energy Calculations
+        self.Efus = self.De * self.Vf * self.Sh * (self.Mp - 25) # Energia de fusão necessária para fundir a peça
+        # Assume=se que a temperatura ambiente é 25°C
+        self.Potcond1 = self.Ct * (self.Mp + self.DelT2 - Tamb) * (self.As1/((self.Pe + self.h)/2))
+        self.Potcond2 = self.Ct * 20 * (self.As2/(self.Pe/2))
+        self.Prad = self.Em * sigma * ((self.Mp + self.DelT3)**4) * (self.As3 + self.As4)
+        self.Potconv = Convt * ((self.Mp + self.DelT2 - Tamb) + 273) * (self.As3 + self.As4) # Potência de Energia Liberada por Convecção
+        self.Ecl = self.De * self.Vf * self.CLFus # Energia Liberada pela formação de cristais
+        
         self.Tsolid = self.getTsolid()
     def getTsolid(self):
-        #Botar ts em evidencia
-        t_sol = 0
+
+        Numerator = (self.Et + self.Ecl - self.Efus
+        - self.t_halfway * (self.Potcond1 + self.Potcond2 + self.Prad + self.Potconv))
+
+        Denominator = self.Potcond1 + self.Potcond2 + self.Prad + self.Potconv
+
+        t_sol = Numerator/Denominator
 
         return t_sol
 
@@ -79,7 +108,7 @@ class BeadGeometry:
 
         return Hi, Wi
 
-    def getSurfaces(self):
+    def __getSurfaces(self):
         '''Calculates multiple different surfaces of the weld bead'''
 
         # Área 1 (Superfície líquida em contato com o substrato sólido)
@@ -106,7 +135,7 @@ class BeadGeometry:
 
         return As1, As2, As3, As4
 
-    def getVolume(self):
+    def __getVolume(self):
         '''Calculates total volume of the weld bead'''
 
         # Volume 1 (Volume da calota fundida no substrato)

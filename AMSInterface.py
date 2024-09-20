@@ -37,7 +37,7 @@ class AMSInterface(QMainWindow):
         ui.calculate_button.clicked.connect(lambda: self.GeometricPredictionCallback(float(ui.ws_input1.text()), float(ui.ts_input1.text()), float(ui.v_input.text()), 
                                                                                      float(ui.I.text()), float(ui.melting_point.text()), float(ui.specific_heat.text()), 
                                                                                      float(ui.viscosity.text()), float(ui.density.text()), float(ui.thermal_conductivity.text()), 
-                                                                    float(ui.diameter.text())))
+                                                                    float(ui.diameter.text()), float(ui.emissivity.text()), float(ui.EnthalpyFusion.text()), n_eficiency))
         
 
         ui.Analyzebttn.clicked.connect(lambda: self.LoadImg(ui.AnalyzedImg))             
@@ -47,7 +47,7 @@ class AMSInterface(QMainWindow):
         # /////////////////////////////////////////////
 
         # AUTOMATIONS
-
+        n_eficiency = self.EficiencyButton()
         ui.ws_input1.editingFinished.connect(lambda: ui.ws_input2.setText(self.SpeedMeasureConverter(ui.ws_input1.text(), 1)))
         ui.ws_input2.editingFinished.connect(lambda: ui.ws_input1.setText(self.SpeedMeasureConverter(ui.ws_input2.text(), -1)))
 
@@ -93,11 +93,16 @@ class AMSInterface(QMainWindow):
 
         self.show()
 
-    def GeometricPredictionCallback(self, Ws, Ts, V, I, Mp, Sh, Vi, De, Ct, D) -> None:
-            penetration = BeadGeometry.getPenetration(V, I, Ws, Ts, Mp, Sh)
+    def GeometricPredictionCallback(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n) -> None:
+            Geometry = BeadGeometry.BeadGeometry(D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n) #Initiate GeomtryObject
+            height, width = Geometry.getBeadGeometry() #Get Bead Geometry
+            penetration = BeadGeometry.BeadGeometry.getPenetration() #Get Penetration
+            t_solid = BeadGeometry.BeadGeometry.getTsolid() #Get Solidification Time of Bead
+
+            
+
             #t_solid = BeadGeometry.getT_Sol(Sh, D, Ts, I, V, De, penetration, Mp, Ct, Ws)
-            t_solid = 1 #Valor temporário
-            height, width = BeadGeometry.getBeadGeometry(D, Ws, Ts, I, V, t_solid, De, Sh, Vi, Ct)
+            #t_solid = 1 #Valor temporário
             
             ui.penetration.setText(str(round(penetration, 3)))
             ui.t_solid.setText(str(round(t_solid,3)))
@@ -126,6 +131,13 @@ class AMSInterface(QMainWindow):
             return ""
         
 
+    def EficiencyButton(self):
+        if ui.cmt.isChecked():
+            return 0.89
+        elif ui.mix.isChecked():
+            return 0.84
+        elif ui.pulsado.isChecked():
+            return 0.81
 
     def LoadImg(self, receiverImg = QLabel) -> None:
         file_filter = "Image Files (*.png *.jpg *.bmp)"
