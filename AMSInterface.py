@@ -53,22 +53,22 @@ class AMSInterface(QMainWindow):
 
         # BUTTONS
 
-        ui.calculate_button.clicked.connect(lambda: self.GeometricPredictionCallback(float(ui.ws_input1.text()), float(ui.ts_input1.text()), float(ui.v_input.text()), 
-                                                                                     float(ui.I.text()), float(ui.melting_point.text()), float(ui.specific_heat.text()), 
-                                                                                     float(ui.viscosity.text()), float(ui.density.text()), float(ui.thermal_conductivity.text()), 
-                                                                    float(ui.diameter.text()), float(ui.emissivity.text()), float(ui.EnthalpyFusion.text()), n_eficiency))
+        ui.calculate_button.clicked.connect(lambda: self.GeometricPredictionCallback(Ws=float(ui.ws_input1.text()), Ts=float(ui.ts_input1.text()), V=float(ui.v_input.text()), 
+                                                                                     I=float(ui.I.text()), Mp=float(ui.melting_point.text()), Sh=float(ui.specific_heat.text()), 
+                                                                                     Vi=float(ui.viscosity.text()), De=float(ui.density.text()), Ct=float(ui.thermal_conductivity.text()), 
+                                                                    D=float(ui.diameter.text()), Em=float(ui.emissivity.text()), CLFus=float(ui.EnthalpyFusion.text()), n=n_eficiency))
 
         ui.Analyzebttn.clicked.connect(lambda: self.LoadImg(ui.AnalyzedImg))             
       
 
         # Default Parameters: Common Steel
 
-        mp_default = 1450   # Melting Point
+        mp_default = 1420   # Melting Point
         sh_default = 0.11   # Specific Heat
         vi_default = 0.003  # Viscosity
         de_default = 7.89   # Density
         ct_default = 71.5   # Thermal Conductivity
-        em_default = 0.75   # Emissivity
+        em_default = 0.7   # Emissivity
         ef_default = 25     # Enthalpy Fusion
         ui.melting_point.setText(str(mp_default))
         ui.specific_heat.setText(str(sh_default))
@@ -79,12 +79,12 @@ class AMSInterface(QMainWindow):
         ui.EnthalpyFusion.setText(str(ef_default))
 
 
-        # Default Parameters: Análise de dados.xlsx (linha 1)
+        # Default Parameters: valores usados no codigo no MatLab 
 
-        ui.ws_input2.setText("3")
-        ui.ts_input1.setText("8.33")
-        ui.v_input.setText("17.1")
-        ui.I.setText("83")
+        ui.ws_input1.setText("140")
+        ui.ts_input1.setText("5.83")
+        ui.v_input.setText("20")
+        ui.I.setText("200")
         ui.diameter.setText("1.2")
 
         # ///////////////////////////////////////////////////
@@ -95,7 +95,7 @@ class AMSInterface(QMainWindow):
 
     def GeometricPredictionCallback(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n) -> None:
             Geometry = BeadGeometry.BeadGeometry(D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n) #Initiate GeomtryObject
-            height, width = Geometry.getBeadGeometry() #Get Bead Geometry
+            height, width = Geometry.h, Geometry.w #Get Bead Geometry
             penetration = Geometry.getPenetration() #Get Penetration
             t_solid = Geometry.getTsolid() #Get Solidification Time of Bead
 
