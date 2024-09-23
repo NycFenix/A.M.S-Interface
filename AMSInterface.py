@@ -32,21 +32,11 @@ class AMSInterface(QMainWindow):
         self.setWindowTitle(title)
 
 
-        # BUTTONS
-
-        ui.calculate_button.clicked.connect(lambda: self.GeometricPredictionCallback(float(ui.ws_input1.text()), float(ui.ts_input1.text()), float(ui.v_input.text()), 
-                                                                                     float(ui.I.text()), float(ui.melting_point.text()), float(ui.specific_heat.text()), 
-                                                                                     float(ui.viscosity.text()), float(ui.density.text()), float(ui.thermal_conductivity.text()), 
-                                                                    float(ui.diameter.text()), float(ui.emissivity.text()), float(ui.EnthalpyFusion.text()), n_eficiency))
-        
-
-        ui.Analyzebttn.clicked.connect(lambda: self.LoadImg(ui.AnalyzedImg))             
-      
-        
-
-        # /////////////////////////////////////////////
+         # /////////////////////////////////////////////
 
         # AUTOMATIONS
+
+        ui.cmt.setChecked(True) # Default Transfer Mode
         n_eficiency = self.EficiencyButton()
         ui.ws_input1.editingFinished.connect(lambda: ui.ws_input2.setText(self.SpeedMeasureConverter(ui.ws_input1.text(), 1)))
         ui.ws_input2.editingFinished.connect(lambda: ui.ws_input1.setText(self.SpeedMeasureConverter(ui.ws_input2.text(), -1)))
@@ -54,14 +44,22 @@ class AMSInterface(QMainWindow):
         ui.ts_input1.editingFinished.connect(lambda: ui.ts_input2.setText(self.SpeedMeasureConverter(ui.ts_input1.text(), 1)))
         ui.ts_input2.editingFinished.connect(lambda: ui.ts_input1.setText(self.SpeedMeasureConverter(ui.ts_input2.text(), -1)))
 
-        # /////////////////////////////////////////////
 
+
+        # /////////////////////////////////////////////
 
 
     
 
+        # BUTTONS
 
+        ui.calculate_button.clicked.connect(lambda: self.GeometricPredictionCallback(float(ui.ws_input1.text()), float(ui.ts_input1.text()), float(ui.v_input.text()), 
+                                                                                     float(ui.I.text()), float(ui.melting_point.text()), float(ui.specific_heat.text()), 
+                                                                                     float(ui.viscosity.text()), float(ui.density.text()), float(ui.thermal_conductivity.text()), 
+                                                                    float(ui.diameter.text()), float(ui.emissivity.text()), float(ui.EnthalpyFusion.text()), n_eficiency))
 
+        ui.Analyzebttn.clicked.connect(lambda: self.LoadImg(ui.AnalyzedImg))             
+      
 
         # Default Parameters: Common Steel
 
@@ -71,13 +69,15 @@ class AMSInterface(QMainWindow):
         de_default = 7.89   # Density
         ct_default = 71.5   # Thermal Conductivity
         em_default = 0.75   # Emissivity
-
+        ef_default = 25     # Enthalpy Fusion
         ui.melting_point.setText(str(mp_default))
         ui.specific_heat.setText(str(sh_default))
         ui.viscosity.setText(str(vi_default))
         ui.density.setText(str(de_default))
         ui.thermal_conductivity.setText(str(ct_default))
         ui.emissivity.setText(str(em_default))
+        ui.EnthalpyFusion.setText(str(ef_default))
+
 
         # Default Parameters: Análise de dados.xlsx (linha 1)
 
@@ -96,8 +96,8 @@ class AMSInterface(QMainWindow):
     def GeometricPredictionCallback(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n) -> None:
             Geometry = BeadGeometry.BeadGeometry(D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n) #Initiate GeomtryObject
             height, width = Geometry.getBeadGeometry() #Get Bead Geometry
-            penetration = BeadGeometry.BeadGeometry.getPenetration() #Get Penetration
-            t_solid = BeadGeometry.BeadGeometry.getTsolid() #Get Solidification Time of Bead
+            penetration = Geometry.getPenetration() #Get Penetration
+            t_solid = Geometry.getTsolid() #Get Solidification Time of Bead
 
             
 

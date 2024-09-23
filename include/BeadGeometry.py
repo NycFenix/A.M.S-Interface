@@ -9,33 +9,39 @@ class BeadGeometry:
         # Constans
         sigma = 5.67e-14  # W/mm^2 * K^4
         Tamb = 25 # C°
-        Convt = 100/1000000 # W / mm^2 * °K
+        Convt = 100/1000000 # Conversion coefficient (W / mm^2 * °K)
+
+        
         #Given Parameters
         self.D = D  # Diameter
         self.Ws = Ws    # Wire Feet Speed
         self.Ts = Ts    # Travel Speed
-        self.I = I    # Current
-        self.V = V  # Tension
-        self.Mp = Mp    # Melting Point
-        self.Sh = Sh    # Specific Heat
-        self.Ct = Ct    # Thermal Conductivity
-        self.De = De    # Density
+        self.I = I    # Current (A)
+        self.V = V  # Tension (v)
+        self.Mp = Mp    # Melting Point (°C)
+        self.Sh = Sh    # Specific Heat (cal/g*°C) #TODO: Mudar para J/g*°C
+        self.Ct = Ct    # Thermal Conductivity (W/m*°C) TODO: Mudar para W/mm*°C
+        self.De = De    # Density   (g/cm^3) TODO: Mudar para g/mm^3
         self.Vi = Vi    # Viscosity
         self.Em = Em    # Emissivity
-        self.CLFus = CLFus  # Latent Heat of Fusion
-        self.n = n  # Transfer Mode Eficiency
+        self.CLFus = CLFus  # Latent Heat of Fusion (J/g)
+        self.n = n  # Transfer Mode Eficiency  TODO: Deixar mudança de modo de soldagem com valor default no radiobutton
+        
 
         # Calculated Parameters
-
+        
+        self.Pot = self.I*self.V  # Potency (Watts)
+        self.h, self.w = self.getBeadGeometry() # Height and Width of the weld bead
         self.Pe = self.getPenetration()  # Penetration Depth
         self.PRratio = self.Pe/(self.w/2)  # Penetration/ radius Ratio
         self.theta1 = 33.18*(self.PRratio**2) - 123.74*self.PRratio + 90.54 # Angulo em graus
         self.theta2 = self.theta1 * 3.1416/180                              # Angulo em radianos
         
-        self.h, self.w = self.getBeadGeometry() # Height and Width of the weld bead
+        
+        
+        
 
         
-        self.Pot = self.I*self.V  # Potency (Watts)
         self.t_halfway = (self.w/2)/self.Ts     # Time to run 1/2 times the width of the weld bead
 
         self.Et = (self.n * self.I * self.V/self.Ts) * (self.w/2)  # Total Energy Given
