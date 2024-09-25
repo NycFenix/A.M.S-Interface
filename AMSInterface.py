@@ -97,7 +97,7 @@ class AMSInterface(QMainWindow):
             Geometry = BeadGeometry.BeadGeometry(D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n) #Initiate GeomtryObject
             height, width = Geometry.h, Geometry.w #Get Bead Geometry
             penetration = Geometry.getPenetration() #Get Penetration
-            t_solid = Geometry.getTsolid() #Get Solidification Time of Bead
+            t_solid = Geometry.Tsolid #Get Solidification Time of Bead
 
             
 

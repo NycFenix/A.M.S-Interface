@@ -34,7 +34,7 @@ class BeadGeometry:
         self.Tamb2 = Tamb + 273 # (°K)
 
         self.Sh2 = self.Sh * 4.184 # J/g*°C
-        self.De2 = self.De * 1000 # g/mm^3
+        self.De2 = self.De / 1000 # g/mm^3
         self.Ct2 = self.Ct / 1000 # W/mm*°C
 
         # Calculated Parameters
@@ -57,20 +57,27 @@ class BeadGeometry:
 
         DeltaTa = ((self.I * self.V)/self.Ts) * self.w/2
         DeltaTb = self.Vf
-        DeltaT_num = DeltaTa - (self.De * (self.w/2 * 3.1416 * DeltaTb) * self.Sh * (self.Mp - Tamb))
-        DeltaT_den = self.Sh * self.De * DeltaTb
+        DeltaT_num = DeltaTa - (self.De2 * (self.w/2 * 3.1416 * DeltaTb) * self.Sh2 * (self.Mp - Tamb))
+        print("DeltaNumerador ", DeltaT_num)
+       
+        DeltaT_den = self.Sh2 * self.De2 * DeltaTb
+        print("DeltaDenominador ", DeltaT_den)
         self.DelT = DeltaT_num/DeltaT_den
-        
+        print("DeltaTa: ", DeltaTa)
+        print("DeltaTb: ", DeltaTb)        
 
         # Energy Calculations
-        self.Efus = self.De * self.Vf * self.Sh * (self.Mp - Tamb) # Energia de fusão necessária para fundir a peça
-        self.Potcond1 = self.Ct * (self.Mp + self.DelT - Tamb) * (self.As1/((self.Pe + self.h)/2))
-        self.Potcond2 = self.Ct * 20 * (self.As2/(self.Pe/2))
+        self.Efus = self.De2 * self.Vf * self.Sh * (self.Mp - Tamb) # Energia de fusão necessária para fundir a peça
+        self.Potcond1 = self.Ct2 * (self.Mp + self.DelT - Tamb) * (self.As1/((self.Pe + self.h)/2))
+        print("Delta T: ", self.DelT)
+        self.Potcond2 = self.Ct2 * 20 * (self.As2/(self.Pe/2))
         self.Prad = self.Em * sigma * ((self.Mp + self.DelT)**4) * (self.As3 + self.As4)
         self.Potconv = Convt * ((self.Mp + self.DelT - Tamb) + 273) * (self.As3 + self.As4) # Potência de Energia Liberada por Convecção
-        self.Ecl = self.De * self.Vf * self.CLFus # Energia Liberada pela formação de cristais
+        self.Ecl = self.De2 * self.Vf * self.CLFus # Energia Liberada pela formação de cristais
         
         self.Tsolid = self.getTsolid()
+
+        
     def getTsolid(self):
 
         Numerator = (self.Et + self.Ecl - self.Efus
@@ -79,7 +86,28 @@ class BeadGeometry:
         Denominator = self.Potcond1 + self.Potcond2 + self.Prad + self.Potconv
 
         t_sol = Numerator/Denominator
+        
+        # print("ENERGIAS")
+        # print("/////////////////////////////////")
+        
+        # print("Energia Total necessária: ", self.Et)
+        # print("Energia de Fusão: ", self.Efus)
+        # print("Densidade: ", self.De2)
+        # print("Volume: ", self.Vf)
+        # print("Calor Específico: ", self.Sh)
+        # print("Temperatura", (self.Mp - 25))
+        # print("Energia Liberada pela formação de cristais: ", self.Ecl)
+        # print("Potência de Condução 1: ", self.Potcond1)
+        # print("Potência de Condução 2: ", self.Potcond2)
+        # print("Potência de Radiação: ", self.Prad)
+        # print("Potência de Convecção: ", self.Potconv)
+        # print("numerador: ", Numerator)
+        # print("/////////////////////////////////")
+        # print("denominador: ", Denominator)
+        # print("Tempo de Solidificação: ", t_sol)
 
+
+        
         return t_sol
 
     def getBeadGeometry(self):
@@ -132,6 +160,9 @@ class BeadGeometry:
 
         v3 = np.pi/16 * (self.w**3)
 
+        print("Volume 1: ", v1)
+        print("Volume 2: ", v2)
+        print("Volume 3: ", v3)
         return v1 + v2 + v3
     
     def getPenetration(self): #Acertar fórmula: valores muito baixos de penetração
