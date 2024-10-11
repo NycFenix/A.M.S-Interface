@@ -156,7 +156,7 @@ cython_debug/
 
 
 # pycache files
-
+.include/__pycache__/
 __pycache__/
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
