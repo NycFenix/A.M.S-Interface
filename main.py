@@ -5,13 +5,9 @@ import sys
 from AMSInterface import AMSInterface
 
 
-from PySide6.QtWidgets import (QApplication, QCheckBox, QDial, QGridLayout,
-    QLabel, QLayout, QLineEdit, QMainWindow,
-    QPushButton, QSizePolicy, QSpacerItem, QTabWidget,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication)
 
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon)
+from PySide6.QtGui import (QIcon)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
