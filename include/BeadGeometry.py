@@ -10,7 +10,7 @@ class BeadGeometry:
         sigma = 5.67e-14  # W/mm^2 * K^4
         Tamb = 25 # C°
         Convt = 100/1000000 # Conversion coefficient (W / mm^2 * °K)
-
+        self.eficiency = 0.88
 
         #Given Parameters
         self.D = D  # Diameter
@@ -165,7 +165,7 @@ class BeadGeometry:
         print("Volume 3: ", v3)
         return v1 + v2 + v3
     
-    def getPenetration(self): #Acertar fórmula: valores muito baixos de penetração
+    def getPenetration1(self): #Acertar fórmula: valores muito baixos de penetração
         '''Calculates the penetration depth of the weld bead'''
 
         
@@ -186,6 +186,7 @@ class BeadGeometry:
         Cp3 = 0.021
 
         DBCP = 15  #distancia da tocha ao á peça (Distancia Bico de Contato Peça) em mm
+        #TODO: fazer isso um input na interface
 
         a = (self.Ws/(Cp1 + ((self.Ts-4)**2)**0.5))   # a 
         b = self.Ts**2*(((E_d*Cp2)/(DBCP * self.Mp *Ce2))**0.5) #b
@@ -195,10 +196,25 @@ class BeadGeometry:
         # print("b: ", b)
         # print("Pe: ", Pe)
         return Pe
+    
 
-#Usar 0.7 segundos para o tempo de soldagem por enquanto
+    def getPenetration2(self): #Modelo matemático usando fórmulas de termodinâmica
+        r = self.eficiency * self.I * self.V / (self.Mp2 - 25) # r = penetração considerando a temperatura do ponto de fusão
 
-def getDeltaE(I, V, Ts, den, Ws, Sh, Mp, D, t = 1):
+        #Penetração 2.1: relação da penetração semiesférica radial a semielíptica - Distribuição igual de ÁREAS 
+        Penetr1 = r**2 / (self.w/2)
+        #Penetração 2.2: relação da penetração semiesférica radial a semielíptica - Distribuição igual de VOLUMES
+        Penetr2 = r**3 / (self.w/2)**2
+        #Penetração 2.3: Relação da penetração considerando relação entre corrente e Tensão
+        Penetr3 = r*self.I/ (12 * self.V) #NOTA: 12 é a constante para o aço
+
+        #Média de todas as penetrações com os seus determinados pesos
+        Pe = self.getPenetration1()
+
+        PeFinal = (0.5 * Penetr1 + 0.08*Penetr2 + 0.12*Penetr3 + 0.3*Pe) # Pesos determinados empiricamente
+
+
+def getDeltaE(I, V, Ts, den, Ws, Sh, Mp, D, t = 1): 
     '''Calculates the energy consumed in the welding process
     /////////////////////////////////////////////////
     PARAMS:
