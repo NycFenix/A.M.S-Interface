@@ -70,6 +70,7 @@ class AMSInterface(QMainWindow):
         ct_default = 71.5   # Thermal Conductivity
         em_default = 0.7   # Emissivity
         ef_default = 25     # Enthalpy Fusion
+        DBCP_default = 15
         ui.melting_point.setText(str(mp_default))
         ui.specific_heat.setText(str(sh_default))
         ui.viscosity.setText(str(vi_default))
@@ -96,9 +97,9 @@ class AMSInterface(QMainWindow):
     def GeometricPredictionCallback(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n) -> None:
             Geometry = BeadGeometry.BeadGeometry(D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n) #Initiate GeomtryObject
             height, width = Geometry.h, Geometry.w #Get Bead Geometry
-            penetration = Geometry.getPenetration() #Get Penetration
-            t_solid = Geometry.Tsolid #Get Solidification Time of Bead
-
+            penetration = Geometry.getPenetration2() #Get Penetration
+            t_solid = Geometry.getTSolid2() #Get Solidification Time of Bead
+            TMax = Geometry.Tmax1 #Get Maximum Temperature
             
 
             #t_solid = BeadGeometry.getT_Sol(Sh, D, Ts, I, V, De, penetration, Mp, Ct, Ws)
@@ -108,7 +109,7 @@ class AMSInterface(QMainWindow):
             ui.t_solid.setText(str(round(t_solid,3)))
             ui.height.setText(str(round(height,3)))
             ui.width.setText(str(round(width,3)))
-
+            ui.Tmax.setText(str(round(TMax,3)))
 
     def SpeedMeasureConverter(self, speed = str,flag = int):
         #This method converts mm/s into m/min and vice-versa

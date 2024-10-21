@@ -338,7 +338,7 @@
            </palette>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="Geometriadocordao">
            <property name="palette">
@@ -469,7 +469,7 @@ color:rgb(162, 23, 51);
 }
 
 /* yellow icon labels */ 
-#ws_icon, #ts_icon, #v_icon, #density_icon, #emissivity_icon, #viscosity_icon, #melting_point_icon, #conductivity_icon, #specific_heat_icon, #diameter_icon, #EnthalpyFusion_icon {
+#ws_icon, #ts_icon, #v_icon, #density_icon, #emissivity_icon, #viscosity_icon, #melting_point_icon, #conductivity_icon, #specific_heat_icon, #diameter_icon, #EnthalpyFusion_icon, #DBCP_label {
 color:rgb(0, 0, 0);
 background-color:rgb(245, 230, 196);
 font-weight: bold
@@ -3978,7 +3978,7 @@ background-color:rgb(245, 197, 159)
                     </font>
                    </property>
                    <property name="text">
-                    <string>tempo_solid</string>
+                    <string>t_solid</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -4459,12 +4459,10 @@ background-color:rgb(245, 197, 159)
                     </font>
                    </property>
                    <property name="text">
-                    <string>
-Temperatura 
-Máxima na poça</string>
+                    <string>T_MAX</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignTop</set>
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
                    </property>
                   </widget>
                  </item>
@@ -6191,6 +6189,24 @@ Máxima na poça</string>
                  <property name="spacing">
                   <number>20</number>
                  </property>
+                 <item row="0" column="0" colspan="3">
+                  <widget class="QLabel" name="wire_characteristics_title">
+                   <property name="font">
+                    <font>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string>Wire Characteristics</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="1" column="0">
                   <widget class="QLabel" name="diameter_icon">
                    <property name="enabled">
@@ -6424,34 +6440,6 @@ Máxima na poça</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="0" colspan="3">
-                  <widget class="QLabel" name="wire_characteristics_title">
-                   <property name="font">
-                    <font>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true"/>
-                   </property>
-                   <property name="text">
-                    <string>Wire Characteristics</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignmentFlag::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QLineEdit" name="diameter">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="1" column="2">
                   <widget class="QLabel" name="diameter_measure">
                    <property name="palette">
@@ -6481,6 +6469,39 @@ Máxima na poça</string>
                      <disabled/>
                     </palette>
                    </property>
+                   <property name="text">
+                    <string>(mm)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="diameter">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="DBCP_label">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Torch-Piece Distance</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLineEdit" name="DBCP"/>
+                 </item>
+                 <item row="2" column="2">
+                  <widget class="QLabel" name="DBCP_measure">
                    <property name="text">
                     <string>(mm)</string>
                    </property>

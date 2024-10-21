@@ -50,14 +50,14 @@ class BeadGeometry:
         self.r = self.eficiency * self.I * self.V / (self.Mp2 - 25) # r = penetração considerando a temperatura do ponto de fusão
         self.Desloc =  self.w/25 # Deslocamento da tocha escolhido (muito menor que a largura)
         self.PeMF = self.getPenetration2()  # Penetration Depth
-        self.PRratio = self.Pe/(self.w/2)
+        self.PRratio = self.PeMF/(self.w/2)
         self.theta1 = 33.18*(self.PRratio**2) - 123.74*self.PRratio + 90.54 # Angulo em graus
         self.theta2 = self.theta1 * 3.1416/180 # Angulo em radianos
         self.temFun = self.Desloc/self.Ts # Tempo que a tocha fica depositando
         # Volume and Surfaces
         self.Vf, self.mass = self.__getVolumeandMass()  # Total Volume of the weld bead
-        self.As1, self.As2, self.As3, self.As4 = self.__getSurfaces() # Surface Areas of the weld bead
-    
+        #self.As1, self.As2, self.As3, self.As4 = self.__getSurfaces() # Surface Areas of the weld bead
+        # TODO: dont need these surfaces anymore?
         self.As3I = np.pi * (self.w/2)**2 # Área superfícial na parte superior da poça
         self.As4I = self.w/2 * self.Desloc # Área superficial da zona fundida na parte superior
         self.AsIConv = self.As3I + self.As4I # Área total fundida exposta a conveccção e radiação
@@ -65,31 +65,13 @@ class BeadGeometry:
         # Energy Calculations
 
         self.t_halfway = (self.w/2)/self.Ts     # Time to run 1/2 times the width of the weld bead
-
+        self.Ecl = self.mass* self.CLFus # Energia Liberada pela formação de cristais
         self.Tmax1 = (((self.eficiency * self.I * self.V/self.Ts) * self.Desloc) + self.mass * self.Sh2 * Tamb2 + self.Ecl - self.Ct2*self.Temp2 *
                       (self.De2 * self.Sh2 * self.Ts * self.As3I/ (4*self.Ct2)) * self.temFun - self.Convt * self.Temp2 * self.AsIConv * self.temFun -
                       self.Em * self.sigma * (self.Mp2 ** 4) * self.AsIConv * self.temFun) / (self.mass * self.Sh2) # Temperatura máxima no ponto de fusão
         
-
-
-        self.Et = (self.n * self.I * self.V/self.Ts) * (self.w/2)  # Total Energy Given
         
-        # Delta T cálculo (se estiver um número grande (ou negativo), tá errado)
-
-        # DeltaTa = ((self.I * self.V)/self.Ts) * self.w/2
-        # DeltaTb = self.Vf
-        # DeltaT_num = DeltaTa - (self.De2 * (self.w/2 * 3.1416 * DeltaTb) * self.Sh2 * (self.Mp - Tamb))
-        # print("DeltaNumerador ", DeltaT_num)
-        
-        # DeltaT_den = self.Sh2 * self.De2 * DeltaTb
-        # print("DeltaDenominador ", DeltaT_den)
-        # self.DelT = DeltaT_num/DeltaT_den
-        # print("DeltaTa: ", DeltaTa)
-        # print("DeltaTb: ", DeltaTb)        
-        # TODO: Delt inútil agora?
-
         # Energy Calculations
-
         self.Comp = self.w/4 # Comprimento do cordão de solda percorrido
         self.tcomp = self.Comp/self.Ts # Tempo para percorrer o comprimento do cordão de solda
         self.Delt2 = self.Tmax1 - self.Mp2 # Diferença de temperatura entre a temperatura máxima e o ponto de fusão
@@ -102,23 +84,33 @@ class BeadGeometry:
         self.DeltReal = (A_poca * (1/25) * self.Delt3 + A_poca * (8/25) * (self.Delt3/2))/25 # Distribuição do incremento máximo na área da poça
                                                                 # TODO: o que é 1/25 e 8/25??
 
+        self.PotCond, self.PotConv, self.PotRad, self.Efus, self.Et = self.__getHeatLoss()
+        self.Et = (self.n * self.I * self.V/self.Ts) * (self.w/2)  # Total Energy Given
+        
+        # Delta T cálculo (se estiver um número grande (ou negativo), tá errado)
 
+        # DeltaTa = ((self.I * self.V)/self.Ts) * self.w/2
+        # DeltaTb = self.Vf
+        # DeltaT_num = DeltaTa - (self.De2 * (self.w/2 * 3.1416 * DeltaTb) * self.Sh2 * (self.Mp - Tamb))
+        # print("DeltaNumerador ", DeltaT_num)
 
+        # DeltaT_den = self.Sh2 * self.De2 * DeltaTb
+        # print("DeltaDenominador ", DeltaT_den)
+        # self.DelT = DeltaT_num/DeltaT_den
+        # print("DeltaTa: ", DeltaTa)
+        # print("DeltaTb: ", DeltaTb)        
+        # TODO: Delt inútil agora?
 
         
-        
-        
+
+       
         
         # self.Efus = self.De2 * self.Vf * self.Sh * (self.Mp - Tamb) # Energia de fusão necessária para fundir a peça
         # self.Potcond1 = self.Ct2F * (self.Mp + self.DelT - Tamb) * (self.As1/((self.Pe + self.h)/2))
         # self.Potcond2 = self.Ct2 * 20 * (self.As2/(self.Pe/2))
         # self.Prad = self.Em * self.sigma * ((self.Mp + self.DelT)**4) * (self.As3 + self.As4)
         # self.Potconv = self.Convt * ((self.Mp + self.DelT - Tamb) + 273) * (self.As3 + self.As4) # Potência de Energia Liberada por Convecção
-
-        self.Ecl = self.mass* self.CLFus # Energia Liberada pela formação de cristais
-        self.PotCond, self.PotConv, self.PotRad, self.Efus, self.Et = self.__getHeatLoss()
-
-        self.Tsolid = self.getTsolid()
+        
 
         
     def getTsolid(self):
@@ -228,14 +220,9 @@ class BeadGeometry:
         return (v1 + v2), massaT
     
     
-    def getPenetration1(self): #Acertar fórmula: valores muito baixos de penetração
+    def getPenetration1(self, DBCP): #Acertar fórmula: valores muito baixos de penetração
         '''Calculates the penetration depth of the weld bead'''
 
-        
-        # Ws  = Ws * 1000/60
-        # Ts = Ts * 1000 / 60
-
-        
         E_d1 = self.Pot/self.Ts   # J/mm  
         E_d2 = E_d1/1000         # KJ/mm 
         E_d = E_d2 * 0.2388      # Kcal/mm
@@ -248,16 +235,13 @@ class BeadGeometry:
         Cp2 = 0.054423      # All in unit S^4g
         Cp3 = 0.021
 
-        DBCP = 15  #distancia da tocha ao á peça (Distancia Bico de Contato Peça) em mm
+          #DBCP - distancia da tocha ao á peça (Distancia Bico de Contato Peça) em mm
         #TODO: fazer isso um input na interface
 
         a = (self.Ws/(Cp1 + ((self.Ts-4)**2)**0.5))   # a 
         b = self.Ts**2*(((E_d*Cp2)/(DBCP * self.Mp *Ce2))**0.5) #b
         Pe = (a*b)*Cp3      
 
-        # print("a: ", a)
-        # print("b: ", b)
-        # print("Pe: ", Pe)
         return Pe
     
     def __getHeatLoss(self):
@@ -312,7 +296,7 @@ class BeadGeometry:
         # energia de fusão,
         # energia total
 
-    def getPenetration2(self): #Modelo matemático usando fórmulas de termodinâmica
+    def getPenetration2(self, DBCP): #Modelo matemático usando fórmulas de termodinâmica
         
         #Penetração 2.1: relação da penetração semiesférica radial a semielíptica - Distribuição igual de ÁREAS 
         Penetr1 = self.r**2 / (self.w/2)
@@ -322,8 +306,11 @@ class BeadGeometry:
         Penetr3 = self.r*self.I/ (12 * self.V) #NOTA: 12 é a constante para o aço
 
         #Média de todas as penetrações com os seus determinados pesos
-        Pe = self.getPenetration1()
-
+        Pe = self.getPenetration1(DBCP)
+        print("Penetr1: ", Penetr1)
+        print("Penetr2: ", Penetr2)
+        print("Penetr3: ", Penetr3)
+        print("Pe: ", Pe)
         PeFinal = (0.5 * Penetr1 + 0.08*Penetr2 + 0.12*Penetr3 + 0.3*Pe) # Pesos determinados empiricamente
         return PeFinal  
 
