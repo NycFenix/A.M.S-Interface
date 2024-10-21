@@ -7,10 +7,10 @@ import math
 class BeadGeometry:
     def __init__(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n):
         # Constans
-        sigma = 5.67e-14  # W/mm^2 * K^4
+        self.sigma = 5.67e-14  # W/mm^2 * K^4
         Tamb = 25 # C°
         Tamb2 = Tamb + 273 # K
-        Convt = 100/1000000 # Conversion coefficient (W / mm^2 * °K)
+        self.Convt = 100/1000000 # Conversion coefficient (W / mm^2 * °K)
         self.eficiency = 0.88
 
         #Given Parameters
@@ -20,14 +20,13 @@ class BeadGeometry:
         self.I = I    # Current (A)
         self.V = V  # Tension (v)
         self.Mp = Mp    # Melting Point (°C)
-        self.Sh = Sh    # Specific Heat (cal/g*°C) #TODO: Converter para J/g*°C
-        self.Ct = Ct    # Thermal Conductivity (W/m*°C) TODO: Converter para W/mm*°C
-        self.De = De    # Density   (g/cm^3) TODO: Converter para g/mm^3
+        self.Sh = Sh    # Specific Heat (cal/g*°C) 
+        self.Ct = Ct    # Thermal Conductivity (W/m*°C) 
+        self.De = De    # Density   (g/cm^3) 
         self.Vi = Vi    # Viscosity (g/mm*s)
         self.Em = Em    # Emissivity
         self.CLFus = CLFus  # Latent Heat of Fusion (J/g)
-        self.n = n  # Transfer Mode Eficiency  TODO: Deixar mudança de modo de soldagem com valor default no radiobutton
-        
+        self.n = n  # Transfer Mode Eficiency 
 
         # Converting to other units
 
@@ -48,6 +47,7 @@ class BeadGeometry:
         self.Pot = self.I*self.V  # Potency (Watts)
         self.Temp2 = self.Mp2 - Tamb2 # Diferença de temperatura entre os pontos de fusao a tamb
         self.h, self.w = self.getBeadGeometry() # Height and Width of the weld bead
+        self.r = self.eficiency * self.I * self.V / (self.Mp2 - 25) # r = penetração considerando a temperatura do ponto de fusão
         self.Desloc =  self.w/25 # Deslocamento da tocha escolhido (muito menor que a largura)
         self.PeMF = self.getPenetration2()  # Penetration Depth
         self.PRratio = self.Pe/(self.w/2)
@@ -65,35 +65,59 @@ class BeadGeometry:
         # Energy Calculations
 
         self.t_halfway = (self.w/2)/self.Ts     # Time to run 1/2 times the width of the weld bead
-        
+
         self.Tmax1 = (((self.eficiency * self.I * self.V/self.Ts) * self.Desloc) + self.mass * self.Sh2 * Tamb2 + self.Ecl - self.Ct2*self.Temp2 *
-                      (self.De2 * self.Sh2 * self.Ts * self.As3I/ (4*self.Ct2)) * self.temFun - Convt * self.Temp2 * self.AsIConv * self.temFun -
-                      self.Em * sigma * (self.Mp2 ** 4) * self.AsIConv * self.temFun) / (self.mass * self.Sh2) # Temperatura máxima no ponto de fusão
+                      (self.De2 * self.Sh2 * self.Ts * self.As3I/ (4*self.Ct2)) * self.temFun - self.Convt * self.Temp2 * self.AsIConv * self.temFun -
+                      self.Em * self.sigma * (self.Mp2 ** 4) * self.AsIConv * self.temFun) / (self.mass * self.Sh2) # Temperatura máxima no ponto de fusão
         
+
+
         self.Et = (self.n * self.I * self.V/self.Ts) * (self.w/2)  # Total Energy Given
         
         # Delta T cálculo (se estiver um número grande (ou negativo), tá errado)
 
-        DeltaTa = ((self.I * self.V)/self.Ts) * self.w/2
-        DeltaTb = self.Vf
-        DeltaT_num = DeltaTa - (self.De2 * (self.w/2 * 3.1416 * DeltaTb) * self.Sh2 * (self.Mp - Tamb))
-        print("DeltaNumerador ", DeltaT_num)
-       
-        DeltaT_den = self.Sh2 * self.De2 * DeltaTb
-        print("DeltaDenominador ", DeltaT_den)
-        self.DelT = DeltaT_num/DeltaT_den
-        print("DeltaTa: ", DeltaTa)
-        print("DeltaTb: ", DeltaTb)        
+        # DeltaTa = ((self.I * self.V)/self.Ts) * self.w/2
+        # DeltaTb = self.Vf
+        # DeltaT_num = DeltaTa - (self.De2 * (self.w/2 * 3.1416 * DeltaTb) * self.Sh2 * (self.Mp - Tamb))
+        # print("DeltaNumerador ", DeltaT_num)
+        
+        # DeltaT_den = self.Sh2 * self.De2 * DeltaTb
+        # print("DeltaDenominador ", DeltaT_den)
+        # self.DelT = DeltaT_num/DeltaT_den
+        # print("DeltaTa: ", DeltaTa)
+        # print("DeltaTb: ", DeltaTb)        
+        # TODO: Delt inútil agora?
 
         # Energy Calculations
-        self.Efus = self.De2 * self.Vf * self.Sh * (self.Mp - Tamb) # Energia de fusão necessária para fundir a peça
-        self.Potcond1 = self.Ct2F * (self.Mp + self.DelT - Tamb) * (self.As1/((self.Pe + self.h)/2))
-        print("Delta T: ", self.DelT)
-        self.Potcond2 = self.Ct2 * 20 * (self.As2/(self.Pe/2))
-        self.Prad = self.Em * sigma * ((self.Mp + self.DelT)**4) * (self.As3 + self.As4)
-        self.Potconv = Convt * ((self.Mp + self.DelT - Tamb) + 273) * (self.As3 + self.As4) # Potência de Energia Liberada por Convecção
-        self.Ecl = self.mass* self.CLFus # Energia Liberada pela formação de cristais
+
+        self.Comp = self.w/4 # Comprimento do cordão de solda percorrido
+        self.tcomp = self.Comp/self.Ts # Tempo para percorrer o comprimento do cordão de solda
+        self.Delt2 = self.Tmax1 - self.Mp2 # Diferença de temperatura entre a temperatura máxima e o ponto de fusão
+
+        #Incremento do Delta2 ao percorrer uma distância maior
+        self.Delt3 = self.Delt2 * (1 + (self.Comp/ (self.Comp + (self.Desloc/self.Comp)**0.5))/2)
+        #comp - deslocamento da tocha
+
+        A_poca = np.pi * (self.w/2)**2 # Área da poça de fusão
+        self.DeltReal = (A_poca * (1/25) * self.Delt3 + A_poca * (8/25) * (self.Delt3/2))/25 # Distribuição do incremento máximo na área da poça
+                                                                # TODO: o que é 1/25 e 8/25??
+
+
+
+
         
+        
+        
+        
+        # self.Efus = self.De2 * self.Vf * self.Sh * (self.Mp - Tamb) # Energia de fusão necessária para fundir a peça
+        # self.Potcond1 = self.Ct2F * (self.Mp + self.DelT - Tamb) * (self.As1/((self.Pe + self.h)/2))
+        # self.Potcond2 = self.Ct2 * 20 * (self.As2/(self.Pe/2))
+        # self.Prad = self.Em * self.sigma * ((self.Mp + self.DelT)**4) * (self.As3 + self.As4)
+        # self.Potconv = self.Convt * ((self.Mp + self.DelT - Tamb) + 273) * (self.As3 + self.As4) # Potência de Energia Liberada por Convecção
+
+        self.Ecl = self.mass* self.CLFus # Energia Liberada pela formação de cristais
+        self.PotCond, self.PotConv, self.PotRad, self.Efus, self.Et = self.__getHeatLoss()
+
         self.Tsolid = self.getTsolid()
 
         
@@ -131,26 +155,32 @@ class BeadGeometry:
     
 
     def getTSolid2(self):
-        PeFinal = self.getPenetration2()
-        r = self.eficiency * self.I * self.V / (self.Mp2 - 25) # r = penetração considerando a temperatura do ponto de fusão
+        # Método 1 - Modelo matemático
+        tsol_M1 = ((self.Et + self.Ecl - self.Efus - self.tcomp*(self.PotCond + self.PotRad + self.PotConv))
+        / (self.PotCond + self.PotRad + self.PotConv)) # Considera perdas de conducao convecção e radiação e a energia dada pela fonte
 
+        # Método 2 - Modelo matemático 2
 
-        Comp = self.w/4 # Comprimento do cordão de solda percorrido
-        tcomp = Comp/self.Ts # Tempo para percorrer o comprimento do cordão de solda
+        tsol2_sem = ((4/3) * (np.pi * (0.25 * self.PeMF + 0.25*self.r + 0.5*self.h)**3)/ (self.Ct2M * self.Ts / (4*self.De2*self.Sh2F)))**0.5
+        
+        # Calculo anterior propõe uma perda de calor mínima por radiação e convecção durante a solidificação
+        tsol_M2 = tsol2_sem * 0.95 ** (self.eficiency * self.I * self.V * self.tcomp / self.Efus)
 
-        tsol2_sem = ((4/3) * (np.pi * (0.25 * PeFinal + 0.25*r + 0.5*self.h)**3)/ (self.Ct2M * self.Ts / (4*self.De2*self.Sh2F)))**0.5
-        # Valor de tempo de solidifcação desconsiderando as perdas de radiação e convecção
-        # e considerando difusividade "velocidade de transmissão de calor"
+        # /////////////////////////////////////////////////
+        # TEMPO DE SOLIDIFICAÇÃO QUANDO O SUBSTRATO ESTÁ QUENTE
+        Tsub = 200 # Temperatura do substrato
+        tsol_quente = (self.Et + self.Ecl - self.Efus - self.tcomp * (self.PotRad + self.PotConv)) / (self.PotCond + self.PotRad + self.PotConv + (Tsub/self.Tamb2))
+        #Valor usado para temperaturas do substrato muito superiores a temperatura do ambiente # TODO: não utilizado?
+        # /////////////////////////////////////////////////
 
-        tsol2 = tsol2_sem * (0.95) ** (self.eficiency * self.I * self.V * tcomp / self.Efus)
-        #...
+        # VALOR MÉDIO - VALOR FINAL DE TEMPO DE SOLIDIFICAÇÃO
+        tsol_final = (0.85 * tsol_M1 + 0.15 * tsol_M2) # Pesos determinados empiricamente
+        return tsol_final
+        
     def getBeadGeometry(self):
         '''Calculates the height and width of the weld bead'''
-
-        r = self.D/2
-        
         # Semicircular bead height
-        Hi = (2*(self.Ws/self.Ts) * (r **2))**0.5
+        Hi = (2*(self.Ws/self.Ts) * (self.Ra **2))**0.5
         Wi = 2*Hi                 
         print("Hi: ", Hi)
         print("Wi: ", Wi)
@@ -230,16 +260,66 @@ class BeadGeometry:
         # print("Pe: ", Pe)
         return Pe
     
+    def __getHeatLoss(self):
+        '''Calculates the multiple sources of heat and energy loss from the welding process'''
+
+        Difus = (self.Ct2 / self.De2*self.Sh2) # Difusividade
+
+
+        # PERDA POR CONDUTIVIDADE
+        # constantes de posição
+        con1 = 1 # Se o calor foi distribuido do centro do corpo para fora
+        con2 = 0.5 # Se o calor foi distribuído de um plano para dentro de um corpo
+        con3 = 0.25 # Se o calor foi distribuido de uma lateral do corpo
+        con4 = 0.125 # Se o calor foi distribuído de uma quina
+
+        Eixo_trans = 3 # Eixo no que se transmite o calor
+
+        # Ao passar do tempo o ponto intermediário entre duas distancias
+        #  muito pequenas, entre duas temperaturas, aumenta sua T°, 
+        # pode-se considerar este ponto com aumento de T° intermediário
+        # de 1/2*DeltaT°, mais quente que o instante anterior . (Traduzido dos comentários do Jairo)
+        
+        ## Influencia do acumulo de calor na condução - Constante proposta para trajetoria oscilada
+        Acum_oscilado = 6 * Difus / self.Ts * self.h # TODO: não utilizado
+
+        ## Influência do acumulod e calor na condução - constante proposta para trajetoria filetada ou paralela
+        Acum_raster = 4 * Difus / self.Ts * self.h
+
+        ConsCond = Eixo_trans * con2/Acum_raster
+
+        Pcond1 = self.Ct2F * (self.Mp2 + (self.Delt2 / (np.pi * ((self.w/2)**2))) - self.Tamb2) * (2*(np.pi * ((self.w/2)**2)) / (self.h + self.PeMF)) * ConsCond
+        
+        # PERDA POR CONVECÇÃO
+        
+        Pconv = self.Convt * (self.Mp2 + (self.Delt3 / (np.pi * ((self.w/2) ** 2))) - self.Tamb2) * self.AsIConv 
+
+        # PERDA POR RADIAÇÃO
+
+        Prad = self.Em * self.sigma * (self.Mp + (self.Delt3 / (np.pi *((self.w/2) ** 2)))) ** 4 * self.AsIConv
+
+        Q = 4 * np.pi * Difus * self.r * self.DeltReal * math.e**(self.r**2 / (4* Difus * self.tcomp)) / self.tcomp # TODO: não utilizado
+
+        Et = (self.eficiency * self.I * self.V /self.Ts) * self.Comp
+        Efus = self.mass * self.Sh2 * (self.Mp2 - self.Tamb2)
+
+        Result = Et - Efus # TODO: não usado?
+
+        return Pcond1, Pconv, Prad, Efus, Et
+        # return Potencial de condução, 
+        # potencial de convecção, 
+        # potencial de radiação,
+        # energia de fusão,
+        # energia total
 
     def getPenetration2(self): #Modelo matemático usando fórmulas de termodinâmica
-        r = self.eficiency * self.I * self.V / (self.Mp2 - 25) # r = penetração considerando a temperatura do ponto de fusão
-
+        
         #Penetração 2.1: relação da penetração semiesférica radial a semielíptica - Distribuição igual de ÁREAS 
-        Penetr1 = r**2 / (self.w/2)
+        Penetr1 = self.r**2 / (self.w/2)
         #Penetração 2.2: relação da penetração semiesférica radial a semielíptica - Distribuição igual de VOLUMES
-        Penetr2 = r**3 / (self.w/2)**2
+        Penetr2 = self.r**3 / (self.w/2)**2
         #Penetração 2.3: Relação da penetração considerando relação entre corrente e Tensão
-        Penetr3 = r*self.I/ (12 * self.V) #NOTA: 12 é a constante para o aço
+        Penetr3 = self.r*self.I/ (12 * self.V) #NOTA: 12 é a constante para o aço
 
         #Média de todas as penetrações com os seus determinados pesos
         Pe = self.getPenetration1()
@@ -247,19 +327,3 @@ class BeadGeometry:
         PeFinal = (0.5 * Penetr1 + 0.08*Penetr2 + 0.12*Penetr3 + 0.3*Pe) # Pesos determinados empiricamente
         return PeFinal  
 
-def getDeltaE(I, V, Ts, den, Ws, Sh, Mp, D, t = 1): 
-    '''Calculates the energy consumed in the welding process
-    /////////////////////////////////////////////////
-    PARAMS:
-    I: Current
-    V: Tension
-    Ts: Travel Speed
-    den: Density
-    Ws: Wire Feet Speed
-    Sh: Specific Heat
-    Mp: Melting Point
-    D: Diameter
-    t: Time'''
-    wire_area = np.pi * (D/2)**2
-    DeltaE = ((I*V/Ts) * t) - (Sh * Mp * (den * (wire_area*Ws*t)))
-    return DeltaE
