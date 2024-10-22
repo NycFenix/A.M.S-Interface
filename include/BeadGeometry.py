@@ -5,7 +5,7 @@ import math
 
 
 class BeadGeometry:
-    def __init__(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n):
+    def __init__(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n, DBCP):
         # Constans
         self.sigma = 5.67e-14  # W/mm^2 * K^4
         Tamb = 25 # C°
@@ -27,7 +27,7 @@ class BeadGeometry:
         self.Em = Em    # Emissivity
         self.CLFus = CLFus  # Latent Heat of Fusion (J/g)
         self.n = n  # Transfer Mode Eficiency 
-
+        self.DBCP = DBCP
         # Converting to other units
 
         self.Mp2 = self.Mp + 273 # (°K)
@@ -57,7 +57,7 @@ class BeadGeometry:
         # Volume and Surfaces
         self.Vf, self.mass = self.__getVolumeandMass()  # Total Volume of the weld bead
         #self.As1, self.As2, self.As3, self.As4 = self.__getSurfaces() # Surface Areas of the weld bead
-        # TODO: dont need these surfaces anymore?
+        # TODO: não precisa mais desses cálculos de superfície?
         self.As3I = np.pi * (self.w/2)**2 # Área superfícial na parte superior da poça
         self.As4I = self.w/2 * self.Desloc # Área superficial da zona fundida na parte superior
         self.AsIConv = self.As3I + self.As4I # Área total fundida exposta a conveccção e radiação
@@ -113,37 +113,37 @@ class BeadGeometry:
         
 
         
-    def getTsolid(self):
+    # def getTsolid(self):
 
-        Numerator = (self.Et + self.Ecl - self.Efus
-        - self.t_halfway * (self.Potcond1 + self.Potcond2 + self.Prad + self.Potconv))
+    #     Numerator = (self.Et + self.Ecl - self.Efus
+    #     - self.t_halfway * (self.Potcond1 + self.Potcond2 + self.Prad + self.Potconv))
 
-        Denominator = self.Potcond1 + self.Potcond2 + self.Prad + self.Potconv
+    #     Denominator = self.Potcond1 + self.Potcond2 + self.Prad + self.Potconv
 
-        t_sol = Numerator/Denominator
+    #     t_sol = Numerator/Denominator
         
-        # print("ENERGIAS")
-        # print("/////////////////////////////////")
+    #     # print("ENERGIAS")
+    #     # print("/////////////////////////////////")
         
-        # print("Energia Total necessária: ", self.Et)
-        # print("Energia de Fusão: ", self.Efus)
-        # print("Densidade: ", self.De2)
-        # print("Volume: ", self.Vf)
-        # print("Calor Específico: ", self.Sh)
-        # print("Temperatura", (self.Mp - 25))
-        # print("Energia Liberada pela formação de cristais: ", self.Ecl)
-        # print("Potência de Condução 1: ", self.Potcond1)
-        # print("Potência de Condução 2: ", self.Potcond2)
-        # print("Potência de Radiação: ", self.Prad)
-        # print("Potência de Convecção: ", self.Potconv)
-        # print("numerador: ", Numerator)
-        # print("/////////////////////////////////")
-        # print("denominador: ", Denominator)
-        # print("Tempo de Solidificação: ", t_sol)
+    #     # print("Energia Total necessária: ", self.Et)
+    #     # print("Energia de Fusão: ", self.Efus)
+    #     # print("Densidade: ", self.De2)
+    #     # print("Volume: ", self.Vf)
+    #     # print("Calor Específico: ", self.Sh)
+    #     # print("Temperatura", (self.Mp - 25))
+    #     # print("Energia Liberada pela formação de cristais: ", self.Ecl)
+    #     # print("Potência de Condução 1: ", self.Potcond1)
+    #     # print("Potência de Condução 2: ", self.Potcond2)
+    #     # print("Potência de Radiação: ", self.Prad)
+    #     # print("Potência de Convecção: ", self.Potconv)
+    #     # print("numerador: ", Numerator)
+    #     # print("/////////////////////////////////")
+    #     # print("denominador: ", Denominator)
+    #     # print("Tempo de Solidificação: ", t_sol)
 
 
         
-        return t_sol
+    #     return t_sol
     
 
     def getTSolid2(self):
@@ -220,7 +220,7 @@ class BeadGeometry:
         return (v1 + v2), massaT
     
     
-    def getPenetration1(self, DBCP): #Acertar fórmula: valores muito baixos de penetração
+    def getPenetration1(self): #Acertar fórmula: valores muito baixos de penetração
         '''Calculates the penetration depth of the weld bead'''
 
         E_d1 = self.Pot/self.Ts   # J/mm  
@@ -235,11 +235,8 @@ class BeadGeometry:
         Cp2 = 0.054423      # All in unit S^4g
         Cp3 = 0.021
 
-          #DBCP - distancia da tocha ao á peça (Distancia Bico de Contato Peça) em mm
-        #TODO: fazer isso um input na interface
-
         a = (self.Ws/(Cp1 + ((self.Ts-4)**2)**0.5))   # a 
-        b = self.Ts**2*(((E_d*Cp2)/(DBCP * self.Mp *Ce2))**0.5) #b
+        b = self.Ts**2*(((E_d*Cp2)/(self.DBCP * self.Mp *Ce2))**0.5) #b
         Pe = (a*b)*Cp3      
 
         return Pe
@@ -296,7 +293,7 @@ class BeadGeometry:
         # energia de fusão,
         # energia total
 
-    def getPenetration2(self, DBCP): #Modelo matemático usando fórmulas de termodinâmica
+    def getPenetration2(self): #Modelo matemático usando fórmulas de termodinâmica
         
         #Penetração 2.1: relação da penetração semiesférica radial a semielíptica - Distribuição igual de ÁREAS 
         Penetr1 = self.r**2 / (self.w/2)
@@ -306,7 +303,7 @@ class BeadGeometry:
         Penetr3 = self.r*self.I/ (12 * self.V) #NOTA: 12 é a constante para o aço
 
         #Média de todas as penetrações com os seus determinados pesos
-        Pe = self.getPenetration1(DBCP)
+        Pe = self.getPenetration1()
         print("Penetr1: ", Penetr1)
         print("Penetr2: ", Penetr2)
         print("Penetr3: ", Penetr3)

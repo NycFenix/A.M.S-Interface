@@ -56,7 +56,8 @@ class AMSInterface(QMainWindow):
         ui.calculate_button.clicked.connect(lambda: self.GeometricPredictionCallback(Ws=float(ui.ws_input1.text()), Ts=float(ui.ts_input1.text()), V=float(ui.v_input.text()), 
                                                                                      I=float(ui.I.text()), Mp=float(ui.melting_point.text()), Sh=float(ui.specific_heat.text()), 
                                                                                      Vi=float(ui.viscosity.text()), De=float(ui.density.text()), Ct=float(ui.thermal_conductivity.text()), 
-                                                                    D=float(ui.diameter.text()), Em=float(ui.emissivity.text()), CLFus=float(ui.EnthalpyFusion.text()), n=n_eficiency))
+                                                                    D=float(ui.diameter.text()), Em=float(ui.emissivity.text()), CLFus=float(ui.EnthalpyFusion.text()), 
+                                                                    n=n_eficiency, DBCP=float(ui.DBCP.text())))
 
         ui.Analyzebttn.clicked.connect(lambda: self.LoadImg(ui.AnalyzedImg))             
       
@@ -78,26 +79,26 @@ class AMSInterface(QMainWindow):
         ui.thermal_conductivity.setText(str(ct_default))
         ui.emissivity.setText(str(em_default))
         ui.EnthalpyFusion.setText(str(ef_default))
-
+        ui.DBCP.setText(str(DBCP_default))
 
         # Default Parameters: valores usados no codigo no MatLab 
 
-        ui.ws_input1.setText("140")
-        ui.ts_input1.setText("5.83")
-        ui.v_input.setText("20")
-        ui.I.setText("200")
+        ui.ws_input2.setText("5")
+        ui.ts_input1.setText("10.83")
+        ui.v_input.setText("20.1")
+        ui.I.setText("129")
         ui.diameter.setText("1.2")
-
+        
         # ///////////////////////////////////////////////////
 
 
 
         self.show()
 
-    def GeometricPredictionCallback(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n) -> None:
-            Geometry = BeadGeometry.BeadGeometry(D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n) #Initiate GeomtryObject
+    def GeometricPredictionCallback(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n, DBCP) -> None:
+            Geometry = BeadGeometry.BeadGeometry(D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n, DBCP) #Initiate GeomtryObject
             height, width = Geometry.h, Geometry.w #Get Bead Geometry
-            penetration = Geometry.getPenetration2() #Get Penetration
+            penetration = Geometry.PeMF #Get Penetration
             t_solid = Geometry.getTSolid2() #Get Solidification Time of Bead
             TMax = Geometry.Tmax1 #Get Maximum Temperature
             
