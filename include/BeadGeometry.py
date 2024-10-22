@@ -74,44 +74,10 @@ class BeadGeometry:
         # Energy Calculations
         self.Comp = self.w/4 # Comprimento do cordão de solda percorrido
         self.tcomp = self.Comp/self.Ts # Tempo para percorrer o comprimento do cordão de solda
-        self.Delt2 = self.Tmax1 - self.Mp2 # Diferença de temperatura entre a temperatura máxima e o ponto de fusão
-
-        #Incremento do Delta2 ao percorrer uma distância maior
-        self.Delt3 = self.Delt2 * (1 + (self.Comp/ (self.Comp + (self.Desloc/self.Comp)**0.5))/2)
-        #comp - deslocamento da tocha
-
-        A_poca = np.pi * (self.w/2)**2 # Área da poça de fusão
-        self.DeltReal = (A_poca * (1/25) * self.Delt3 + A_poca * (8/25) * (self.Delt3/2))/25 # Distribuição do incremento máximo na área da poça
-                                                                # TODO: o que é 1/25 e 8/25??
-
+        
         self.PotCond, self.PotConv, self.PotRad, self.Efus, self.Et = self.__getHeatLoss()
         self.Et = (self.n * self.I * self.V/self.Ts) * (self.w/2)  # Total Energy Given
-        
-        # Delta T cálculo (se estiver um número grande (ou negativo), tá errado)
-
-        # DeltaTa = ((self.I * self.V)/self.Ts) * self.w/2
-        # DeltaTb = self.Vf
-        # DeltaT_num = DeltaTa - (self.De2 * (self.w/2 * 3.1416 * DeltaTb) * self.Sh2 * (self.Mp - Tamb))
-        # print("DeltaNumerador ", DeltaT_num)
-
-        # DeltaT_den = self.Sh2 * self.De2 * DeltaTb
-        # print("DeltaDenominador ", DeltaT_den)
-        # self.DelT = DeltaT_num/DeltaT_den
-        # print("DeltaTa: ", DeltaTa)
-        # print("DeltaTb: ", DeltaTb)        
-        # TODO: Delt inútil agora?
-
-        
-
-       
-        
-        # self.Efus = self.De2 * self.Vf * self.Sh * (self.Mp - Tamb) # Energia de fusão necessária para fundir a peça
-        # self.Potcond1 = self.Ct2F * (self.Mp + self.DelT - Tamb) * (self.As1/((self.Pe + self.h)/2))
-        # self.Potcond2 = self.Ct2 * 20 * (self.As2/(self.Pe/2))
-        # self.Prad = self.Em * self.sigma * ((self.Mp + self.DelT)**4) * (self.As3 + self.As4)
-        # self.Potconv = self.Convt * ((self.Mp + self.DelT - Tamb) + 273) * (self.As3 + self.As4) # Potência de Energia Liberada por Convecção
-        
-
+    # //////////////////////////////////////////////////
         
     # def getTsolid(self):
 
@@ -245,7 +211,14 @@ class BeadGeometry:
         '''Calculates the multiple sources of heat and energy loss from the welding process'''
 
         Difus = (self.Ct2 / self.De2*self.Sh2) # Difusividade
+        Delt2 = self.Tmax1 - self.Mp2 # Diferença de temperatura entre a temperatura máxima e o ponto de fusão
 
+        #Incremento do Delta2 ao percorrer uma distância maior
+        Delt3 = Delt2 * (1 + (self.Comp/ (self.Comp + (self.Desloc/self.Comp)**0.5))/2)
+        
+        A_poca = np.pi * (self.w/2)**2 # Área da poça de fusão
+        DeltReal = (A_poca * (1/25) * Delt3 + A_poca * (8/25) * (Delt3/2))/25 # Distribuição do incremento máximo na área da poça
+                                            
 
         # PERDA POR CONDUTIVIDADE
         # constantes de posição
@@ -269,17 +242,17 @@ class BeadGeometry:
 
         ConsCond = Eixo_trans * con2/Acum_raster
 
-        Pcond1 = self.Ct2F * (self.Mp2 + (self.Delt2 / (np.pi * ((self.w/2)**2))) - self.Tamb2) * (2*(np.pi * ((self.w/2)**2)) / (self.h + self.PeMF)) * ConsCond
+        Pcond1 = self.Ct2F * (self.Mp2 + (Delt2 / (np.pi * ((self.w/2)**2))) - self.Tamb2) * (2*(np.pi * ((self.w/2)**2)) / (self.h + self.PeMF)) * ConsCond
         
         # PERDA POR CONVECÇÃO
         
-        Pconv = self.Convt * (self.Mp2 + (self.Delt3 / (np.pi * ((self.w/2) ** 2))) - self.Tamb2) * self.AsIConv 
+        Pconv = self.Convt * (self.Mp2 + (Delt3 / (np.pi * ((self.w/2) ** 2))) - self.Tamb2) * self.AsIConv 
 
         # PERDA POR RADIAÇÃO
 
-        Prad = self.Em * self.sigma * (self.Mp + (self.Delt3 / (np.pi *((self.w/2) ** 2)))) ** 4 * self.AsIConv
+        Prad = self.Em * self.sigma * (self.Mp + (Delt3 / (np.pi *((self.w/2) ** 2)))) ** 4 * self.AsIConv
 
-        Q = 4 * np.pi * Difus * self.r * self.DeltReal * math.e**(self.r**2 / (4* Difus * self.tcomp)) / self.tcomp # TODO: não utilizado
+        Q = 4 * np.pi * Difus * self.r * DeltReal * math.e**(self.r**2 / (4* Difus * self.tcomp)) / self.tcomp # TODO: não utilizado
 
         Et = (self.eficiency * self.I * self.V /self.Ts) * self.Comp
         Efus = self.mass * self.Sh2 * (self.Mp2 - self.Tamb2)
