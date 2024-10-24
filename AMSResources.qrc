@@ -1,8 +1,0 @@
-<RCC>
-  <qresource prefix="Images">
-    <file alias="PlaceHolder">img/placeholderImgEvenSmaller.png</file>
-  </qresource>
-  <qresource prefix="Icons">
-    <file alias="MainWindowIcon">img/sold_icon.ico</file>
-  </qresource>
-</RCC>

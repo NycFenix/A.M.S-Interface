@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="pictures">
+    <file>img/pictures/placeholderImgEvenSmaller.png</file>
+  </qresource>
+  <qresource prefix="icons">
+    <file>img/icons/sold_icon.ico</file>
+  </qresource>
+</RCC>

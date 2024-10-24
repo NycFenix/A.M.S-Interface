@@ -11,7 +11,7 @@ from PySide6.QtGui import (QIcon)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon("img/sold_icon.ico"))
+    app.setWindowIcon(QIcon("img/icons/sold_icon.ico"))
     
     #ui = Ui_AMS_Interface()
     ui = AMSInterface()

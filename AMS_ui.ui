@@ -6597,7 +6597,7 @@ text-decoration-color: gray;
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap>../../../../Pictures/placeholderImg.png</pixmap>
+                  <pixmap resource="resources.qrc">:/pictures/img/pictures/placeholderImgEvenSmaller.png</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
@@ -6999,7 +6999,7 @@ background-color:rgb(197, 252, 252);
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap>../../../.designer/backup/img/placeholderImgEvenSmaller.png</pixmap>
+               <pixmap resource="resources.qrc">:/pictures/img/pictures/placeholderImgEvenSmaller.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -7096,7 +7096,7 @@ background-color:rgb(197, 252, 252);
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap>../../../../Pictures/placeholderImgEvenSmaller.png</pixmap>
+               <pixmap resource="resources.qrc">:/pictures/img/pictures/placeholderImgEvenSmaller.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -7109,7 +7109,7 @@ background-color:rgb(197, 252, 252);
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap>../../../../Pictures/placeholderImgEvenSmaller.png</pixmap>
+               <pixmap resource="resources.qrc">:/pictures/img/pictures/placeholderImgEvenSmaller.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -7212,7 +7212,7 @@ background-color:rgb(197, 252, 252);
   </widget>
  </widget>
  <resources>
-  <include location="AMSResources.qrc"/>
+  <include location="resources.qrc"/>
  </resources>
  <connections/>
 </ui>
