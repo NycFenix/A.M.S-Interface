@@ -38,11 +38,11 @@ class AMSInterface(QMainWindow):
 
         ui.cmt.setChecked(True) # Default Transfer Mode
         n_eficiency = self.EficiencyButton()
-        ui.ws_input1.editingFinished.connect(lambda: ui.ws_input2.setText(self.SpeedMeasureConverter(ui.ws_input1.text(), 1)))
-        ui.ws_input2.editingFinished.connect(lambda: ui.ws_input1.setText(self.SpeedMeasureConverter(ui.ws_input2.text(), -1)))
+        ui.ws_input1.textEdited.connect(lambda: ui.ws_input2.setText(self.SpeedMeasureConverter(ui.ws_input1.text(), 1)))
+        ui.ws_input2.textEdited.connect(lambda: ui.ws_input1.setText(self.SpeedMeasureConverter(ui.ws_input2.text(), -1)))
 
-        ui.ts_input1.editingFinished.connect(lambda: ui.ts_input2.setText(self.SpeedMeasureConverter(ui.ts_input1.text(), 1)))
-        ui.ts_input2.editingFinished.connect(lambda: ui.ts_input1.setText(self.SpeedMeasureConverter(ui.ts_input2.text(), -1)))
+        ui.ts_input1.textEdited.connect(lambda: ui.ts_input2.setText(self.SpeedMeasureConverter(ui.ts_input1.text(), 1)))
+        ui.ts_input2.textEdited.connect(lambda: ui.ts_input1.setText(self.SpeedMeasureConverter(ui.ts_input2.text(), -1)))
 
 
 
@@ -53,11 +53,11 @@ class AMSInterface(QMainWindow):
 
         # BUTTONS
 
-        ui.calculate_button.clicked.connect(lambda: self.GeometricPredictionCallback(Ws=float(ui.ws_input1.text()), Ts=float(ui.ts_input1.text()), V=float(ui.v_input.text()), 
-                                                                                     I=float(ui.I.text()), Mp=float(ui.melting_point.text()), Sh=float(ui.specific_heat.text()), 
-                                                                                     Vi=float(ui.viscosity.text()), De=float(ui.density.text()), Ct=float(ui.thermal_conductivity.text()), 
-                                                                    D=float(ui.diameter.text()), Em=float(ui.emissivity.text()), CLFus=float(ui.EnthalpyFusion.text()), 
-                                                                    n=n_eficiency, DBCP=float(ui.DBCP.text())))
+        ui.calculate_button.clicked.connect(lambda: self.GeometricPredictionCallback(Ws=ui.ws_input1.text(), Ts=ui.ts_input1.text(), V=ui.v_input.text(), 
+                                                                                     I=ui.I.text(), Mp=ui.melting_point.text(), Sh=ui.specific_heat.text(), 
+                                                                                     Vi=ui.viscosity.text(), De=ui.density.text(), Ct=ui.thermal_conductivity.text(), 
+                                                                    D=ui.diameter.text(), Em=ui.emissivity.text(), CLFus=ui.EnthalpyFusion.text(), 
+                                                                    n=n_eficiency, DBCP=ui.DBCP.text()))
 
         ui.Analyzebttn.clicked.connect(lambda: self.LoadImg(ui.AnalyzedImg))             
       
@@ -88,7 +88,7 @@ class AMSInterface(QMainWindow):
         ui.v_input.setText("20.1")
         ui.I.setText("129")
         ui.diameter.setText("1.2")
-        
+
         # ///////////////////////////////////////////////////
 
 
@@ -96,12 +96,44 @@ class AMSInterface(QMainWindow):
         self.show()
 
     def GeometricPredictionCallback(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n, DBCP) -> None:
+            
+
+            # Como a classe de cálculo só aceita em mm/s, é necessário converter para mm/s quando não for essa a unidade usada no input
+            try :
+                Ws = float(Ws)
+            except ValueError:
+                Ws = self.SpeedMeasureConverter(ui.ws_input2.text(), -1)
+                ui.ws_input1.setText(Ws)
+                Ws = float(Ws)
+            
+            try:
+                Ts = float(Ts)
+            except ValueError:
+                Ts = self.SpeedMeasureConverter(ui.ts_input2.text(), -1)
+                ui.ts_input1.setText(Ts)
+                Ts = float(Ts)
+
+            # Converterndo tudo pra float
+            V = float(V)
+            I = float(I)
+            Mp = float(Mp)
+            Sh = float(Sh)
+            Ct = float(Ct)
+            De = float(De)
+            Vi = float(Vi)
+            Em = float(Em)
+            CLFus = float(CLFus)
+            n = float(n)
+            DBCP = float(DBCP)
+            D = float(D)
+
+
             Geometry = BeadGeometry.BeadGeometry(D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n, DBCP) #Initiate GeomtryObject
             height, width = Geometry.h, Geometry.w #Get Bead Geometry
             penetration = Geometry.PeMF #Get Penetration
             t_solid = Geometry.getTSolid2() #Get Solidification Time of Bead
             TMax = Geometry.Tmax1 #Get Maximum Temperature
-            
+            TMax -= 273.15 #Convert to Celsius
 
             #t_solid = BeadGeometry.getT_Sol(Sh, D, Ts, I, V, De, penetration, Mp, Ct, Ws)
             #t_solid = 1 #Valor temporário
@@ -112,11 +144,11 @@ class AMSInterface(QMainWindow):
             ui.width.setText(str(round(width,3)))
             ui.Tmax.setText(str(round(TMax,3)))
 
-    def SpeedMeasureConverter(self, speed = str,flag = int):
+    def SpeedMeasureConverter(self, speed = str,flag = int) -> str:
         #This method converts mm/s into m/min and vice-versa
         # If flag = 1, mm/s -> m/min
         # if its -1, m/min -> mm/s
-
+        
         try:
             speed = float(speed)
             new_speed  = speed * ((60 / 1000) ** flag)
