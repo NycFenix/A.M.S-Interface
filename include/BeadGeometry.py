@@ -257,7 +257,7 @@ class BeadGeometry:
         Et = (self.eficiency * self.I * self.V /self.Ts) * self.Comp
         Efus = self.mass * self.Sh2 * (self.Mp2 - self.Tamb2)
 
-        Result = Et - Efus # TODO: não usado?
+        #Result = Et - Efus # TODO: não usado?
 
         return Pcond1, Pconv, Prad, Efus, Et
         # return Potencial de condução, 

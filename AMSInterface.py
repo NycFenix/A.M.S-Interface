@@ -114,6 +114,7 @@ class AMSInterface(QMainWindow):
                 Ts = float(Ts)
 
             # Converterndo tudo pra float
+            # TODO: ta muito feio, fazer de forma mais elegante
             V = float(V)
             I = float(I)
             Mp = float(Mp)
