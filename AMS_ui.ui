@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>946</width>
-    <height>591</height>
+    <width>931</width>
+    <height>580</height>
    </rect>
   </property>
   <property name="palette">
@@ -4714,7 +4714,7 @@ background-color:rgb(245, 197, 159)
                     <string notr="true"/>
                    </property>
                    <property name="text">
-                    <string>Voltage</string>
+                    <string>Teste</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignmentFlag::AlignCenter</set>

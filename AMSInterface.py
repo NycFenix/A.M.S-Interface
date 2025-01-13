@@ -7,6 +7,9 @@ from PySide6.QtWidgets import QInputDialog
 from PySide6.QtGui import QPixmap
 import os
 from include.AMS_ui import Ui_AMS_Interface
+from PySide6.QtCore import QFile
+from PySide6.QtUiTools import QUiLoader
+
 class AMSInterface(QMainWindow):
     '''Class that contains all methods and atributes of the interface hat do not belong to the UI file
     
@@ -19,9 +22,24 @@ class AMSInterface(QMainWindow):
 
         super(AMSInterface, self).__init__()
 
+        ui_file = QFile("AMS_ui.ui")
+        ui_file.open(QFile.ReadOnly)
+        loader = QUiLoader()
+        self.ui = loader.load(ui_file)
+        ui_file.close()
+        
+        self.setCentralWidget(self.ui) # essencial para que a interface seja setada como MainWindow e não apareçam 2 janelas
 
-        self.ui = Ui_AMS_Interface()
-        self.ui.setupUi(self)
+
+        # self.ui = Ui_AMS_Interface()
+        
+
+
+
+
+
+
+
 
         # Defining global variable as to not have to repeat it every time
         global ui
