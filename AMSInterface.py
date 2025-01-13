@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QFileDialog
 from PySide6.QtWidgets import QInputDialog
 from PySide6.QtGui import QPixmap
 import os
-#import ui.py
+from include.AMS_ui import Ui_AMS_Interface
 class AMSInterface(QMainWindow):
     '''Class that contains all methods and atributes of the interface hat do not belong to the UI file
     
@@ -19,7 +19,8 @@ class AMSInterface(QMainWindow):
 
         super(AMSInterface, self).__init__()
 
-#        self.ui = Ui_AMS_Interface()
+
+        self.ui = Ui_AMS_Interface()
         self.ui.setupUi(self)
 
         # Defining global variable as to not have to repeat it every time

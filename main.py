@@ -1,7 +1,7 @@
 import os
 import sys
 
-from include import AMSui.py
+from include import AMS_ui
 #from lib.ui import Ui_AMS_Interface
 from AMSInterface import AMSInterface
 
