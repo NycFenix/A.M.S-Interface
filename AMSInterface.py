@@ -1,4 +1,4 @@
-from lib.ui import Ui_AMS_Interface
+
 from include import BeadGeometry
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtWidgets import QLabel
@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QFileDialog
 from PySide6.QtWidgets import QInputDialog
 from PySide6.QtGui import QPixmap
 import os
+#import ui.py
 class AMSInterface(QMainWindow):
     '''Class that contains all methods and atributes of the interface hat do not belong to the UI file
     
@@ -18,7 +19,7 @@ class AMSInterface(QMainWindow):
 
         super(AMSInterface, self).__init__()
 
-        self.ui = Ui_AMS_Interface()
+#        self.ui = Ui_AMS_Interface()
         self.ui.setupUi(self)
 
         # Defining global variable as to not have to repeat it every time
@@ -72,6 +73,7 @@ class AMSInterface(QMainWindow):
         em_default = 0.7   # Emissivity
         ef_default = 25     # Enthalpy Fusion
         DBCP_default = 15
+        
         ui.melting_point.setText(str(mp_default))
         ui.specific_heat.setText(str(sh_default))
         ui.viscosity.setText(str(vi_default))

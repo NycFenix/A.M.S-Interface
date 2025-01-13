@@ -1,9 +1,9 @@
 import os
 import sys
-#from AMSInterface_atual import Ui_AMS_Interface
+
+from include import AMSui.py
 #from lib.ui import Ui_AMS_Interface
 from AMSInterface import AMSInterface
-nnnnnn
 
 from PySide6.QtWidgets import (QApplication)
 
