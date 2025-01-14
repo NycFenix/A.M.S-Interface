@@ -25,10 +25,10 @@ class AMSInterface(QMainWindow):
         ui_file = QFile("AMS_ui.ui")
         ui_file.open(QFile.ReadOnly)
         loader = QUiLoader()
-        self.ui = loader.load(ui_file)
+        self.ui = loader.load(ui_file, self)
         ui_file.close()
-        
-        self.setCentralWidget(self.ui) # essencial para que a interface seja setada como MainWindow e não apareçam 2 janelas
+        self.setCentralWidget(self.ui)
+
 
 
         # self.ui = Ui_AMS_Interface()
@@ -114,7 +114,7 @@ class AMSInterface(QMainWindow):
 
 
 
-        self.show()
+        # self.show()
 
     def GeometricPredictionCallback(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n, DBCP) -> None:
             
