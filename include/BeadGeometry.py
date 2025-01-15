@@ -3,7 +3,6 @@ import numpy as np
 import math
 
 
-
 class BeadGeometry:
     def __init__(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n, DBCP):
         # Constans
