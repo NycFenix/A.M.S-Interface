@@ -211,3 +211,5 @@ class AMSInterface(QMainWindow):
         receiverImg.resize(400, 200)
         print("Button Clicked")
 
+
+    
