@@ -9,7 +9,7 @@ import os
 from include.AMS_ui import Ui_AMS_Interface
 from PySide6.QtCore import QFile
 from PySide6.QtUiTools import QUiLoader
-
+from include import MaterialPropertiesWindow
 class AMSInterface(QMainWindow):
     '''Class that contains all methods and atributes of the interface hat do not belong to the UI file
     
@@ -22,18 +22,20 @@ class AMSInterface(QMainWindow):
 
         super(AMSInterface, self).__init__()
 
-        ui_file = QFile("AMS_ui.ui")
+        ui_file = QFile("include/ui/AMS_ui.ui")
         ui_file.open(QFile.ReadOnly)
         loader = QUiLoader()
         self.ui = loader.load(ui_file, self)
         ui_file.close()
         self.setCentralWidget(self.ui)
 
-
+        self.MaterialPropertiesForm = MaterialPropertiesWindow.MaterialPropertiesForm()
 
         # self.ui = Ui_AMS_Interface()
         
 
+
+        # HERE END THE LOADING WINDOW PART
 
 
 
@@ -81,7 +83,7 @@ class AMSInterface(QMainWindow):
 
         ui.Analyzebttn.clicked.connect(lambda: self.LoadImg(ui.AnalyzedImg))             
       
-
+        ui.MaterialsButton.clicked.connect(lambda: self.MaterialPropertiesCallback())
         # Default Parameters: Common Steel
 
         mp_default = 1420   # Melting Point
@@ -111,10 +113,6 @@ class AMSInterface(QMainWindow):
         ui.diameter.setText("1.2")
 
         # ///////////////////////////////////////////////////
-
-
-
-        # self.show()
 
     def GeometricPredictionCallback(self, D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n, DBCP) -> None:
             
@@ -211,5 +209,9 @@ class AMSInterface(QMainWindow):
         receiverImg.resize(400, 200)
         print("Button Clicked")
 
+    def MaterialPropertiesCallback(self) -> None:
+        
+        self.MaterialPropertiesForm.show()
+        
 
     

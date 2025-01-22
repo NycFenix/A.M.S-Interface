@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>931</width>
-    <height>582</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="palette">
@@ -7025,7 +7025,7 @@ background-color:rgb(197, 252, 252);
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap>../../../../../Pictures/placeholderImgEvenSmaller.png</pixmap>
+                  <pixmap>../../../../Pictures/placeholderImgEvenSmaller.png</pixmap>
                  </property>
                 </widget>
                </item>

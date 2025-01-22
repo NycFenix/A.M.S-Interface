@@ -11,12 +11,13 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     #app.setWindowIcon(QIcon("img/icons/sold_icon.ico"))
 
-    
+    app.setQuitOnLastWindowClosed(False)
     AMSWindow = AMSInterface()
     AMSWindow.ui.show()
+    
    #ui.setupUi(QUI)
     sys.exit(app.exec())
-
+    
 
 
 
