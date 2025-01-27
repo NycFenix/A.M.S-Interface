@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>931</width>
-    <height>500</height>
+    <height>559</height>
    </rect>
   </property>
   <property name="palette">
@@ -6558,7 +6558,7 @@ text-decoration-color: gray;
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="resources.qrc">:/pictures/img/pictures/placeholderImgEvenSmaller.png</pixmap>
+                  <pixmap resource="../../resources.qrc">:/pictures/img/pictures/placeholderImgEvenSmaller.png</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
@@ -6960,7 +6960,7 @@ background-color:rgb(197, 252, 252);
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap resource="resources.qrc">:/pictures/img/pictures/placeholderImgEvenSmaller.png</pixmap>
+               <pixmap resource="../../resources.qrc">:/pictures/img/pictures/placeholderImgEvenSmaller.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -7025,7 +7025,7 @@ background-color:rgb(197, 252, 252);
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap>../../../../Pictures/placeholderImgEvenSmaller.png</pixmap>
+                  <pixmap>../../../../../../../Pictures/placeholderImgEvenSmaller.png</pixmap>
                  </property>
                 </widget>
                </item>
@@ -7057,7 +7057,7 @@ background-color:rgb(197, 252, 252);
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap resource="resources.qrc">:/pictures/img/pictures/placeholderImgEvenSmaller.png</pixmap>
+               <pixmap resource="../../resources.qrc">:/pictures/img/pictures/placeholderImgEvenSmaller.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -7070,7 +7070,7 @@ background-color:rgb(197, 252, 252);
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap resource="resources.qrc">:/pictures/img/pictures/placeholderImgEvenSmaller.png</pixmap>
+               <pixmap resource="../../resources.qrc">:/pictures/img/pictures/placeholderImgEvenSmaller.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -7160,7 +7160,8 @@ background-color:rgb(197, 252, 252);
   </widget>
  </widget>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../../resources.qrc"/>
+  <include location="../../../../../resources.qrc"/>
  </resources>
  <connections/>
 </ui>
