@@ -2,7 +2,7 @@
 from include import BeadGeometry
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtWidgets import QLabel
-from PySide6.QtWidgets import QFileDialog
+from PySide6.QtWidgets import QFileDialog, QApplication
 from PySide6.QtWidgets import QInputDialog
 from PySide6.QtGui import QPixmap
 import os
@@ -67,7 +67,7 @@ class AMSInterface(QMainWindow):
         ui.ts_input2.textEdited.connect(lambda: ui.ts_input1.setText(self.SpeedMeasureConverter(ui.ts_input2.text(), -1)))
 
 
-
+        ui.destroyed.connect(QApplication.quit)
         # /////////////////////////////////////////////
 
 
@@ -214,4 +214,6 @@ class AMSInterface(QMainWindow):
         self.MaterialPropertiesForm.show()
         
 
-    
+    def closeEvent(self, event):
+        QApplication.quit()
+        event.accept()
