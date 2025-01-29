@@ -7,18 +7,31 @@
     <x>0</x>
     <y>0</y>
     <width>505</width>
-    <height>346</height>
+    <height>345</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
-    <widget class="QComboBox" name="MatSelectBox"/>
+   <item row="3" column="1">
+    <widget class="QDialogButtonBox" name="LoadBox">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::StandardButton::Apply|QDialogButtonBox::StandardButton::Cancel</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item row="1" column="1">
     <widget class="QTableWidget" name="PropertiesTable"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="MatSelectBox"/>
    </item>
   </layout>
  </widget>

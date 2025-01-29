@@ -3,7 +3,7 @@ from include import BeadGeometry
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtWidgets import QLabel
 from PySide6.QtWidgets import QFileDialog, QApplication
-from PySide6.QtWidgets import QInputDialog
+from PySide6.QtWidgets import QInputDialog, QDialogButtonBox
 from PySide6.QtGui import QPixmap
 import os
 from include.AMS_ui import Ui_AMS_Interface
@@ -84,6 +84,10 @@ class AMSInterface(QMainWindow):
         ui.Analyzebttn.clicked.connect(lambda: self.LoadImg(ui.AnalyzedImg))             
       
         ui.MaterialsButton.clicked.connect(lambda: self.MaterialPropertiesCallback())
+        
+        
+        MaterialPropertiesWindow.ui.LoadBox.button(QDialogButtonBox.Apply).clicked.connect(lambda: self.ApplyPropertiesCallback(MaterialPropertiesWindow.MaterialPropertiesForm().ChosenMaterialDF))
+
         # Default Parameters: Common Steel
 
         mp_default = 1420   # Melting Point
@@ -183,8 +187,19 @@ class AMSInterface(QMainWindow):
             return str(round(deltaE, 3))
         except ValueError:
             return ""
+    
+    def ApplyPropertiesCallback(self, ChosenMaterialDF) -> None:
+        
+        TemperaturaUsada = "T Solidus"
+
+        ui.melting_point.setText(str(ChosenMaterialDF.loc[TemperaturaUsada, "Temperatura Crítica"]))
+        ui.melting_point2.setText(str(ChosenMaterialDF.loc["T Liquidus", "Temperatura Crítica"]))
+
         
 
+    
+           
+        
     def EficiencyButton(self):
         if ui.cmt.isChecked():
             return 0.89
@@ -217,3 +232,4 @@ class AMSInterface(QMainWindow):
     def closeEvent(self, event):
         QApplication.quit()
         event.accept()
+
