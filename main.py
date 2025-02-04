@@ -9,7 +9,7 @@ from PySide6.QtGui import (QIcon)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    #app.setWindowIcon(QIcon("img/icons/sold_icon.ico"))
+    #app.setWindowIcon(QIcon("img/icons/sold_ico n.ico"))
 
     #app.setQuitOnLastWindowClosed(False)
     AMSWindow = AMSInterface()

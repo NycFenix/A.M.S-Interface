@@ -1,5 +1,5 @@
 import pandas as pd
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QWidget, QDialog
 from PySide6.QtWidgets import QLabel
 from PySide6.QtWidgets import QFileDialog
 from PySide6.QtWidgets import QInputDialog, QTableView, QTableWidget, QTableWidgetItem, QDialogButtonBox
@@ -8,12 +8,12 @@ from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 
 path = "include\Material_Properties.xlsx"
-class MaterialPropertiesForm(QWidget):
+class MaterialPropertiesForm(QDialog):
 
    
     def __init__(self) -> None:
         super(MaterialPropertiesForm, self).__init__()
-        ui_file = QFile("include/ui/MaterialPropertiesWindow.ui")
+        ui_file = QFile("include/ui/MaterialProperties.ui")
         ui_file.open(QFile.ReadOnly)
         loader = QUiLoader()
         self.ui = loader.load(ui_file, self)
@@ -39,26 +39,24 @@ class MaterialPropertiesForm(QWidget):
         
 
         self.ChosenMaterialDF = ExcelFile.parse(sheet_name=ui.MatSelectBox.currentIndex())
-        self.ChosenMaterialDF.set_index("Propriedade", inplace=True)
-        
 
-        ui.MatSelectBox.currentIndexChanged.connect(lambda: self.loadPropertiesDF(self.ChosenMaterialDF, ExcelFile, ui.PropertiesTable))
+        ui.MatSelectBox.currentIndexChanged.connect(lambda: self.loadPropertiesDF(ExcelFile, ui.PropertiesTable))
         
-        
+        ui.show()
 
-    def loadPropertiesDF(self, ChosenMaterialDF, file: pd.ExcelFile, table: QTableWidget) -> None:
+    def loadPropertiesDF(self, file: pd.ExcelFile, table: QTableWidget) -> None:
         "This function loads the properties of a pandas dataframe into a qtablewidget"    
         
-        #TODO: load so  ta acontecendo uma vez, nao muda de material
+        self.ChosenMaterialDF = file.parse(sheet_name=ui.MatSelectBox.currentIndex())
         
-        #print(ChosenMaterialDF)
-        headers = list(ChosenMaterialDF)
-        table.setColumnCount(ChosenMaterialDF.shape[1]) 
-        table.setRowCount(ChosenMaterialDF.shape[0])
+        
+        headers = list(self.ChosenMaterialDF)
+        table.setColumnCount(self.ChosenMaterialDF.shape[1]) 
+        table.setRowCount(self.ChosenMaterialDF.shape[0])
         table.setHorizontalHeaderLabels(headers)
 
-        df_array = ChosenMaterialDF.values
-        for i in range(ChosenMaterialDF.shape[0]):
-            for j in range(ChosenMaterialDF.shape[1]):
+        df_array = self.ChosenMaterialDF.values
+        for i in range(self.ChosenMaterialDF.shape[0]):
+            for j in range(self.ChosenMaterialDF.shape[1]):
                 table.setItem(i, j, QTableWidgetItem(str(df_array[i, j])))
         

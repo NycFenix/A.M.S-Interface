@@ -10,6 +10,7 @@ from include.AMS_ui import Ui_AMS_Interface
 from PySide6.QtCore import QFile
 from PySide6.QtUiTools import QUiLoader
 from include import MaterialPropertiesWindow
+import pandas as pd
 class AMSInterface(QMainWindow):
     '''Class that contains all methods and atributes of the interface hat do not belong to the UI file
     
@@ -86,8 +87,8 @@ class AMSInterface(QMainWindow):
         ui.MaterialsButton.clicked.connect(lambda: self.MaterialPropertiesCallback())
         
         
-        MaterialPropertiesWindow.ui.LoadBox.button(QDialogButtonBox.Apply).clicked.connect(lambda: self.ApplyPropertiesCallback(MaterialPropertiesWindow.MaterialPropertiesForm().ChosenMaterialDF))
-
+        MaterialPropertiesWindow.ui.LoadBox.button(QDialogButtonBox.Apply).clicked.connect(lambda: self.ApplyPropertiesCallback())
+        MaterialPropertiesWindow.ui.LoadBox.button(QDialogButtonBox.Apply).clicked.connect(MaterialPropertiesWindow.MaterialPropertiesForm.close)
         # Default Parameters: Common Steel
 
         mp_default = 1420   # Melting Point
@@ -188,17 +189,25 @@ class AMSInterface(QMainWindow):
         except ValueError:
             return ""
     
-    def ApplyPropertiesCallback(self, ChosenMaterialDF) -> None:
+    def ApplyPropertiesCallback(self) -> None:
+        ChosenMaterialDF = MaterialPropertiesWindow.MaterialPropertiesForm().ChosenMaterialDF
+        ChosenMaterialDF.set_index("Propriedade", inplace=True)
         
         TemperaturaUsada = "T Solidus"
-
+        
         ui.melting_point.setText(str(ChosenMaterialDF.loc[TemperaturaUsada, "Temperatura Crítica"]))
         ui.melting_point2.setText(str(ChosenMaterialDF.loc["T Liquidus", "Temperatura Crítica"]))
-
+        ui.specific_heat.setText(str(ChosenMaterialDF.loc[TemperaturaUsada, "Calor específico (J/gK)"]))
+        ui.viscosity.setText(str(ChosenMaterialDF.loc[TemperaturaUsada, "Viscosidade Líquida (mPa s)"]))
+        ui.EnthalpyFusion.setText(str(ChosenMaterialDF.loc[TemperaturaUsada, "Entalpia (J/g)"]))
+        ui.density.setText(str(ChosenMaterialDF.loc[TemperaturaUsada, "Densidade (g/cm³)"]))
+        ui.thermal_conductivity.setText(str(ChosenMaterialDF.loc[TemperaturaUsada, "Condutividade Térmica (W/mK)"]))
+        #ui.emissivity.setText(str(ChosenMaterialDF.loc[TemperaturaUsada, "Emissividade"]))
         
-
-    
-           
+        
+    def closeEvent(self, widget):
+        
+           pass
         
     def EficiencyButton(self):
         if ui.cmt.isChecked():
