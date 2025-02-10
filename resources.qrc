@@ -4,5 +4,9 @@
   </qresource>
   <qresource prefix="icons">
     <file>img/icons/sold_icon.ico</file>
+    <file>img/icons/blue_ball.png</file>
+    <file>img/icons/green_ball.png</file>
+    <file>img/icons/red_ball.png</file>
+    <file>img/icons/yellow_ball.png</file>
   </qresource>
 </RCC>
