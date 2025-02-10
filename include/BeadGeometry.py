@@ -56,7 +56,7 @@ class BeadGeometry:
         # Volume and Surfaces
         self.Vf, self.mass = self.__getVolumeandMass()  # Total Volume of the weld bead
         #self.As1, self.As2, self.As3, self.As4 = self.__getSurfaces() # Surface Areas of the weld bead
-        # TODO: não precisa mais desses cálculos de superfície?
+        
         self.As3I = np.pi * (self.w/2)**2 # Área superfícial na parte superior da poça
         self.As4I = self.w/2 * self.Desloc # Área superficial da zona fundida na parte superior
         self.AsIConv = self.As3I + self.As4I # Área total fundida exposta a conveccção e radiação
@@ -64,7 +64,7 @@ class BeadGeometry:
         # Energy Calculations
 
         self.t_halfway = (self.w/2)/self.Ts     # Time to run 1/2 times the width of the weld bead
-        self.Ecl = self.mass* self.CLFus # Energia Liberada pela formação de cristais
+        self.Ecl = self.mass* self.CLFus # Energia necessaria para fundir
         self.Tmax1 = (((self.eficiency * self.I * self.V/self.Ts) * self.Desloc) + self.mass * self.Sh2 * Tamb2 + self.Ecl - self.Ct2*self.Temp2 *
                       (self.De2 * self.Sh2 * self.Ts * self.As3I/ (4*self.Ct2)) * self.temFun - self.Convt * self.Temp2 * self.AsIConv * self.temFun -
                       self.Em * self.sigma * (self.Mp2 ** 4) * self.AsIConv * self.temFun) / (self.mass * self.Sh2) # Temperatura máxima no ponto de fusão
@@ -76,42 +76,9 @@ class BeadGeometry:
         
         self.PotCond, self.PotConv, self.PotRad, self.Efus, self.Et = self.__getHeatLoss()
         self.Et = (self.n * self.I * self.V/self.Ts) * (self.w/2)  # Total Energy Given
-    # //////////////////////////////////////////////////
-        
-    # def getTsolid(self):
-
-    #     Numerator = (self.Et + self.Ecl - self.Efus
-    #     - self.t_halfway * (self.Potcond1 + self.Potcond2 + self.Prad + self.Potconv))
-
-    #     Denominator = self.Potcond1 + self.Potcond2 + self.Prad + self.Potconv
-
-    #     t_sol = Numerator/Denominator
-        
-    #     # print("ENERGIAS")
-    #     # print("/////////////////////////////////")
-        
-    #     # print("Energia Total necessária: ", self.Et)
-    #     # print("Energia de Fusão: ", self.Efus)
-    #     # print("Densidade: ", self.De2)
-    #     # print("Volume: ", self.Vf)
-    #     # print("Calor Específico: ", self.Sh)
-    #     # print("Temperatura", (self.Mp - 25))
-    #     # print("Energia Liberada pela formação de cristais: ", self.Ecl)
-    #     # print("Potência de Condução 1: ", self.Potcond1)
-    #     # print("Potência de Condução 2: ", self.Potcond2)
-    #     # print("Potência de Radiação: ", self.Prad)
-    #     # print("Potência de Convecção: ", self.Potconv)
-    #     # print("numerador: ", Numerator)
-    #     # print("/////////////////////////////////")
-    #     # print("denominador: ", Denominator)
-    #     # print("Tempo de Solidificação: ", t_sol)
 
 
-        
-    #     return t_sol
-    
-
-    def getTSolid2(self):
+    def getT_sol(self):
         # Método 1 - Modelo matemático
         tsol_M1 = ((self.Et + self.Ecl - self.Efus - self.tcomp*(self.PotCond + self.PotRad + self.PotConv))
         / (self.PotCond + self.PotRad + self.PotConv)) # Considera perdas de conducao convecção e radiação e a energia dada pela fonte
@@ -119,23 +86,31 @@ class BeadGeometry:
         # Método 2 - Modelo matemático 2
 
         tsol2_sem = ((4/3) * (np.pi * (0.25 * self.PeMF + 0.25*self.r + 0.5*self.h)**3)/ (self.Ct2M * self.Ts / (4*self.De2*self.Sh2F)))**0.5
-        
         # Calculo anterior propõe uma perda de calor mínima por radiação e convecção durante a solidificação
         tsol_M2 = tsol2_sem * 0.95 ** (self.eficiency * self.I * self.V * self.tcomp / self.Efus)
 
         # /////////////////////////////////////////////////
         # TEMPO DE SOLIDIFICAÇÃO QUANDO O SUBSTRATO ESTÁ QUENTE
         Tsub = 200 # Temperatura do substrato
-        tsol_quente = (self.Et + self.Ecl - self.Efus - self.tcomp * (self.PotRad + self.PotConv)) / (self.PotCond + self.PotRad + self.PotConv + (Tsub/self.Tamb2))
-        #Valor usado para temperaturas do substrato muito superiores a temperatura do ambiente # TODO: não utilizado?
-        # /////////////////////////////////////////////////
 
-        # VALOR MÉDIO - VALOR FINAL DE TEMPO DE SOLIDIFICAÇÃO
-        tsol_final = (0.85 * tsol_M1 + 0.15 * tsol_M2) # Pesos determinados empiricamente
-        return tsol_final
+        ASuperficie = 40000 # Área superficial do substrato usado como teste TODO: deixar dinâmico no futuro
+
+        tempoSimulado = 100 # TODO: deixar como input na interface depois
+        incremento = 0
+        tempoT = 0
+        for i in range(tempoSimulado):
+            tempoT += i
+            incre1 = tempoT ** (1/tempoT)
+            incremento +=  incre1
         
+        tsolF2 = (0.3 * tsol_M1 + 0.7 * tsol_M2) # Pesos determinados empiricamente
+        tsolFt = tsolF2 + ((tsolF2)*((self.Ct2 * self.Ws) / self.Ts) * (self.w * (self.Ts * tempoSimulado)/ASuperficie)* (incremento) ** 0.5)
+        
+        return tsolFt
+    
     def getBeadGeometry(self):
         '''Calculates the height and width of the weld bead'''
+        
         # Semicircular bead height
         Hi = (2*(self.Ws/self.Ts) * (self.Ra **2))**0.5
         Wi = 2*Hi                 
@@ -282,4 +257,4 @@ class BeadGeometry:
         print("Pe: ", Pe)
         PeFinal = (0.5 * Penetr1 + 0.08*Penetr2 + 0.12*Penetr3 + 0.3*Pe) # Pesos determinados empiricamente
         return PeFinal  
-
+  

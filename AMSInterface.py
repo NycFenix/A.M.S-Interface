@@ -156,7 +156,7 @@ class AMSInterface(QMainWindow):
             Geometry = BeadGeometry.BeadGeometry(D, Ws, Ts, I, V, Mp, Sh, Ct, De, Vi, Em, CLFus, n, DBCP) #Initiate GeomtryObject
             height, width = Geometry.h, Geometry.w #Get Bead Geometry
             penetration = Geometry.PeMF #Get Penetration
-            t_solid = Geometry.getTSolid2() #Get Solidification Time of Bead
+            t_solid = Geometry.getT_sol() #Get Solidification Time of Bead
             TMax = Geometry.Tmax1 #Get Maximum Temperature
             TMax -= 273.15 #Convert to Celsius
 
